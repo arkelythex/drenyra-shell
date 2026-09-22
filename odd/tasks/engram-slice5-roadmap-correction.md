@@ -36,7 +36,8 @@ Not test-first — this is a documentation prose correction, no new behavior. Fu
 ## Progress
 
 - 2026-09-21 — Branch `docs/engram-slice5-roadmap-correction` created off `main`. Task file created. Background exploration (`ae911e28d2a9ee429`) confirmed capability-manifest.yaml is already accurate; only ROADMAP.md needs correction.
+- 2026-09-21 — T1 done: both ROADMAP.md prose spots corrected. `bunx vitest run __tests__/capability-manifest.test.ts`: 35/35 passed. Committed `886213e` on `docs/engram-slice5-roadmap-correction`.
 
 ## Next step
 
-Apply the two prose edits to `ROADMAP.md`, run the functional check, commit.
+None — feature complete. Push and open a PR are the user's decision under ordinary repository policy.
