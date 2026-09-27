@@ -1,0 +1,8 @@
+{
+  "executionMode": "auto",
+  "artifactStore": "openspec",
+  "chainedPrStrategy": "auto-chain",
+  "reviewBudgetLines": 400,
+  "engramAvailable": true,
+  "prompted": false
+}
