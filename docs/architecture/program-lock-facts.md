@@ -12,9 +12,10 @@ The sequence below is mandatory after either trigger class:
 1. **A participation-path mutation.** Any change to a path listed in `PARTICIPATION_PATHS_V1`
    (`scripts/compute-candidate-identity.mjs`) — by an apply unit, by a formatter or autofix pass, or by
    another session acting outside any attempt.
-2. **A change-folder lifecycle event.** Opening or archiving a change under `openspec/changes/` moves the
-   generated `activeChanges` field, which lives inside an allowlisted file. This trigger needs no mistake,
-   no budget trip, and no tooling failure: it fires on the ordinary first step of every change.
+2. **A feature-document lifecycle event.** Opening an ODD feature document under `odd/tasks/`, or checking
+   off its last remaining task, moves the generated `activeChanges` field, which lives inside an
+   allowlisted file. This trigger needs no mistake, no budget trip, and no tooling failure: it fires on the
+   ordinary first step of every feature.
 
 ## The sequence (run in this order)
 
@@ -26,9 +27,9 @@ bun run refresh:lock-facts
 # 2. Rewrite the normalization-exempt mirror with the value step 1 produced. The payload is
 #    single-quoted and supplies the replacement as a function, so neither the shell nor
 #    String.replace can interpret a dollar pattern.
-node -e 'const{readFileSync,writeFileSync}=require("node:fs");const facts=JSON.parse(readFileSync("docs/architecture/program-lock-facts.json","utf8"));const id=facts.candidateIdentity;const p="openspec/config.yaml";const before=readFileSync(p,"utf8");const after=before.replace(/^(\s*candidate_identity:\s*).*$/m,function(_match,key){return key+JSON.stringify(id);});if(after===before)throw new Error("openspec/config.yaml has no candidate_identity line to rewrite");writeFileSync(p,after);console.log("config.yaml mirror <- "+id);'
+node -e 'const{readFileSync,writeFileSync}=require("node:fs");const facts=JSON.parse(readFileSync("docs/architecture/program-lock-facts.json","utf8"));const id=facts.candidateIdentity;const p="docs/architecture/current-test-state.yaml";const before=readFileSync(p,"utf8");const after=before.replace(/^(\s*candidate_identity:\s*).*$/m,function(_match,key){return key+JSON.stringify(id);});if(after===before)throw new Error("docs/architecture/current-test-state.yaml has no candidate_identity line to rewrite");writeFileSync(p,after);console.log("current-test-state mirror <- "+id);'
 
-# 3. The checkpoint must now be current. If the mirror write was openspec/config.yaml's only
+# 3. The checkpoint must now be current. If the mirror write was the snapshot record's only
 #    change, the identity moved with it: repeat steps 1-2, then run this check (see below).
 node scripts/refresh-program-lock-facts.mjs --check
 
@@ -36,13 +37,14 @@ node scripts/refresh-program-lock-facts.mjs --check
 bun run typecheck && bun run test && bun run verify:style && bun run verify:capability && bun run verify:package && node scripts/verify-packed-install.mjs
 ```
 
-**Why the order matters.** `openspec/config.yaml#/current_test_state/candidate_identity` is the one field the
-identity algorithm normalizes (`normalizeConfigYaml` in `scripts/compute-candidate-identity.mjs`): the mirror
+**Why the order matters.** `docs/architecture/current-test-state.yaml#/current_test_state/candidate_identity`
+is the one field the identity algorithm normalizes (`normalizeSnapshotRecord` in
+`scripts/compute-candidate-identity.mjs`): the mirror
 is normalization-exempt as a **value**, never as a **path**. Membership is decided by `workingTreeChanged()`
-→ `git diff --quiet HEAD -- <path>` over raw bytes, so when the mirror write is `openspec/config.yaml`'s
+→ `git diff --quiet HEAD -- <path>` over raw bytes, so when the mirror write is the snapshot record's
 **only** change the identity moves with that write, and `refresh → mirror → --check` cannot converge in one
 pass: `--check` reports `program lock facts are stale`. Iterate to the fixed point — run the refresh **again**
-once the mirror line exists, then `--check`. When other `openspec/config.yaml` fields change in the same unit
+once the mirror line exists, then `--check`. When other snapshot-record fields change in the same unit
 (the usual case: the recorded counts participate in the identity), the first refresh already computed the
 identity with the file modified, so the single pass converges.
 
@@ -51,14 +53,14 @@ verify:capability` goes red while the generator's own `--check` still exits 0, b
 input to the checkpoint. The mirror must carry exactly the value the last refresh produced, and step 3 must
 follow it. **Steps 1-3 are one indivisible operation.**
 
-Write the mirror **last** among the edits of a unit: every other field of `openspec/config.yaml` (the recorded
+Write the mirror **last** among the edits of a unit: every other field of the snapshot record (the recorded
 counts included) participates in the identity, so the mirror is only stable once those edits are final.
 
 Run the command only from the canonical Git top-level. The default command and explicit `--write` mode atomically update the checkpoint. `--check` is read-only and exits non-zero when the prospective bytes differ. Both modes reject nested execution and symlinked fixed paths. Tests and lifecycle commands never invoke write mode automatically.
 
 ## What changes
 
-The producer derives only `headSha`, `packageVersion`, sorted immediate `activeChanges` (excluding `archive`), the existing content and capability manifest digests, and `candidateIdentity`. Candidate identity uses the canonical participation algorithm with an in-memory lock-facts override, so checking never requires a temporary checkpoint write.
+The producer derives only `headSha`, `packageVersion`, sorted `activeChanges` (every `odd/tasks/*.md` feature document that still carries an unchecked `- [ ]` task, reported by filename), the existing content and capability manifest digests, and `candidateIdentity`. Candidate identity uses the canonical participation algorithm with an in-memory lock-facts override, so checking never requires a temporary checkpoint write.
 
 The command preserves contract declarations, schema and authority fields, the pinned runtime entry checksum, and historical test evidence. In particular, `tests`, `evidenceDate`, and old `derivationCommands` describe their recorded evidence date; they do not claim current test counts. Verified test-result ingestion is intentionally out of scope.
 

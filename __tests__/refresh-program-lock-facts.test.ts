@@ -66,7 +66,7 @@ function makeFixture(): { root: string; factsPath: string } {
 	fixtures.push(root);
 	mkdirSync(join(root, "docs/architecture"), { recursive: true });
 	mkdirSync(join(root, "contracts"), { recursive: true });
-	mkdirSync(join(root, "openspec/changes/archive"), { recursive: true });
+	mkdirSync(join(root, "odd/tasks"), { recursive: true });
 	writeFileSync(join(root, "package.json"), '{"version":"1.2.3"}\n');
 	writeFileSync(join(root, "contracts/SHA256SUMS.json"), '{"version":1}\n');
 	writeFileSync(
@@ -121,10 +121,18 @@ afterEach(() => {
 describe("refresh-program-lock-facts", () => {
 	it("refreshes apply/archive metadata, checks without writes, and is idempotent", () => {
 		const { root, factsPath } = makeFixture();
-		mkdirSync(join(root, "openspec/changes/z-change"));
-		mkdirSync(join(root, "openspec/changes/a-change"));
-		writeFileSync(join(root, "openspec/changes/z-change/proposal.md"), "# z\n");
-		writeFileSync(join(root, "openspec/changes/a-change/proposal.md"), "# a\n");
+		writeFileSync(
+			join(root, "odd/tasks/z-feature.md"),
+			"## Tasks\n\n- [ ] **T1** — pending work\n",
+		);
+		writeFileSync(
+			join(root, "odd/tasks/a-feature.md"),
+			"## Tasks\n\n- [x] **T1** — done\n- [ ] **T2** — pending work\n",
+		);
+		writeFileSync(
+			join(root, "odd/tasks/done-feature.md"),
+			"## Tasks\n\n- [x] **T1** — done\n",
+		);
 		const staleBytes = readFileSync(factsPath, "utf8");
 
 		const stale = run(root, "--check");
@@ -134,7 +142,7 @@ describe("refresh-program-lock-facts", () => {
 
 		const refreshedBytes = readFileSync(factsPath, "utf8");
 		const refreshed = JSON.parse(refreshedBytes) as Record<string, unknown>;
-		expect(refreshed.activeChanges).toEqual(["a-change", "z-change"]);
+		expect(refreshed.activeChanges).toEqual(["a-feature", "z-feature"]);
 		expect(refreshed.packageVersion).toBe("1.2.3");
 		expect(refreshed.headSha).toBe(spawnSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).stdout.trim());
 		expect(refreshed.candidateIdentity).toBe(expectedFixtureIdentity(root, refreshedBytes));
@@ -154,8 +162,8 @@ describe("refresh-program-lock-facts", () => {
 		expect(run(root, "--write").status).toBe(0);
 		expect(readFileSync(factsPath, "utf8")).toBe(refreshedBytes);
 
-		rmSync(join(root, "openspec/changes/a-change"), { recursive: true });
-		rmSync(join(root, "openspec/changes/z-change"), { recursive: true });
+		rmSync(join(root, "odd/tasks/a-feature.md"));
+		rmSync(join(root, "odd/tasks/z-feature.md"));
 		expect(run(root, "--check").status).not.toBe(0);
 		expect(run(root, "--write").status).toBe(0);
 		expect(JSON.parse(readFileSync(factsPath, "utf8")).activeChanges).toEqual([]);

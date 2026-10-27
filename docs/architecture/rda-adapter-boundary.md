@@ -86,7 +86,7 @@ receipt/export/context data and proves the kernel pipeline still stops at
 - Audit guard tests (materiality ownership, agent ceilings, UNKNOWN zero
   retries, store non-authority, delegation closure):
   [`../../__tests__/adapter-boundary-audit.test.ts`](../../__tests__/adapter-boundary-audit.test.ts)
-- OpenSpec verify report: `openspec/changes/pi-sdd-040-adapter-boundary/verify-report.md` (when it exists)
+- Boundary evidence: `specs/routing-adapter/spec.md` and `__tests__/adapter-boundary-audit.test.ts`
 
 ## Master alignment
 

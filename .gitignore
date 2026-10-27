@@ -28,6 +28,9 @@ coverage/
 # Local Pi runtime state
 .atl/
 
+# Local gentle-ai SDD state (per-checkout, not shareable)
+.pi/
+
 # CodeGraph local index
 .codegraph/
 

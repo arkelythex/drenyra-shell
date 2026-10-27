@@ -21,7 +21,7 @@ import { computeCandidateIdentity } from "./compute-candidate-identity.mjs";
 const LOCK_FACTS_PATH = "docs/architecture/program-lock-facts.json";
 const CONTENT_MANIFEST_PATH = "contracts/SHA256SUMS.json";
 const CAPABILITY_MANIFEST_PATH = "capability-manifest.yaml";
-const CHANGES_PATH = "openspec/changes";
+const ACTIVE_FEATURES_PATH = "odd/tasks";
 const PIN_ENTRY_SHA256 =
 	"09df8d696204337a9b62ddd28c354b414b62e81924caaf68a50b61131d5b7600";
 const AUTHORITY_NOTICE =
@@ -119,6 +119,24 @@ function validatePreservedFields(facts) {
 	}
 }
 
+/**
+ * Active feature documents: every `odd/tasks/*.md` file that still carries at
+ * least one unchecked task (`- [ ]`). Reported by filename without `.md`, in
+ * lexicographic order.
+ */
+function activeFeatureDocuments(root) {
+	const tasksDirectory = confinedPath(root, ACTIVE_FEATURES_PATH, "directory");
+	const entries = readdirSync(tasksDirectory, { withFileTypes: true });
+	return entries
+		.filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+		.filter((entry) => {
+			const bytes = readFileSync(join(tasksDirectory, entry.name), "utf8");
+			return bytes.split("\n").some((line) => /^\s*- \[ \]/.test(line));
+		})
+		.map((entry) => entry.name.slice(0, -".md".length))
+		.sort();
+}
+
 export function deriveProgramLockFacts(cwd) {
 	const root = canonicalRoot(cwd);
 	const currentBytes = readRequiredFile(root, LOCK_FACTS_PATH);
@@ -137,12 +155,7 @@ export function deriveProgramLockFacts(cwd) {
 		fail("capability manifest schemaVersion mismatch");
 	}
 
-	const changesDirectory = confinedPath(root, CHANGES_PATH, "directory");
-	const entries = readdirSync(changesDirectory, { withFileTypes: true });
-	const activeChanges = entries
-		.filter((entry) => entry.name !== "archive" && entry.isDirectory())
-		.map((entry) => entry.name)
-		.sort();
+	const activeChanges = activeFeatureDocuments(root);
 	const prospective = {
 		...facts,
 		headSha: gitHead(root),

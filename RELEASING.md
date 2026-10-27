@@ -78,7 +78,7 @@ follow it in order for every runtime pin change.
    exact version across the pin-asserting tests (`pin`, `installer`, `doctor`,
    `status`, `extension`, `package-verify`, `contracts`, `evidence-status`,
    `accounting-status`, adapter-boundary audit/replacement) and the docs
-   (`contracts/runtime-dependency.md`, `openspec/config.yaml`). Fixture tool
+   (`contracts/runtime-dependency.md`, `docs/architecture/current-test-state.yaml`). Fixture tool
    versions that merely coincidentally match the runtime version are left alone.
 5. **Rebuild dist BEFORE `bun install`.** The postinstall hook runs
    `dist/scripts/install-drenyra-ai.js`, which is a stale build artifact: if it
@@ -97,8 +97,9 @@ follow it in order for every runtime pin change.
    ```sh
    bun run refresh:lock-facts
    # then rewrite the identity-normalized field
-   # openspec/config.yaml#/current_test_state/candidate_identity with the value the generator just
-   # produced (exact command: docs/architecture/program-lock-facts.md, step 2)
+   # docs/architecture/current-test-state.yaml#/current_test_state/candidate_identity with the
+   # value the generator just produced (exact command:
+   # docs/architecture/program-lock-facts.md, step 2)
    node scripts/refresh-program-lock-facts.mjs --check
    ```
 
