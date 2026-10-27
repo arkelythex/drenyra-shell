@@ -17,12 +17,12 @@
 
 ## Tasks
 
-- [ ] **T1** — `lib/journal-proposal.ts`: the pure wrapper over the three kernel entry points. *(S1, S2, S3, S5, S6)*
-- [ ] **T2** — `__tests__/journal-proposal.test.ts`: RED first. Balanced entry records; unbalanced, bad RUC, memory-shaped evidence and malformed items surface the kernel's code; the result carries no receipt. *(S2, S5, S6)*
-- [ ] **T3** — `extensions/journal-tools.ts`: `propose_journal_entry` with TypeBox parameters, scope read from the context store, decimal-string amounts converted to `BigInt`. *(S1, S3, S4, S5)*
-- [ ] **T4** — Wire into `extensions/register.ts`; extension-level tests for the no-scope short-circuit, a successful proposal, and a kernel rejection rendered as text. *(S4, S5)*
-- [ ] **T5** — Docs: REQ-AUTH-011, README rows, CHANGELOG. *(S7)*
-- [ ] **T6** — Gates and lock-facts refresh. *(S8)*
+- [x] **T1** — `lib/journal-proposal.ts`: the pure wrapper over the three kernel entry points. *(S1, S2, S3, S5, S6)*
+- [x] **T2** — `__tests__/journal-proposal.test.ts`: RED first. Balanced entry records; unbalanced, bad RUC, memory-shaped evidence and malformed items surface the kernel's code; the result carries no receipt. *(S2, S5, S6)*
+- [x] **T3** — `extensions/journal-tools.ts`: `propose_journal_entry` with TypeBox parameters, scope read from the context store, decimal-string amounts converted to `BigInt`. *(S1, S3, S4, S5)*
+- [x] **T4** — Wire into `extensions/register.ts`; extension-level tests for the no-scope short-circuit, a successful proposal, and a kernel rejection rendered as text. *(S4, S5)*
+- [x] **T5** — Docs: REQ-AUTH-011, README rows, CHANGELOG. *(S7)*
+- [x] **T6** — Gates and lock-facts refresh. *(S8)*
 
 ## Log
 
@@ -47,3 +47,20 @@ Context: the previous turn closed with the README's remaining gap — typed fisc
 - **D2 — Amounts arrive as decimal strings.** Tool parameters come from JSON, where a float would silently corrupt cents. The tool accepts a string of digits and converts with `BigInt`, rejecting anything else before the kernel is reached.
 - **D3 — The wrapper maps, it does not judge.** Every validation is delegated; the wrapper's only logic is field mapping and error-code extraction. If the kernel changes its mind about what is valid, this file does not need to change.
 - **D4 — No `close_period`.** `drenyra-ai/fiscal` has no close entry point, so there is nothing to wrap. A tool by that name would have to invent period-close semantics locally.
+
+### L4 — 2026-10-27 — verification (36c94fd)
+
+Every task is closed against `36c94fd`.
+
+- `bun run typecheck` — clean.
+- `bun run test` — 58 files / 825 passed / 0 failed (baseline 56/798 before the books mode; this feature adds 2 files and 10 tests).
+- `bun run verify:capability` — OK.
+- `bun run verify:style` — OK (diff-scoped · 121 owned files · 4 rules).
+- `node scripts/refresh-program-lock-facts.mjs --check` — current after two passes of the write → mirror-rewrite loop.
+
+Two failures were real and are recorded rather than smoothed over:
+
+1. `Type` imported from `@sinclair/typebox` does not resolve — the package is not installed. The repository uses `typebox` (v1.3.14), as `extensions/register.ts:10` already did.
+2. `__tests__/lock-facts.test.ts` failed twice because creating this feature document with unchecked tasks changes `activeChanges`. That is the mechanism working: the lock facts refuse to describe a tree whose active-feature set is out of date.
+
+Deliberate non-changes: no `post`, no signing, no `close_period`, no `ingest_cpe`. D1-D4 in L3 stand. This feature does not make any capability `validated-end-to-end`.
