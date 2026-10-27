@@ -6,19 +6,20 @@
 # best-effort only.
 
 current_test_state:
-      files: 52
-      tests: 773
+      files: 54
+      tests: 798
       passing: true
       failed: 0
       command: bun test
       classification: dirty-candidate
       evidence_scope: current
-      candidate_identity: "dirty-sha256:8fb9f3eff51f9e93456f220fd792f3160758cce9eda6426bd0672e0a6e7adae0"
-      evidence_date: 2026-09-12
+      candidate_identity: "dirty-sha256:9be242e850f5d1b62dfe67e6d6334fffbfc20ffde4063034ea39144bef929201"
+      evidence_date: 2026-10-27
       evidence: >-
-            PR 3 verified current snapshot. `bun test` from the canonical repository
-            root ran 773 tests across 52 files with 0 failures; the dirty candidate
-            identity is re-derived by `node scripts/compute-candidate-identity.mjs`
-            and generated into docs/architecture/program-lock-facts.json. This is the
-            canonical current snapshot; preserved older snapshots are labeled
-            historical in capability-manifest.yaml and program-lock-facts.json.
+            Verified current snapshot. `bun test` from the canonical repository root
+            ran 798 tests across 54 files with 0 failures on the merged main after the
+            SDD-to-ODD migration; the dirty candidate identity is re-derived by
+            `node scripts/compute-candidate-identity.mjs` and generated into
+            docs/architecture/program-lock-facts.json. This is the canonical current
+            snapshot; preserved older snapshots are labeled historical in
+            capability-manifest.yaml and program-lock-facts.json.
