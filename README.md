@@ -52,11 +52,12 @@ operational integration.
 | Works today | Does not exist yet |
 | --- | --- |
 | 21 `/drenyra:*` commands, all registered | Publication on npm |
-| Pinned `drenyra-ai@0.4.1` with checksum verification that fails closed | Typed fiscal tools (`ingest_cpe`, `propose_journal`, `close_period`) |
+| Pinned `drenyra-ai@0.4.1` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
 | Signed, verifiable receipts through `ReceiptStore` | Executable Drenyra Engram memory reads |
 | A `books` operation mode where `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool by default | A measured eval set against a professional's own work |
 | Fiscal scope (RUC + period) threading and fail-closed guards | — |
 | RDA command chains, persona, startup panel, 11 packaged skills | — |
+| `propose_journal_entry` — the kernel validates the scope, accepts the evidence and records a balanced entry (it is recorded, never posted) | — |
 
 Everything below is written against that table. If a claim is not backed by a
 `file:line` you can open, it does not belong in this README.
@@ -370,7 +371,7 @@ documentation bug worth reporting.
 | --- | --- | --- |
 | **`record_receipt` is fail-open** | `extensions/fiscal-guard.ts:398-409` | The id is `Date.now()` + `Math.random().toString(36)`, `beforeState`/`afterState` are supplied by the caller, and `hash` is `""` with `// TODO: hash over receipt fields`. A record from this path is a log line, **not proof**. The signed path is `ReceiptStore` (`lib/receipt-store.ts:270`). |
 | **Guards are hygiene, not enforcement** | `extensions/fiscal-guard.ts:133`, `:171`, `:211` | See [Control and safety](#control). |
-| **No typed fiscal tool surface** | — | There is no `ingest_cpe`, `propose_journal`, `close_period`, or equivalent. Fiscal actions are command chains over the pinned runtime. |
+| **Typed fiscal tools stop at the proposal half** | `lib/journal-proposal.ts` | `propose_journal_entry` records an entry through the kernel's `journal.record`. Posting needs a `JournalReceiptIssuer` the harness does not have, so nothing is signed or posted. `ingest_cpe` and `close_period` do not exist: `drenyra-ai/fiscal` exposes a candidate-ordering adapter, not a close entry point. |
 | **No end-to-end validation** | `capability-manifest.yaml` | No capability is `validated-end-to-end`; every one is `declared-only`, `implemented`, or `unit-or-contract-tested`. |
 | **Engram reads are not executable** | [Engram dependency](contracts/engram-dependency.md) | Memory integration is designed and bounded, not shipped. |
 | **No measured eval set** | — | There is no corpus of cases signed off by a professional accountant, and therefore no measured diff against what one would have done. |
