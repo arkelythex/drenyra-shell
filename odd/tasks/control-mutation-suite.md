@@ -18,12 +18,12 @@
 
 ## Tasks
 
-- [ ] **T1** — Research doc with dated sources and the adopted/rejected mapping. *(S2)*
-- [ ] **T2** — RED: `__tests__/control-mutation.test.ts` (scoreboard ratchet, integer basis points, the suite never decides). *(S3, S4, S5, S6)*
-- [ ] **T3** — `lib/control-mutation.ts` (engine + report) and `lib/control-mutation-corpus.ts` (synthetic baseline, 25 mutants, valid variants). *(S1, S3, S4, S6)*
-- [ ] **T4** — `scripts/eval-controls.ts` + `eval:controls` package script. *(S7)*
-- [ ] **T5** — REQ-CONF-009, methodology doc, README, CHANGELOG. *(S8)*
-- [ ] **T6** — Gates, lock facts, PR. *(S9)*
+- [x] **T1** — Research doc with dated sources and the adopted/rejected mapping. *(S2)* — `4b98b11`
+- [x] **T2** — RED: `__tests__/control-mutation.test.ts` (scoreboard ratchet, integer basis points, the suite never decides). *(S3, S4, S5, S6)* — `9a043d1`
+- [x] **T3** — `lib/control-mutation.ts` (engine + report) and `lib/control-mutation-corpus.ts` (synthetic baseline, 25 mutants, valid variants). *(S1, S3, S4, S6)* — `9a043d1`
+- [x] **T4** — `scripts/eval-controls.ts` + `eval:controls` package script. *(S7)* — `9a043d1`
+- [x] **T5** — REQ-CONF-009, methodology doc, README, CHANGELOG. *(S8)* — `9a043d1`
+- [x] **T6** — Gates, lock facts, PR. *(S9)* — `9a043d1` + closing commit; PR linked to #92
 
 ## Log
 
@@ -49,3 +49,14 @@ The open question from the previous turn (a real anonymized ledger or a syntheti
 - **D2** — The self-offsetting entry (same account, debit and credit) is excluded. It is not unambiguously a defect, and a mutant with a debatable label would make the metric argue with itself.
 - **D3** — Survivors are reported upstream to `drenyra-ai`, not fixed here. Filing in that repository is left as a next step for the human (it is a different destination).
 - **D4** — The subagent tool is denied in this runtime, so the work runs inline even past the context backstop.
+
+### L5 — 2026-10-27 — verification (`9a043d1`)
+
+- RED: `__tests__/control-mutation.test.ts` failed on the missing modules before `lib/control-mutation*.ts` existed.
+- GREEN: 14/14. Full gates: typecheck clean, `bun run test` 59 files / 860 passed, `verify:capability` OK, `verify:style` OK, lock facts current.
+- `bun run eval:controls` printed `detection: 18/25 defects rejected (7200 bps)` and `false alarms: 0/3 valid entries rejected (0 bps)`, then exited 0.
+- No Pi-local fiscal check was added. The survivors stay survivors (S3).
+
+### L6 — 2026-10-27 — slice boundary
+
+The feature commit `9a043d1` is ~710 authored lines (347 engine and corpus, 185 tests, the rest spec and docs), past the ~400-line guide. It stays one commit and one PR because it is one behavior unit: splitting the engine from its tests or docs would produce halves that cannot be reviewed alone. The research note is its own commit (`4b98b11`), and the PR body carries a review order.
