@@ -9,6 +9,22 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Documentation
+
+- **README and documentation quality pass.** The README is restructured around a
+  hero, an explicit status section, per-topic sections that link to their deep
+  document, collapsible detail, and a documentation index — following the
+  structural quality of `gentle-shell`.
+- **Two overstatements corrected.** The fiscal guards are now documented as
+  development-hygiene guards with their exact trigger and scope
+  (`extensions/fiscal-guard.ts:133`, `:171`, `:211`) instead of "broad-deny,
+  narrow-allow tool permissions for fiscal actions", and `docs/intended-usage.md`
+  no longer claims a signed receipt for every material action.
+- **`record_receipt` disclosed as a known limitation.** The fail-open path
+  (`extensions/fiscal-guard.ts:398-409`: `Date.now()` + `Math.random()` id,
+  caller-supplied before/after state, `hash: ""` with a TODO) is documented next
+  to the signed `ReceiptStore` path it does not replace.
+
 ### Changed
 
 - **Renamed Drenyra Pi to Drenyra Shell** (product identity rename, mirroring
