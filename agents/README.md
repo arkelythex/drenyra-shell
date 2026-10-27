@@ -32,6 +32,23 @@ Free text may accompany the explanation but never replaces structured values,
 references, hashes, or states (REQ-AGENT-004). Candidate values are whole-number
 BigInt cents; no float is ever used for money.
 
+## Institutional memory
+
+Four agents declare `drenyra_institutional_memory` (read-only `engram_search`
+over Drenyra Engram, REQ-ENG-005/006): `journal-candidate-agent`,
+`invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe`. They are
+the roles whose proposals a provider or account precedent can shape, and
+memory decides **what** they propose, never **how much** review it gets
+(`docs/architecture/trust-model.md` §5). A precedent is never cited as
+sufficient evidence.
+
+The other six are excluded on purpose. `guardian-angel` and `anomaly-refuter`
+review and refute, so precedent would anchor them. `evidence-builder` builds
+the graph, and memory is not evidence. `close-controller`, `accounting-scout`,
+and `ledger-analyst` propose no content a precedent shapes. The tool is
+registered globally, so the frontmatter `tools:` line is the only gate.
+`__tests__/agents.test.ts` pins both sets.
+
 ## Common contract
 
 Every definition enforces: scope-first read and fail closed (REQ-AGENT-003),

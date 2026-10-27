@@ -11,6 +11,19 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ### Added
 
+- **Institutional memory reaches the proposing agents.** `invoice-sire-agent`,
+  `reconciliation-agent`, and `tax-controller-pe` now declare
+  `drenyra_institutional_memory` (read-only `engram_search`), joining
+  `journal-candidate-agent`. Each carries a role-adapted contract: a precedent
+  may change what it proposes, never review depth or authority, and is never
+  cited as sufficient evidence. `guardian-angel`, `anomaly-refuter`,
+  `evidence-builder`, `close-controller`, `accounting-scout`, and
+  `ledger-analyst` are excluded on purpose. A reviewer or refuter anchored by
+  precedent stops being independent, memory is not evidence, and the rest
+  propose nothing a precedent shapes. Because the tool is registered globally,
+  `__tests__/agents.test.ts` now pins both sets and forbids any `accounting_*`
+  or `engram_*` tool in any agent (REQ-ENG-005/006).
+
 - **`books` operation mode (`/drenyra:mode`).** A reduced-capability session in
   which every tool call is denied unless its name is on a fixed allowlist
   (`read`, `grep`, `glob`, `list_fiscal_phases`, `verify_fiscal_phase`,

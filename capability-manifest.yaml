@@ -152,14 +152,18 @@
           "runtime/engram-pin.ts",
           "runtime/engram-client.ts",
           "extensions/register.ts",
-          "agents/journal-candidate-agent.md"
+          "agents/journal-candidate-agent.md",
+          "agents/invoice-sire-agent.md",
+          "agents/reconciliation-agent.md",
+          "agents/tax-controller-pe.md"
         ],
         "tests": [
           "__tests__/extension.test.ts",
           "__tests__/engram-pin.test.ts",
-          "__tests__/engram-client.test.ts"
+          "__tests__/engram-client.test.ts",
+          "__tests__/agents.test.ts"
         ],
-        "limitation": "pi-engram-integration (Slice A-C) added a pinned, fail-closed-verified drenyra-engram binary and a read-only institutional-context addendum on /drenyra:context (engram_context, REQ-ENG-003). pi-engram-memory-reads added one more caller: journal-candidate-agent (only) can call the drenyra_institutional_memory tool (engram_search, REQ-ENG-005) with its own query to inform which candidate it drafts -- never wired to any gate or the materiality policy (REQ-ENG-006). The active company/period pointer itself is still local (runtime/context.ts's development-grade JSON store) -- Drenyra Engram's scope model has no session-pointer concept to hold it. The other 9 agents and no accounting_* tool are touched; that remains not evidenced (REQ-BOUND-001)."
+        "limitation": "pi-engram-integration (Slice A-C) added a pinned, fail-closed-verified drenyra-engram binary and a read-only institutional-context addendum on /drenyra:context (engram_context, REQ-ENG-003). pi-engram-memory-reads added one more caller, widened by institutional-memory-agents: journal-candidate-agent, invoice-sire-agent, reconciliation-agent, and tax-controller-pe (only) can call the drenyra_institutional_memory tool (engram_search, REQ-ENG-005) with their own query to inform what they propose -- never wired to any gate or the materiality policy (REQ-ENG-006). The active company/period pointer itself is still local (runtime/context.ts's development-grade JSON store) -- Drenyra Engram's scope model has no session-pointer concept to hold it. The other six agents (guardian-angel, anomaly-refuter, evidence-builder, close-controller, accounting-scout, ledger-analyst) are excluded by design, and no accounting_* tool is touched; __tests__/agents.test.ts pins both (REQ-BOUND-001)."
       },
       "verificationLevel": "unit-or-contract-tested",
       "ownership": "pi-local",

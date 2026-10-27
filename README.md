@@ -54,7 +54,7 @@ operational integration.
 | 21 `/drenyra:*` commands, all registered | Publication on npm |
 | Pinned `drenyra-ai@0.4.1` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
 | Signed, verifiable receipts through `ReceiptStore` | A measured eval set against a professional's own work |
-| Checksum-pinned Drenyra Engram reads — `engram_search` and `engram_context` over the vendored `0.2.1-SNAPSHOT` build | Engram memory reads for the nine agents outside `journal-candidate-agent` |
+| Checksum-pinned Drenyra Engram reads — `engram_search` and `engram_context` over the vendored `0.2.1-SNAPSHOT` build, reachable by the four proposing agents | — |
 | A `books` operation mode where `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool by default | — |
 | Fiscal scope (RUC + period) threading and fail-closed guards | — |
 | RDA command chains, persona, startup panel, 11 packaged skills | — |
@@ -374,7 +374,7 @@ documentation bug worth reporting.
 | **Guards are hygiene, not enforcement** | `extensions/fiscal-guard.ts:133`, `:171`, `:211` | See [Control and safety](#control). |
 | **Typed fiscal tools stop at the proposal half** | `lib/journal-proposal.ts` | `propose_journal_entry` records an entry through the kernel's `journal.record`. Posting needs a `JournalReceiptIssuer` the harness does not have, so nothing is signed or posted. `ingest_cpe` and `close_period` do not exist: `drenyra-ai/fiscal` exposes a candidate-ordering adapter, not a close entry point. |
 | **No end-to-end validation** | `capability-manifest.yaml` | No capability is `validated-end-to-end`; every one is `declared-only`, `implemented`, or `unit-or-contract-tested`. |
-| **Engram reads reach one agent** | `extensions/register.ts:706-793`, [Engram dependency](contracts/engram-dependency.md) | The integration is shipped, not designed-but-unbuilt: the pin verifies, the vendored binary spawns, and `engram_search` round-trips — a live probe returned `healthy` with an empty result set, which is an empty database rather than a failure. What is missing is reach: of the ten agents in `agents/`, only `journal-candidate-agent.md` declares `drenyra_institutional_memory` in its `tools:` frontmatter; the other nine have no memory access. The `/drenyra:context` command is the second caller. |
+| **Engram reads reach four agents, by design** | `extensions/register.ts:705-778`, [`agents/README.md`](agents/README.md#institutional-memory), [Engram dependency](contracts/engram-dependency.md) | The integration is shipped: the pin verifies, the vendored binary spawns, and `engram_search` round-trips (a live probe returned `healthy` with an empty result set, which is an empty database rather than a failure). `journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` declare `drenyra_institutional_memory`. The other six are excluded on purpose, and `__tests__/agents.test.ts` pins that: the reviewer and the refuter would be anchored by precedent, and memory is not evidence. The tool is registered globally, so each agent's `tools:` frontmatter is the only gate. `/drenyra:context` is the second caller. |
 | **No measured eval set** | — | There is no corpus of cases signed off by a professional accountant, and therefore no measured diff against what one would have done. |
 
 **[Capability conformance matrix →](docs/architecture/capability-conformance-matrix.md)**

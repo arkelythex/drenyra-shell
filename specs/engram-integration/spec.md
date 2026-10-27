@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Defines how `drenyra-shell` consumes the `drenyra-engram` memory engine: the pinned dependency, its fail-closed child-process lifecycle, the `/drenyra:context` read contract, the honesty requirement on `capability-manifest.yaml` (`REQ-ENG-001`..`004`, published by `pi-engram-integration`), and one bounded proposal-informing read for `journal-candidate-agent` (`REQ-ENG-005`..`006`, added by `pi-engram-memory-reads`). The active company/period *pointer* itself stays local (`runtime/context.ts`, unchanged) — Engram's own scope model has no session/app-state concept to hold it (see `pi-engram-integration`'s design.md §6).
+Defines how `drenyra-shell` consumes the `drenyra-engram` memory engine: the pinned dependency, its fail-closed child-process lifecycle, the `/drenyra:context` read contract, the honesty requirement on `capability-manifest.yaml` (`REQ-ENG-001`..`004`, published by `pi-engram-integration`), and one bounded proposal-informing read for the four proposing agents `journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` (`REQ-ENG-005`..`006`, added by `pi-engram-memory-reads` and widened by `institutional-memory-agents`). The active company/period *pointer* itself stays local (`runtime/context.ts`, unchanged) — Engram's own scope model has no session/app-state concept to hold it (see `pi-engram-integration`'s design.md §6).
 
 Out of scope, both by design and still open after two changes: any `accounting_*` tool of any kind; any write-shaped `engram_*` tool (`engram_save`/`engram_reject`/`engram_void`/`engram_supersede`); any agent other than `journal-candidate-agent`; any `accounting_approve`/`accounting_review_reject`/`accounting_review_return` call; the full 10-element canonical scope model (`REQ-SCOPE-001`, unaffected — this domain governs RUC + period persistence and one bounded memory read, not scope validation, which stays owned by `scope-binding`).
 
@@ -82,11 +82,11 @@ Once `ScopeContext` (company RUC + fiscal period) is known from the existing loc
 
 ### Requirement: REQ-ENG-005 — Agent-driven institutional-memory search
 
-`journal-candidate-agent` MUST be able to call a tool that searches `drenyra-engram`'s general institutional memory (`engram_search`) with a query the agent itself chooses, scoped to the company RUC already known from the local scope pointer — never a RUC the agent supplies, never a different company.
+`journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` MUST be able to call a tool that searches `drenyra-engram`'s general institutional memory (`engram_search`) with a query the agent itself chooses, scoped to the company RUC already known from the local scope pointer — never a RUC the agent supplies, never a different company.
 
 #### Scenario: Agent-supplied query, host-supplied scope
 
-- GIVEN `journal-candidate-agent` calls the tool with a query string
+- GIVEN one of the four proposing agents calls the tool with a query string
 - WHEN the tool executes
 - THEN it calls `engram_search` with that exact query and a `scope` built from the currently-known local RUC — the agent's input controls only the query text, never the scope
 
@@ -102,9 +102,16 @@ Once `ScopeContext` (company RUC + fiscal period) is known from the existing loc
 - WHEN the tool is called
 - THEN it returns a clear, typed "unavailable" result — the calling agent can proceed without institutional context, never blocked or crashed by this tool
 
+#### Scenario: Reach is limited to proposing agents
+
+- GIVEN the ten agent definitions under `agents/`
+- WHEN their frontmatter `tools:` lines are read
+- THEN exactly `journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` declare `drenyra_institutional_memory`; `guardian-angel`, `anomaly-refuter`, `evidence-builder`, `close-controller`, `accounting-scout`, and `ledger-analyst` do not, and no agent declares any `accounting_*` or `engram_*` tool
+- AND the reason is `trust-model.md` §5 (memory decides WHAT to propose, never HOW MUCH review): the independent reviewer (`guardian-angel`) and the refuter (`anomaly-refuter`) would be anchored by precedent, memory is not evidence (`evidence-builder`), and the remaining roles propose no content a precedent shapes
+
 ### Requirement: REQ-ENG-006 — Memory shapes proposals, never authority
 
-The tool's result MUST NOT be connected to any gate (`mission-state`, `receipt`, `approval`) or to the deterministic materiality policy, and MUST NOT change `journal-candidate-agent`'s authority ceiling (PREPARE, propose-only, never posts).
+The tool's result MUST NOT be connected to any gate (`mission-state`, `receipt`, `approval`) or to the deterministic materiality policy, and MUST NOT change any calling agent's authority ceiling (`journal-candidate-agent` PREPARE, propose-only, never posts; `invoice-sire-agent`, `reconciliation-agent`, `tax-controller-pe` ANALYZE).
 
 #### Scenario: No gate wiring exists
 
@@ -114,10 +121,10 @@ The tool's result MUST NOT be connected to any gate (`mission-state`, `receipt`,
 
 #### Scenario: Candidate artifact shape is unchanged
 
-- GIVEN `journal-candidate-agent`'s output contract (a structured candidate-entries artifact citing evidence node ids)
-- WHEN a candidate is drafted with the tool's input available
-- THEN the artifact's required shape (debit/credit lines, accounts, period, evidence references) is unchanged — institutional context may inform which correction is proposed, never the artifact's structural contract
+- GIVEN a calling agent's output contract (candidate entries, exceptions and candidates, reconciliation result, or compliance findings — each citing evidence node ids)
+- WHEN the artifact is drafted with the tool's input available
+- THEN the artifact's required shape is unchanged — institutional context may inform which proposal is made, never the artifact's structural contract, and is never cited as sufficient evidence
 
 ## Out of Scope
 
-Any `accounting_*` tool of any kind; any write-shaped `engram_*` tool (`engram_save`/`engram_reject`/`engram_void`/`engram_supersede`); any agent other than `journal-candidate-agent` receiving a `drenyra-engram`-backed tool; any `accounting_approve`/`accounting_review_reject`/`accounting_review_return` call; widening `ScopeContext` beyond RUC + period; any change to the 10-element canonical scope model (`REQ-SCOPE-001`..`005`, `scope-binding` domain); any change inside the `drenyra-engram` repository; publication of `drenyra-shell` to any registry (`REQ-REL-006`); any change to gate, approval, or materiality logic.
+Any `accounting_*` tool of any kind; any write-shaped `engram_*` tool (`engram_save`/`engram_reject`/`engram_void`/`engram_supersede`); any agent other than `journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` receiving a `drenyra-engram`-backed tool; any `accounting_approve`/`accounting_review_reject`/`accounting_review_return` call; widening `ScopeContext` beyond RUC + period; any change to the 10-element canonical scope model (`REQ-SCOPE-001`..`005`, `scope-binding` domain); any change inside the `drenyra-engram` repository; publication of `drenyra-shell` to any registry (`REQ-REL-006`); any change to gate, approval, or materiality logic.
