@@ -9,6 +9,20 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Added
+
+- **`books` operation mode (`/drenyra:mode`).** A reduced-capability session in
+  which every tool call is denied unless its name is on a fixed allowlist
+  (`read`, `grep`, `glob`, `list_fiscal_phases`, `verify_fiscal_phase`,
+  `run_fiscal_lens`, `record_receipt`). `bash`, `write`, `edit`, and any tool the
+  harness does not know — including an MCP or database client the host exposes —
+  are blocked at the `tool_call` hook, with a reason naming the mode, the tool,
+  and `/drenyra:mode open`. The mode is per-process state that starts `open`, so
+  no existing session is restricted implicitly. The policy is a pure function
+  (`lib/operation-mode.ts`, REQ-AUTH-010) tested independently of the extension.
+  This constrains which tools exist for a session; it is not an authority level,
+  a fiscal gate, or a replacement for the guards.
+
 ### Documentation
 
 - **README and documentation quality pass.** The README is restructured around a

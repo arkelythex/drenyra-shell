@@ -42,6 +42,10 @@ The system MUST evaluate gates in a fixed order (scope, materiality, mission sta
 
 The system MUST ensure ASK and ANALYZE modes never produce mutation, PREPARE produces candidates only (never postings, export, or submission), and EXECUTE runs only after approval, evidence, and receipt gates all pass.
 
+### Requirement: REQ-AUTH-010 — Operation modes are a tool surface, not an authority level
+
+The harness MUST expose exactly two operation modes, `open` (default) and `books`. `books` MUST deny every tool call whose tool name is absent from its allowlist, so an unlisted tool — including any MCP or database client the host exposes — is unreachable. `open` MUST NOT block any tool by policy. The mode MUST be per-process session state that starts `open`, MUST change only through `/drenyra:mode books|open`, and MUST NOT be presented as an authority level, a fiscal gate, or a substitute for the guards: it constrains which tools exist for the session, never whether a fiscal operation is authorized.
+
 ## Scenarios
 
 #### Scenario: SC-AUTH-001 — Escalation denied
@@ -79,6 +83,19 @@ The system MUST ensure ASK and ANALYZE modes never produce mutation, PREPARE pro
 - GIVEN an approved authorization bound at ANALYZE level
 - WHEN the authority level element in the scope is changed to PREPARE
 - THEN the prior authorization is invalidated and a new bound decision is required
+
+#### Scenario: SC-AUTH-007 — Unlisted tool denied in books mode
+
+- GIVEN a session switched to `books` mode
+- WHEN the agent calls `bash`, `write`, `edit`, or any tool absent from the allowlist
+- THEN the call is denied with a reason naming the mode, the tool, and `/drenyra:mode open`
+- AND the denial is a block decision, not an error thrown into the session
+
+#### Scenario: SC-AUTH-008 — Open mode stays unrestricted
+
+- GIVEN a session in the default `open` mode
+- WHEN the agent calls any tool
+- THEN no tool is denied by operation-mode policy, and only the fiscal guards may block
 
 ## Out of Scope
 
