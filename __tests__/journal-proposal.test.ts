@@ -14,7 +14,7 @@ import { proposeJournalEntry } from "../lib/journal-proposal.js";
 
 const BASE = {
   companyId: "company-1",
-  ruc: "20123456789",
+  ruc: "20123456786",
   period: "202609",
   entryId: "entry-1",
   lines: [
