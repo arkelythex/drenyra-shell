@@ -61,6 +61,7 @@ import {
 import { loadEvidenceStatus } from "../lib/evidence-status.js";
 import { showStartupPanel, type StartupPanelDeps } from "./startup-panel.js";
 import { registerFiscalGuard } from "./fiscal-guard.js";
+import { registerJournalTools } from "./journal-tools.js";
 import { registerOperationMode } from "./operation-mode.js";
 import {
   renderContinueResult,
@@ -1594,6 +1595,7 @@ export function registerDrenyraShellExtension(
   });
   registerFiscalGuard(pi);
   registerOperationMode(pi);
+  registerJournalTools(pi, { contextStore });
 }
 
 /**

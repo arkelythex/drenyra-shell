@@ -46,6 +46,10 @@ The system MUST ensure ASK and ANALYZE modes never produce mutation, PREPARE pro
 
 The harness MUST expose exactly two operation modes, `open` (default) and `books`. `books` MUST deny every tool call whose tool name is absent from its allowlist, so an unlisted tool — including any MCP or database client the host exposes — is unreachable. `open` MUST NOT block any tool by policy. The mode MUST be per-process session state that starts `open`, MUST change only through `/drenyra:mode books|open`, and MUST NOT be presented as an authority level, a fiscal gate, or a substitute for the guards: it constrains which tools exist for the session, never whether a fiscal operation is authorized.
 
+### Requirement: REQ-AUTH-011 — The harness proposes journal entries and never posts them
+
+The harness MUST expose at most one fiscal journal tool, `propose_journal_entry`, which records an entry through the pinned kernel's `validateTenantScope`, `acceptEvidence` and `journal.record` entry points and reports the kernel's verdict. It MUST NOT post, sign, supersede or revoke, and its result MUST NOT contain a receipt or a `posted` status. It MUST NOT sum, round, convert, balance-check or otherwise judge an amount, a line, a scope or an evidence artifact: every such verdict belongs to the kernel, and a rejection MUST be surfaced with the kernel's own code. Amounts MUST cross the tool boundary as decimal strings and become BigInt cents before the kernel sees them; no monetary value is ever a JavaScript `number`. Scope MUST come from the bound canonical scope, and the absence of one MUST short-circuit without calling the kernel.
+
 ## Scenarios
 
 #### Scenario: SC-AUTH-001 — Escalation denied
@@ -96,6 +100,18 @@ The harness MUST expose exactly two operation modes, `open` (default) and `books
 - GIVEN a session in the default `open` mode
 - WHEN the agent calls any tool
 - THEN no tool is denied by operation-mode policy, and only the fiscal guards may block
+
+#### Scenario: SC-AUTH-009 — A proposal is recorded, never posted
+
+- GIVEN a session with a complete canonical scope and one accepted evidence artifact
+- WHEN the agent calls `propose_journal_entry` with balanced lines
+- THEN the kernel records the entry, the tool reports `status: "recorded"`, and no receipt is issued
+
+#### Scenario: SC-AUTH-010 — The kernel's refusal is reported, not overridden
+
+- GIVEN a proposal whose debit and credit totals differ
+- WHEN the agent calls `propose_journal_entry`
+- THEN the tool returns the kernel's `unbalanced` code and message, and no entry is recorded
 
 ## Out of Scope
 

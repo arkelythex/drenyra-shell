@@ -23,6 +23,9 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
   This constrains which tools exist for a session; it is not an authority level,
   a fiscal gate, or a replacement for the guards.
 
+- `propose_journal_entry`, the first typed fiscal tool. It maps the bound canonical scope onto the pinned kernel's `validateTenantScope`, accepts evidence through `acceptEvidence`, and records the entry through `journal.record`, reporting the kernel's own verdict code when it refuses (`unbalanced`, `missing-evidence`, `invalid-ruc`, `MEMORY_SHAPED`, `INVALID_ITEM`). The wrapper (`lib/journal-proposal.ts`) does not sum, round, convert, balance-check, or validate anything; every verdict belongs to the kernel (REQ-AUTH-011).
+- The entry is **recorded, never posted**. Posting issues a signed receipt and needs a `JournalReceiptIssuer`; the harness has none, because `lib/receipt-store.ts` speaks mission-receipt vocabulary (`previousStatus`/`newStatus`), not the journal's. This is the proposal half of the typed fiscal surface, not the whole of it: there is no `close_period` because `drenyra-ai/fiscal` exposes a candidate-ordering adapter rather than a close entry point.
+
 ### Documentation
 
 - **README and documentation quality pass.** The README is restructured around a
