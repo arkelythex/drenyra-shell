@@ -192,6 +192,28 @@ The repository MUST provide a focused, reproducible conformance guard that runs 
 - WHEN the conformance guard runs
 - THEN it produces a failing result identifying the violated conformance condition
 
+### Requirement: REQ-CONF-009 — Measured control detection
+
+The harness MUST measure, with a reproducible corpus, how many injected bookkeeping defects the pinned kernel rejects at the journal-proposal boundary and how many valid entries it wrongly rejects. The suite MUST only classify the kernel's verdict and MUST NOT judge a proposal itself. A defect the kernel accepts (a survivor) MUST be recorded as a kernel gap with any harness mitigation named, and MUST NOT be fixed in Pi-local code. Rates MUST be integer basis points. The corpus MUST be labelled as synthetic and not professional-validated for as long as it is.
+
+#### Scenario: Scoreboard is a ratchet
+
+- GIVEN the pinned kernel and the corpus `journal-controls.synthetic.v1`
+- WHEN `__tests__/control-mutation.test.ts` runs
+- THEN the exact killed set (with each kernel code), the exact survivor set, and zero false alarms are asserted, so a pin upgrade that changes any verdict fails until the scoreboard is reviewed and updated in the same release
+
+#### Scenario: The suite never decides
+
+- GIVEN a decider that accepts every proposal
+- WHEN the suite runs
+- THEN every defect is reported as a survivor and detection is 0 bps, which proves classification comes only from the verdict
+
+#### Scenario: Rejected baseline fails closed
+
+- GIVEN a decider that rejects the baseline proposal
+- WHEN the suite runs
+- THEN it throws instead of reporting kills measured against a rejected baseline
+
 ## Out of Scope
 
 `capability-manifest.yaml` schema/tooling redesign (generator, lint-check);

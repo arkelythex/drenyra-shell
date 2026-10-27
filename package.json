@@ -49,7 +49,8 @@
     "verify:style": "node scripts/verify-style.mjs",
     "prepack": "bun run verify:package",
     "prepublishOnly": "bun run typecheck && bun run verify:package && node scripts/verify-packed-install.mjs",
-    "refresh:lock-facts": "node scripts/refresh-program-lock-facts.mjs"
+    "refresh:lock-facts": "node scripts/refresh-program-lock-facts.mjs",
+    "eval:controls": "bun scripts/eval-controls.ts"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"
