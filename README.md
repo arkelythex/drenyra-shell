@@ -107,6 +107,65 @@ Those are consumed from the pinned runtime's public kernel entry points
 
 ---
 
+### ODD for the books — the everyday accounting workflow
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/drenyra-odd-workflow.dark.svg">
+  <img width="100%" src="docs/diagrams/drenyra-odd-workflow.light.svg" alt="Organic Driven Development for accounting as eight steps in one left-to-right flow: Authorize, Bind scope, and Evidence set the scope; Classify asks the pinned core how material the work is, so work below R2 stays light while R2 and above becomes a durable mission; both paths converge on Propose, Verify, and Approve with a signed receipt, above a band noting that the durable mission store lets work resume and that Engram informs what to propose, never how much review">
+</picture>
+
+**Organic Driven Development (ODD)** is how this repository is built, and it is
+also the shape of the accounting work the Shell operates. The same discipline —
+read-only until a change is asked for, understand before acting, keep small work
+small, track substantial work durably, close with proof — maps onto the books:
+
+| ODD step | In the books | Where it lives |
+| --- | --- | --- |
+| Authorize | Questions, reviews, and status stay read-only; `/drenyra:mode books` denies `bash`, `write`, and `edit` by default | [Control and safety](#control) |
+| Explore | Bind the complete RUC + period scope, then ingest and cite every source as an evidence node | `/drenyra:scope`, `/drenyra:evidence` |
+| Classify | Materiality and the route (`direct`, `delegated`, `durable`) are decided by the pinned Core, never by the Shell or a model | `lib/routing/types.ts`, [`specs/authority`](specs/authority/spec.md) |
+| Track | Material work (R2 and above, such as a monthly close) runs as a durable mission over the 13 EDA phases | `/drenyra:mission`, `/drenyra:resume` |
+| Implement | Agents propose candidates — journal entries, reconciliations, compliance findings — that are recorded, never posted | [`agents/`](agents/README.md) |
+| Verify | Refutation runs before any finding is elevated; Guardian Angel reviews independently | `/drenyra:verify` |
+| Close | The professional approves; the Core seals the outcome with a signed receipt | `/drenyra:receipt` |
+
+The fork is the point. A reversible lookup does not need a 13-phase mission, and a
+monthly close must never be treated as a lookup — so the deterministic materiality
+policy, not the agent's judgment, decides which path the work takes. Missing
+materiality inputs fail closed; they never default to R0.
+
+**[Mission protocol →](specs/mission-protocol/spec.md)**
+
+---
+
+### Focused agents — propose, refute, never approve
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/drenyra-agent-orchestration.dark.svg">
+  <img width="100%" src="docs/diagrams/drenyra-agent-orchestration.light.svg" alt="Diagram of one operator session that holds the RUC and period scope and delegates to three groups of accounting agents — map and gather, propose, and refute and review — each returning cited results; candidates go to the Drenyra AI core, which alone accepts or rejects a transition, and findings and gated candidates reach the professional, who alone approves">
+</picture>
+
+One operator session stays accountable for the scope, the decisions, and the
+summary. Ten Shell-native agents do bounded work under it, each with an authority
+ceiling of `ANALYZE` or `PREPARE` and no `EXECUTE` permission:
+
+- **Map and gather** — `accounting-scout`, `ledger-analyst`, `evidence-builder`
+  inventory sources, analyze the ledger, and request evidence-graph nodes.
+- **Propose** — `journal-candidate-agent`, `reconciliation-agent`,
+  `invoice-sire-agent`, `tax-controller-pe`, and `close-controller` draft
+  candidates. The first four may read institutional memory: a precedent shapes
+  **what** they propose, never **how much** review it gets.
+- **Refute and review** — `anomaly-refuter` and `guardian-angel` get no
+  precedent on purpose, so memory cannot anchor the reviewer.
+
+Every agent scopes first and fails closed, cites an evidence node for every
+conclusion, and persists before it responds. Only the Core accepts a transition;
+only the professional approves.
+
+**[Agents →](agents/README.md)**
+
+---
+
 ### Fiscal scope — RUC and period, or nothing happens
 
 Company (RUC, check-digit-validated) and fiscal period (`YYYYMM`) are loaded at

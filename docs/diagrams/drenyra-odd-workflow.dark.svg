@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="548" viewBox="0 0 1240 548" role="img" aria-labelledby="dodd-dk-title dodd-dk-desc">
+  <title id="dodd-dk-title">Organic Driven Development for accounting work</title>
+  <desc id="dodd-dk-desc">One accounting request moves through seven ODD steps. Authorize keeps the session read-only until the professional asks for a change; bind the RUC and period scope; gather and cite evidence; then the pinned Drenyra AI core classifies materiality and picks the route: work below R2 stays light on a direct route, while R2 and above becomes a durable mission over thirteen phases. Both paths propose candidates that are never posted, verify them through refutation and an independent Guardian Angel review, and end with the professional's approval sealed by a signed receipt. The durable mission store lets work resume, and institutional memory informs what to propose but never how much review it gets.</desc>
+  <defs>
+    <pattern id="dodd-dk-rules" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M0 23.5H24" stroke="#5a4a39" stroke-opacity="0.08"/></pattern>
+    <marker id="dodd-dk-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" viewBox="0 0 8 8" refX="7" refY="4" orient="auto"><path d="M0 0.5 7 4 0 7.5z" fill="#d39a5a"/></marker>
+  </defs>
+
+  <!-- canvas -->
+  <rect width="1240" height="548" rx="24" fill="#17120d"/>
+  <rect width="1240" height="548" rx="24" fill="url(#dodd-dk-rules)"/>
+  <rect x="0.5" y="0.5" width="1239" height="547" rx="23.5" fill="none" stroke="#5a4a39" stroke-opacity="0.45"/>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+
+    <!-- eyebrow -->
+    <text x="36" y="52" fill="#d39a5a" font-size="12.5" font-weight="700" letter-spacing="2.6">ORGANIC DRIVEN DEVELOPMENT · FOR THE BOOKS</text>
+    <text x="1204" y="52" fill="#b9a891" font-size="13" text-anchor="end">small work stays light · material work becomes a mission</text>
+
+    <!-- phase brackets -->
+    <g fill="#b9a891" font-size="11" font-weight="700" letter-spacing="2" text-anchor="middle">
+      <text x="240" y="98">SCOPE</text>
+      <text x="606" y="98">DECIDE</text>
+      <text x="994" y="98">PROVE</text>
+    </g>
+    <g fill="none" stroke="#d39a5a" stroke-opacity="0.4" stroke-width="1">
+      <path d="M36 114V108H444V114"/>
+      <path d="M462 114V108H750V114"/>
+      <path d="M790 114V108H1198V114"/>
+    </g>
+
+    <!-- flow lines -->
+    <g fill="none" stroke="#d39a5a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#dodd-dk-arrow)">
+      <path d="M160 264H176"/>
+      <path d="M302 264H318"/>
+      <path d="M444 264H460"/>
+      <path d="M586 264H598Q606 264 606 256V208Q606 200 614 200H624"/>
+      <path d="M586 264H598Q606 264 606 272V320Q606 328 614 328H624"/>
+      <path d="M750 200H762Q770 200 770 208V256Q770 264 778 264H788"/>
+      <path d="M750 328H762Q770 328 770 320V272Q770 264 778 264H788"/>
+      <path d="M914 264H930"/>
+      <path d="M1056 264H1072"/>
+    </g>
+    <path d="M688 378V420" fill="none" stroke="#d39a5a" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="2 5" stroke-linecap="round"/>
+
+    <!-- branch labels -->
+    <g fill="#d39a5a" font-size="12" font-weight="700" letter-spacing="0.6" text-anchor="middle">
+      <text x="688" y="140">light</text>
+      <text x="688" y="396" dx="34">tracked</text>
+    </g>
+
+    <!-- cards -->
+    <g stroke-width="1">
+      <rect x="36" y="204" width="124" height="120" rx="14" fill="#211b15" stroke="#5a4a39"/>
+      <rect x="178" y="204" width="124" height="120" rx="14" fill="#211b15" stroke="#5a4a39"/>
+      <rect x="320" y="204" width="124" height="120" rx="14" fill="#211b15" stroke="#5a4a39"/>
+      <rect x="462" y="204" width="124" height="120" rx="14" fill="#2d2116" stroke="#e07f52" stroke-width="1.5"/>
+      <rect x="626" y="152" width="124" height="96" rx="14" fill="#17120d" stroke="#5a4a39" stroke-dasharray="5 5"/>
+      <rect x="626" y="280" width="124" height="96" rx="14" fill="#2d2116" stroke="#d39a5a" stroke-width="1.5"/>
+      <rect x="790" y="204" width="124" height="120" rx="14" fill="#211b15" stroke="#5a4a39"/>
+      <rect x="932" y="204" width="124" height="120" rx="14" fill="#211b15" stroke="#5a4a39"/>
+      <rect x="1074" y="204" width="124" height="120" rx="14" fill="#1c261b" stroke="#8dbb86" stroke-width="1.5"/>
+    </g>
+
+    <!-- step numbers -->
+    <g fill="#d39a5a" fill-opacity="0.12">
+      <rect x="48" y="216" width="30" height="18" rx="9"/>
+      <rect x="190" y="216" width="30" height="18" rx="9"/>
+      <rect x="332" y="216" width="30" height="18" rx="9"/>
+      <rect x="474" y="216" width="30" height="18" rx="9" fill="#e07f52" fill-opacity="0.18"/>
+      <rect x="638" y="292" width="30" height="18" rx="9" fill-opacity="0.2"/>
+      <rect x="802" y="216" width="30" height="18" rx="9"/>
+      <rect x="944" y="216" width="30" height="18" rx="9"/>
+      <rect x="1086" y="216" width="30" height="18" rx="9" fill="#8dbb86" fill-opacity="0.18"/>
+    </g>
+    <g fill="#d39a5a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" font-weight="700" text-anchor="middle">
+      <text x="63" y="229">01</text>
+      <text x="205" y="229">02</text>
+      <text x="347" y="229">03</text>
+      <text x="489" y="229" fill="#e07f52">04</text>
+      <text x="653" y="305">05</text>
+      <text x="817" y="229">06</text>
+      <text x="959" y="229">07</text>
+      <text x="1101" y="229" fill="#8dbb86">08</text>
+    </g>
+
+    <!-- icons (24px grid) -->
+    <g fill="none" stroke="#d39a5a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <!-- authorize: lock -->
+      <g transform="translate(128 213) scale(0.8)"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g>
+      <!-- bind scope: pin -->
+      <g transform="translate(270 213) scale(0.8)"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></g>
+      <!-- evidence: stacked documents -->
+      <g transform="translate(412 213) scale(0.8)"><path d="M8 3h8l4 4v12H8z"/><path d="M16 3v4h4"/><path d="M5 7v14h11"/></g>
+      <!-- classify: scale -->
+      <g transform="translate(554 213) scale(0.8)" stroke="#e07f52"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></g>
+      <!-- light: feather -->
+      <g transform="translate(718 161) scale(0.8)"><path d="M20 4C12 4 6 10 6 18"/><path d="M6 18c8 0 14-6 14-14"/><path d="M4 20l2-2M9 15l6-6"/></g>
+      <!-- mission: ledger -->
+      <g transform="translate(718 289) scale(0.8)"><path d="M6 3h12v18H6z"/><path d="M9 3v18M12 8h4M12 12h4M12 16h4"/></g>
+      <!-- propose: pen on line -->
+      <g transform="translate(882 213) scale(0.8)"><path d="M4 20h16"/><path d="M15 4l3 3-9 9H6v-3z"/></g>
+      <!-- verify: shield check -->
+      <g transform="translate(1024 213) scale(0.8)"><path d="M12 3 19 6v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></g>
+      <!-- approve: seal -->
+      <g transform="translate(1166 213) scale(0.8)" stroke="#8dbb86"><circle cx="12" cy="10" r="6"/><path d="M9 15l-2 6 5-2 5 2-2-6"/><path d="M9.5 10l2 2 3-3.5"/></g>
+    </g>
+
+    <!-- titles -->
+    <g fill="#f3eadc" font-size="17" font-weight="700">
+      <text x="48" y="276">Authorize</text>
+      <text x="190" y="276">Bind scope</text>
+      <text x="332" y="276">Evidence</text>
+      <text x="474" y="276">Classify</text>
+      <text x="638" y="208">Stay light</text>
+      <text x="638" y="336">Mission</text>
+      <text x="802" y="276">Propose</text>
+      <text x="944" y="276">Verify</text>
+      <text x="1086" y="276">Approve</text>
+    </g>
+    <g fill="#b9a891" font-size="12.5">
+      <text x="48" y="296">read-only until</text>
+      <text x="48" y="312">you ask</text>
+      <text x="190" y="296">RUC + period</text>
+      <text x="190" y="312">10 elements</text>
+      <text x="332" y="296">ingest and cite</text>
+      <text x="332" y="312">every source</text>
+      <text x="474" y="296">how material?</text>
+      <text x="474" y="312">the Core decides</text>
+      <text x="638" y="228">below R2</text>
+      <text x="638" y="356">R2 and above</text>
+      <text x="802" y="296">candidates</text>
+      <text x="802" y="312">never posted</text>
+      <text x="944" y="296">refute, then</text>
+      <text x="944" y="312">Guardian Angel</text>
+      <text x="1086" y="296">you decide</text>
+      <text x="1086" y="312">signed receipt</text>
+    </g>
+
+    <!-- resume band -->
+    <rect x="36" y="420" width="1162" height="56" rx="14" fill="#211b15" stroke="#5a4a39"/>
+    <g fill="none" stroke="#d39a5a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(56 436)">
+      <path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/>
+    </g>
+    <text x="92" y="453" font-size="15.5"><tspan fill="#f3eadc" font-weight="700">Resume where you stopped</tspan><tspan fill="#b9a891" dx="10">The durable mission store keeps every phase; Engram informs what to propose, never how much review.</tspan></text>
+
+    <!-- authority footer -->
+    <text x="620" y="512" fill="#b9a891" font-size="12.5" font-weight="700" letter-spacing="1.6" text-anchor="middle">DRENYRA SHELL OPERATES  ·  DRENYRA AI VALIDATES  ·  THE PROFESSIONAL DECIDES</text>
+  </g>
+</svg>
