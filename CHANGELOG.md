@@ -87,6 +87,35 @@ conformance suite after updating; consumers must install the vendored
 0.2.0 kernel surface; the new configurator/routing modules are additions for
 upcoming SDD-020/030 slices.
 
+### Removed
+
+- **The SDD workflow and its `openspec/` corpus are gone — ODD is the only
+  delivery workflow.** The requirements corpus moved to `specs/` unchanged (one
+  spec per capability, same `REQ-*` identifiers) and feature work is tracked in
+  `odd/tasks/<feature>.md`.
+  - Deleted `openspec/`: `config.yaml`, `README.md`, and the 128-file
+    `changes/archive/`.
+  - Deleted the `drenyra-sdd` packaged skill; the packaged skills are now the
+    eleven foundation/operator skills under `skills/`.
+  - The canonical current snapshot record moved from `openspec/config.yaml` to
+    `docs/architecture/current-test-state.yaml`; `verify:capability`,
+    `refresh:lock-facts`, and `compute-candidate-identity.mjs` read it there.
+  - `program-lock-facts.json#/activeChanges` is now derived from the
+    `odd/tasks/*.md` feature documents that still carry an unchecked task,
+    instead of `openspec/changes/` folders.
+  - `scripts/compute-candidate-identity.mjs` no longer normalizes an
+    apply-progress section; only the current snapshot record and the generated
+    lock facts are normalization-exempt.
+
+### Changed
+
+- **`specs/` is the living requirements baseline and `odd/tasks/` is the
+  workflow.** `AGENTS.md` documents the ODD protocol — authorize, explore, size,
+  track, implement test-first, close — plus the requirement-change rule: a
+  changed requirement appends a verbatim log entry, rewrites only the affected
+  requirement, and reopens only its linked task. No capability, command,
+  contract, or behavior changed.
+
 ## 0.1.0 — 2026-09-12
 
 ### Changed

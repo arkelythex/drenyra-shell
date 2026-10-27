@@ -4,10 +4,16 @@
 **Requirement:** REQ-CONF-008 — Legacy surface retention criteria.
 **Decision:** every candidate recorded below is **retained**. This change deletes nothing.
 
+> **Superseded in part (2026-10-27).** The SDD workflow and its `openspec/` corpus were removed by the
+> `sdd-to-odd-migration` feature, which moved the living requirements to `specs/` and made ODD the only
+> delivery workflow. Rows **B2** and **B3** therefore no longer exist as artifacts; their dispositions
+> below record the removal. Everything else in this record stands as written at its evidence date: it is a
+> point-in-time decision record, not evergreen status.
+
 The retention checks in this record were run from the canonical repository root on the dirty
 candidate whose identity is published in
 [`program-lock-facts.json`](program-lock-facts.json#/candidateIdentity). Exact command outputs are
-recorded in `openspec/changes/pi-capability-conformance/apply-progress.md` (PR 4 section).
+recorded in that change's apply-progress section, which was removed with the `openspec/` corpus.
 
 ## Retention boundary
 
@@ -40,8 +46,8 @@ Candidates were discovered only from the seven concrete conformance surfaces PR 
 Each was read read-only. None was edited or deleted by this unit, and the inventory itself is **not**
 declared as a verified projection surface, so `bun run verify:capability` neither reads nor enforces
 it (see the PR 4 RED note in `tasks.md`). Consumers were checked by repository-wide search, so
-`known` below means at least one concrete consumer was found and cited. `openspec/changes/pi-skills-memory-integration/`
-(SDD 2) and every other change are outside these surfaces and are not inventoried here.
+`known` below means at least one concrete consumer was found and cited. The `pi-skills-memory-integration`
+change (SDD 2) and every other change were outside these surfaces and are not inventoried here.
 
 ## Inventory
 
@@ -64,9 +70,9 @@ found in the seven surfaces or by repository-wide search. `unknown` is not a saf
 | ID | Candidate | Named by (evidence source) | Known consumers | Disposition |
 | --- | --- | --- | --- | --- |
 | B1 | `docs/architecture/harness-draft-conformance.md` — the historical "SDD-050 — Drenyra Pi" draft conformance record | its own historical-snapshot disclaimer header; README, "Drenyra Dominion Program" section (inline link) | the README link is the only inbound link found in the seven surfaces; the document links out to the matrix | retained |
-| B2 | Archived OpenSpec changes `2026-08-15-pi-sdd-010-participation`, `2026-08-15-pi-sdd-030-routing-adapter`, `2026-08-15-pi-sdd-040-adapter-boundary` | `harness-draft-conformance.md` §1 numbering reconciliation and §4 deviations table; `capability-manifest.yaml#derivedFrom` | those citations; all three directories exist under `openspec/changes/archive/` and hold the delivered evidence for the harness record | retained |
-| B3 | `openspec/changes/archive/2026-09-09-pi-accounting-orchestration/verify-report.md` | `program-lock-facts.json#snapshotRecord.evidenceSource`; matrix "Generated lock-fact test evidence" row | the lock-facts `snapshotRecord.evidenceSource` label; the matrix row that cites it as the source of the 48/738 record | retained |
-| B4 | `capability-manifest.yaml` provenance fields `generatedAt: 2026-08-14T00:00:00Z` and `derivedFrom` (`arkelythex/drenyra-ai@4975f4f capability-matrix.yaml Pi row (read-only)`, `package.json version (drenyra-shell)`, `design §5.2 state table (pi-sdd-010-participation)`) | `capability-manifest.yaml` | **unknown** — repository-wide search found no script or test that reads `generatedAt` or `derivedFrom`; the `design §5.2 state table` entry additionally cross-references B2 | retained |
+| B2 | Archived OpenSpec changes `2026-08-15-pi-sdd-010-participation`, `2026-08-15-pi-sdd-030-routing-adapter`, `2026-08-15-pi-sdd-040-adapter-boundary` | `harness-draft-conformance.md` §1 numbering reconciliation and §4 deviations table; `capability-manifest.yaml#derivedFrom` | those citations; the three directories held the delivered evidence for the harness record | **removed** by `sdd-to-odd-migration` (2026-10-27) together with the SDD corpus; the harness record keeps its conclusions, and `specs/` is the living baseline |
+| B3 | `openspec/changes/archive/2026-09-09-pi-accounting-orchestration/verify-report.md` | `program-lock-facts.json#snapshotRecord.evidenceSource`; matrix "Generated lock-fact test evidence" row | the lock-facts `snapshotRecord.evidenceSource` label; the matrix row that cites the 48/738 record | **removed** by `sdd-to-odd-migration` (2026-10-27); the 48/738 record is preserved verbatim inside `program-lock-facts.json#/tests`, which is now its own evidence source |
+| B4 | `capability-manifest.yaml` provenance fields `generatedAt: 2026-08-14T00:00:00Z` and `derivedFrom` (`arkelythex/drenyra-ai@4975f4f capability-matrix.yaml Pi row (read-only)`, `package.json version (drenyra-shell)`, `specs/program-conformance/spec.md capability state requirements`) | `capability-manifest.yaml` | **unknown** — repository-wide search found no script or test that reads `generatedAt` or `derivedFrom` | retained |
 
 ### C. Legacy helpers and compatibility paths
 
@@ -104,8 +110,8 @@ recorded for later bounded review. Two properties make the bar strictly harder f
 
 | Check | Method | Result |
 | --- | --- | --- |
-| Archived artifacts intact | `ls openspec/changes/archive/` and confirmation that B2/B3's cited directories exist | all cited archives present |
-| Surface citations resolve | existence check of every source, test, and document cited in the retention-relevant rows above | every citation resolves |
+| Archived artifacts intact | `ls openspec/changes/archive/` and confirmation that B2/B3's cited directories exist | all cited archives were present at this record's evidence date; B2/B3 were removed later by `sdd-to-odd-migration` |
+| Surface citations resolve | existence check of every source, test, and document cited in the retention-relevant rows above | every citation resolved at this record's evidence date |
 | No new tracked deletion | `git status --short` compared before and after this unit's edits | no new `D` entry; the only deletion, `themes/fiscal-operator/manifest.json`, is pre-existing work from another session and was not touched |
 | Frozen and prohibited surfaces untouched | `git status --short` attribution of `contracts/README.md` and `contracts/SHA256SUMS.json` | modified by pre-existing work, not by this unit; read-only discovery inputs |
 | Candidate-identity inputs untouched | `node scripts/refresh-program-lock-facts.mjs --check` | no identity input in the participation set was mutated, so the generated facts remained current and no refresh was required |

@@ -26,7 +26,7 @@ The pinned build (`0.2.1-SNAPSHOT-6a371a9`) is an explicit pre-release snapshot,
 
    **Windows is explicitly not vendored in this pin.** `runtime/engram-pin.ts` reports a clear "unsupported platform" diagnostic on `win32` rather than silently failing or pretending support (`design.md` §1). This is a disclosed limitation, not an oversight.
 
-3. **Disclosed cost.** Four platform artifacts total ~18 MB (measured, `contracts/engram-dependency.md`'s own apply record — see `openspec/changes/pi-engram-integration/tasks.md` T-A-002), materially larger than `runtime-dependency.md`'s ~640 KB single vendored tarball, because a compiled Go binary has no portable single-file form the way an npm package does. This size ships in every `drenyra-shell` install (`vendored` is in `package.json#/files`).
+3. **Disclosed cost.** Four platform artifacts total ~18 MB (measured at integration time), materially larger than `runtime-dependency.md`'s ~640 KB single vendored tarball, because a compiled Go binary has no portable single-file form the way an npm package does. This size ships in every `drenyra-shell` install (`vendored` is in `package.json#/files`).
 
 4. **Never `PATH`.** Ambient `drenyra-engram` binaries are not trusted, exactly as rule 4 of `runtime-dependency.md` requires for `drenyra-ai`.
 

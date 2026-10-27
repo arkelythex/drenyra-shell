@@ -85,7 +85,7 @@ operational end-to-end integration.
 
 ### Drenyra Dominion Program
 
-Drenyra Shell is a participant in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion), the federated program master in `drenyra-ai` that fixes vision, authority, contracts, dependencies, gates, and sequencing across every Drenyra repository. The program follows a master + vertical SDD model: one master SDD fixes the constitution, and vertical SDDs deliver complete capabilities that may traverse repositories while each repository preserves its ownership and boundaries. Drenyra Shell holds only its local change plus a reference to this master — full specs are never copied here.
+Drenyra Shell is a participant in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion), the federated program master in `drenyra-ai` that fixes vision, authority, contracts, dependencies, gates, and sequencing across every Drenyra repository. The program follows a master + vertical SDD model: one master SDD fixes the constitution, and vertical SDDs deliver complete capabilities that may traverse repositories while each repository preserves its ownership and boundaries. Drenyra Shell keeps its own requirements baseline in [`specs/`](specs) and its delivery workflow in [`odd/tasks/`](odd/tasks); the program catalog itself is never duplicated here.
 
 | SDD | Role in Drenyra Shell |
 | --- | --- |
@@ -219,7 +219,8 @@ contracts/   Package and runtime contracts (see contracts/)
 docs/        Architecture and boundary documentation
 extensions/  Flat Pi extension entrypoints and registration
 lib/         Top-level domain logic (scope, missions, receipts, evidence)
-openspec/    SDD artifacts (changes/, specs/)
+specs/       Living requirements baseline (one spec per capability)
+odd/         ODD feature documents (odd/tasks/<feature>.md)
 prompts/     Prompt templates and command chains
 runtime/     Runtime bootstrap, drenyra-ai pinning and verification
 scripts/     Build, install, and package-verification scripts

@@ -12,10 +12,10 @@ current snapshot facts, on an unlabeled historical value, and on any claim that
 grants Shell fiscal authority.
 
 <!-- conformance:surface id=matrix authority=pi-operates-never-authorizes source=AGENTS.md#non-negotiable-rules -->
-<!-- conformance:snapshot scope=current source=openspec/config.yaml#/current_test_state -->
+<!-- conformance:snapshot scope=current source=docs/architecture/current-test-state.yaml#/current_test_state -->
 <!-- conformance:snapshot scope=current source=capability-manifest.yaml#/evidenceSnapshot -->
 
-Current snapshot facts are published in `openspec/config.yaml`
+Current snapshot facts are published in `docs/architecture/current-test-state.yaml`
 (`current_test_state`): exact command, complete result, evidence date, candidate
 identity, and dirty-candidate classification. `capability-manifest.yaml`
 (`evidenceSnapshot`) mirrors that same snapshot and delegates its identity to the
@@ -89,14 +89,14 @@ fixture.
 
 | Fact | Current statement | Evidence |
 | --- | --- | --- |
-| Current candidate snapshot | `bun test` → 767 passed / 0 failed (50 files), dirty candidate, 2026-09-11 | `openspec/config.yaml#/current_test_state`; identity delegated to `docs/architecture/program-lock-facts.json#/candidateIdentity` |
+| Current candidate snapshot | `bun test` → 767 passed / 0 failed (50 files), dirty candidate, 2026-09-11 | `docs/architecture/current-test-state.yaml#/current_test_state`; identity delegated to `docs/architecture/program-lock-facts.json#/candidateIdentity` |
 | Command surface | 20 registered commands | `extensions/register.ts:1147-1247`; `__tests__/extension.test.ts:312` |
 | Runtime pin | `drenyra-ai@0.4.1` | `runtime/pin.ts:128`; `__tests__/pin.test.ts:73` |
 | Contracts | Shell-local package/runtime and schema families are Frozen v0.1 | `contracts/README.md:3-14` |
 | Monthly close | In-process fixture evidence only | `chains/__tests__/monthly-close-flow.test.ts:109` |
 | Engram | Executable operational integration incomplete | `runtime/context.ts:10-11`; `capability-manifest.yaml` `engram-integration.limitation` |
 | Manifest embedded test state | Preserved historical snapshot: 44 files / 700 passing, labeled `historical`. Not asserted as the live candidate | `capability-manifest.yaml` `testState.evidenceScope` + `evidenceSource`; do not conflate with the preserved 47/717 or 48/738 records |
-| Generated lock-fact test evidence | Preserved historical snapshot: 48 files / 738 passing (2026-09-09), labeled `historical` | `docs/architecture/program-lock-facts.json` `snapshotRecord`; `openspec/changes/archive/2026-09-09-pi-accounting-orchestration/verify-report.md` |
+| Generated lock-fact test evidence | Preserved historical snapshot: 48 files / 738 passing (2026-09-09), labeled `historical` | `docs/architecture/program-lock-facts.json` `snapshotRecord`; the record is preserved verbatim in `program-lock-facts.json#/tests` |
 
 ## Machine-readable projection
 

@@ -87,7 +87,6 @@
         "sources": [
           "skills/scope-discipline/SKILL.md",
           "skills/drenyra-chained-pr/SKILL.md",
-          "skills/drenyra-sdd/SKILL.md",
           "skills/fiscal-compliance/SKILL.md",
           "skills/fiscal-review/SKILL.md",
           "skills/lens-audit-trail/SKILL.md",
@@ -206,11 +205,11 @@
         ],
     "note": "Read-only cross-surface projection surfaces. Each declared surface carries `<!-- conformance:kind key=value -->` markers whose capability state/verification/ownership must agree with this manifest; current snapshot facts must agree with `evidenceSnapshot`, and preserved values are labeled historical with a source. Verified by `bun run verify:capability`.",
     "evidenceRecords": [
-      "openspec/config.yaml",
+      "docs/architecture/current-test-state.yaml",
       "docs/architecture/program-lock-facts.json"
     ],
-    "currentSnapshot": "openspec/config.yaml#/current_test_state",
-    "evidenceRecordsNote": "Snapshot evidence records read read-only by `bun run verify:capability`. `openspec/config.yaml#/current_test_state` is the canonical current snapshot; `program-lock-facts.json` carries the generated live candidate identity plus its preserved, labeled test evidence. The records are read by fixed repository-relative path, so removing this declaration cannot skip the check."
+    "currentSnapshot": "docs/architecture/current-test-state.yaml#/current_test_state",
+    "evidenceRecordsNote": "Snapshot evidence records read read-only by `bun run verify:capability`. `docs/architecture/current-test-state.yaml#/current_test_state` is the canonical current snapshot; `program-lock-facts.json` carries the generated live candidate identity plus its preserved, labeled test evidence. The records are read by fixed repository-relative path, so removing this declaration cannot skip the check."
   },
       "testState": {
     "evidenceScope": "historical",
@@ -227,7 +226,7 @@
   "derivedFrom": [
     "arkelythex/drenyra-ai@4975f4f capability-matrix.yaml Pi row (read-only)",
     "package.json version (drenyra-shell)",
-    "design §5.2 state table (pi-sdd-010-participation)"
+    "specs/program-conformance/spec.md capability state requirements"
   ],
   "evidenceSnapshot": {
     "scope": "point-in-time",

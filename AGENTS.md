@@ -25,6 +25,8 @@ Every change — code, docs, tests, or CI — must respect these. They are also 
 | Understand what the project is and is not | [Intended Usage](docs/intended-usage.md) |
 | Conceptual architecture and boundaries | [Architecture](docs/architecture.md) |
 | Codebase layout and conventions | [Codebase Guide](docs/CODEBASE-GUIDE.md) |
+| The living requirements baseline | [specs/](../specs) — one spec per capability |
+| The delivery workflow and feature documents | [odd/tasks/](../odd/tasks) — one document per feature |
 | The frozen public surface | [Contracts](contracts/README.md) |
 | The runtime pin contract (upgrades are releases) | [runtime-dependency](contracts/runtime-dependency.md) |
 | Trust model and authority boundaries | [Trust Model](docs/architecture/trust-model.md) |
@@ -42,6 +44,8 @@ skills/             Packaged foundation/operator skills shipped with the harness
 prompts/            Persona + command prompts
 contracts/          Package and runtime contracts — FROZEN, versioned
 docs/               Architecture, boundary, and style documentation
+specs/              Living requirements baseline (REQ-* per capability)
+odd/tasks/          ODD feature documents (specs, tasks, log per feature)
 __tests__/          Test suites for commands, chains, and permissions
 ```
 
@@ -51,6 +55,19 @@ __tests__/          Test suites for commands, chains, and permissions
 - A **contract** change goes through the [contract regime](contracts/README.md) first.
 - A **fiscal or mission** change follows the authority boundaries in [trust-model](docs/architecture/trust-model.md); authority-critical behavior stays in the pinned kernel, never in Pi-local code.
 
+## Delivery Workflow — ODD
+
+Organic Driven Development is the only delivery workflow. `specs/` holds the requirements baseline; `odd/tasks/<feature>.md` holds one feature document per feature, and it is the specification every worker reads by reference.
+
+1. **Authorize.** A request to investigate, explain, review, or plan is read-only. Only explicit change intent authorizes writes.
+2. **Explore** the existing code and the relevant `specs/` requirement before proposing anything.
+3. **Size the task.** Small (understood, contained risk, resumable from the diff) runs inline with no durable artifacts. Large creates its feature document *before* the first source write.
+4. **Track.** A feature document is a header, then `## Specs` with numbered `S#` quoting the user's exact strings verbatim, then `## Tasks` with one line per task (ID, linked `S#`, route, status, commit), then `## Log` last, where `L1` is the original request verbatim.
+5. **Implement task by task**, test-first: observe RED, implement GREEN, refactor. Check a task off only after its outcome and its checks were observed.
+6. **Close** with the verified outcome, every failed or skipped check, and the next step.
+
+A requirement change appends its verbatim `## Log` entry, rewrites only the affected `S#`, and reopens only its linked task. Feature documents are committed with the work, and `docs/architecture/program-lock-facts.json#/activeChanges` lists every feature document that still carries an unchecked task.
+
 ## Skills
 
-Drenyra Pi ships foundation/operator skills and runtime-facing fiscal guardrails in `skills/` (scope discipline, evidence citation, chain operation, review lenses, SDD, and chained PR). The complete specialized fiscal and jurisdictional knowledge catalog is owned and versioned separately in [`arkelythex/drenyra-skills`](https://github.com/arkelythex/drenyra-skills), following the Gentle-AI pattern of bundled core skills plus a separate specialized catalog. When working in this repository, resolve the matching `SKILL.md` by task context and read it **before** writing code or docs that touch its domain.
+Drenyra Pi ships foundation/operator skills and runtime-facing fiscal guardrails in `skills/` (scope discipline, evidence citation, chain operation, review lenses, and chained PR). The complete specialized fiscal and jurisdictional knowledge catalog is owned and versioned separately in [`arkelythex/drenyra-skills`](https://github.com/arkelythex/drenyra-skills), following the Gentle-AI pattern of bundled core skills plus a separate specialized catalog. When working in this repository, resolve the matching `SKILL.md` by task context and read it **before** writing code or docs that touch its domain.

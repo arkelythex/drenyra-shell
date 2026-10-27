@@ -21,12 +21,12 @@
  * claim. No network, secret, or fiscal authority is ever read.
  *
  * It also validates the two declared snapshot evidence records
- * (`openspec/config.yaml` and the generated
+ * (`docs/architecture/current-test-state.yaml` and the generated
  * `docs/architecture/program-lock-facts.json`) against the manifest: each record
  * must be complete (command, complete result, date, identity, classification) and
  * carry an explicit `current`/`historical`/`generated` scope label with a source
  * whenever it is not current. The canonical current snapshot is published in
- * `openspec/config.yaml#/current_test_state`; the live generated candidate
+ * `docs/architecture/current-test-state.yaml#/current_test_state`; the live generated candidate
  * identity is read from the lock facts, never recomputed or rewritable here. A
  * record that presents a differing value as current fails verification. The
  * records are read by fixed repository-relative path, so deleting the manifest's
@@ -90,14 +90,15 @@ const DIRTY_IDENTITY_RE = /^dirty-sha256:[a-f0-9]{64}$/;
 const BASELINE_IDENTITY_RE = /^git-sha256:[a-f0-9]{7,64}$/;
 
 /** Canonical snapshot-evidence vocabulary (PR 3; REQ-CONF-003 / REQ-CONF-004). */
-const CONFIG_RECORD_REL = "openspec/config.yaml";
+const SNAPSHOT_RECORD_REL = "docs/architecture/current-test-state.yaml";
 const LOCK_FACTS_RECORD_REL = "docs/architecture/program-lock-facts.json";
-const CURRENT_SNAPSHOT_LOCATOR = "openspec/config.yaml#/current_test_state";
+const CURRENT_SNAPSHOT_LOCATOR =
+	"docs/architecture/current-test-state.yaml#/current_test_state";
 const LIVE_IDENTITY_REF =
 	"docs/architecture/program-lock-facts.json#/candidateIdentity";
-const EVIDENCE_RECORD_PATHS = [CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL];
+const EVIDENCE_RECORD_PATHS = [SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL];
 const EVIDENCE_SCOPES = new Set(["current", "historical", "generated"]);
-const CONFIG_SNAPSHOT_FIELDS = [
+const SNAPSHOT_FIELDS = [
 	"command",
 	"files",
 	"tests",
@@ -142,7 +143,6 @@ const FORBIDDEN_AUTHORITY_PHRASES = [
 	"pi authorizes fiscal operations",
 	"pi grants fiscal authority",
 	"pi owns the dominion program",
-	"pi delivers sdd-0",
 	"drenyra pi owns the master",
 ];
 
@@ -751,56 +751,57 @@ function validateProjection(data, root) {
 }
 
 /**
- * Canonical current snapshot (PR 3). `openspec/config.yaml#/current_test_state` is
+ * Canonical current snapshot (PR 3).
+ * `docs/architecture/current-test-state.yaml#/current_test_state` is
  * the only surface that can publish the live candidate identity, because its
  * `candidate_identity` line is identity-normalized. When it presents itself as
  * current it must be complete and must agree with the manifest's current snapshot
  * record and with the generated live identity.
  */
 function validateCurrentSnapshotRecord(root, data) {
-	const text = readEvidenceText(root, CONFIG_RECORD_REL);
+	const text = readEvidenceText(root, SNAPSHOT_RECORD_REL);
 	if (text === null) return null;
 	const fields = readFlatRecord(text, "current_test_state");
 	if (fields === null) {
 		violation(
-			`missing current snapshot record in ${CONFIG_RECORD_REL}: current_test_state`,
+			`missing current snapshot record in ${SNAPSHOT_RECORD_REL}: current_test_state`,
 		);
 		return null;
 	}
-	for (const field of CONFIG_SNAPSHOT_FIELDS) {
+	for (const field of SNAPSHOT_FIELDS) {
 		if (fields[field] === undefined) {
 			violation(
-				`missing current snapshot field in ${CONFIG_RECORD_REL}: ${field}`,
+				`missing current snapshot field in ${SNAPSHOT_RECORD_REL}: ${field}`,
 			);
 		}
 	}
 	if (!Number.isInteger(fields.files) || fields.files < 1) {
 		violation(
-			`current snapshot files in ${CONFIG_RECORD_REL} must be a positive integer`,
+			`current snapshot files in ${SNAPSHOT_RECORD_REL} must be a positive integer`,
 		);
 	}
 	if (!Number.isInteger(fields.tests) || fields.tests < 1) {
 		violation(
-			`current snapshot tests in ${CONFIG_RECORD_REL} must be a positive integer`,
+			`current snapshot tests in ${SNAPSHOT_RECORD_REL} must be a positive integer`,
 		);
 	}
 	if (!Number.isInteger(fields.failed) || fields.failed < 0) {
 		violation(
-			`current snapshot failed in ${CONFIG_RECORD_REL} must be a non-negative integer`,
+			`current snapshot failed in ${SNAPSHOT_RECORD_REL} must be a non-negative integer`,
 		);
 	}
 	if (typeof fields.passing !== "boolean") {
 		violation(
-			`current snapshot passing in ${CONFIG_RECORD_REL} must be a boolean`,
+			`current snapshot passing in ${SNAPSHOT_RECORD_REL} must be a boolean`,
 		);
 	} else if (fields.passing !== (fields.failed === 0)) {
 		violation(
-			`current snapshot result in ${CONFIG_RECORD_REL} must state passing exactly when failed = 0`,
+			`current snapshot result in ${SNAPSHOT_RECORD_REL} must state passing exactly when failed = 0`,
 		);
 	}
 	if (typeof fields.command !== "string" || fields.command.trim().length === 0) {
 		violation(
-			`current snapshot command in ${CONFIG_RECORD_REL} must be a non-empty string`,
+			`current snapshot command in ${SNAPSHOT_RECORD_REL} must be a non-empty string`,
 		);
 	}
 	if (
@@ -808,24 +809,24 @@ function validateCurrentSnapshotRecord(root, data) {
 		!isCalendarDate(fields.evidence_date)
 	) {
 		violation(
-			`current snapshot evidence_date in ${CONFIG_RECORD_REL} must be an ISO-8601 calendar date`,
+			`current snapshot evidence_date in ${SNAPSHOT_RECORD_REL} must be an ISO-8601 calendar date`,
 		);
 	}
 	if (!SNAPSHOT_CLASSIFICATIONS.has(fields.classification)) {
 		violation(
-			`current snapshot classification in ${CONFIG_RECORD_REL} must be baseline or dirty-candidate`,
+			`current snapshot classification in ${SNAPSHOT_RECORD_REL} must be baseline or dirty-candidate`,
 		);
 	} else if (
 		!isIdentityForClassification(fields.candidate_identity, fields.classification)
 	) {
 		violation(
-			`current snapshot candidate_identity in ${CONFIG_RECORD_REL} must be a ${
+			`current snapshot candidate_identity in ${SNAPSHOT_RECORD_REL} must be a ${
 				fields.classification === "baseline" ? "git-sha256" : "dirty-sha256"
 			} identity`,
 		);
 	}
 	const scope = validateEvidenceScope(
-		CONFIG_RECORD_REL,
+		SNAPSHOT_RECORD_REL,
 		"current_test_state",
 		fields.evidence_scope,
 		fields.evidence_source,
@@ -837,24 +838,24 @@ function validateCurrentSnapshotRecord(root, data) {
 	if (snapshot.evidenceScope !== "current") return fields;
 	if (fields.command !== snapshot.command) {
 		violation(
-			`conflicting current snapshot command in ${CONFIG_RECORD_REL}: ${String(fields.command)} != ${String(snapshot.command)}`,
+			`conflicting current snapshot command in ${SNAPSHOT_RECORD_REL}: ${String(fields.command)} != ${String(snapshot.command)}`,
 		);
 	}
 	if (fields.evidence_date !== snapshot.date) {
 		violation(
-			`conflicting current snapshot date in ${CONFIG_RECORD_REL}: ${String(fields.evidence_date)} != ${String(snapshot.date)}`,
+			`conflicting current snapshot date in ${SNAPSHOT_RECORD_REL}: ${String(fields.evidence_date)} != ${String(snapshot.date)}`,
 		);
 	}
 	if (fields.classification !== snapshot.classification) {
 		violation(
-			`conflicting current snapshot classification in ${CONFIG_RECORD_REL}: ${String(fields.classification)} != ${String(snapshot.classification)}`,
+			`conflicting current snapshot classification in ${SNAPSHOT_RECORD_REL}: ${String(fields.classification)} != ${String(snapshot.classification)}`,
 		);
 	}
 	if (Number.isInteger(fields.tests) && Number.isInteger(fields.failed)) {
 		const derived = completeResult(fields.tests, fields.failed);
 		if (normalizeResult(derived) !== normalizeResult(snapshot.result)) {
 			violation(
-				`conflicting current snapshot result in ${CONFIG_RECORD_REL}: ${derived} != ${String(snapshot.result)}`,
+				`conflicting current snapshot result in ${SNAPSHOT_RECORD_REL}: ${derived} != ${String(snapshot.result)}`,
 			);
 		}
 	}
@@ -863,7 +864,7 @@ function validateCurrentSnapshotRecord(root, data) {
 		fields.candidate_identity !== liveCandidateIdentity
 	) {
 		violation(
-			`conflicting current snapshot identity in ${CONFIG_RECORD_REL}: ${String(fields.candidate_identity)} != ${liveCandidateIdentity}`,
+			`conflicting current snapshot identity in ${SNAPSHOT_RECORD_REL}: ${String(fields.candidate_identity)} != ${liveCandidateIdentity}`,
 		);
 	}
 	return fields;

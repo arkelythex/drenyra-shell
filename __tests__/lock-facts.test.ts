@@ -41,8 +41,8 @@ interface IdentityEntry {
 }
 
 // The identity CLI is a plain .mjs module without a sibling .d.mts (not in the
-// §13 apply whitelist), so the runtime module is loaded through a typed dynamic
-// import with an inline interface (specifier in a variable → no static
+// participation whitelist), so the runtime module is loaded through a typed
+// dynamic import with an inline interface (specifier in a variable → no static
 // resolution, matching the package-verify.d.mts idiom).
 const IDENTITY_URL = new URL(
 	"../scripts/compute-candidate-identity.mjs",
@@ -53,9 +53,8 @@ const {
 	PARTICIPATION_PATHS_V1,
 	buildCanonicalManifest,
 	computeCandidateIdentity,
-	normalizeApplyProgress,
-	normalizeConfigYaml,
 	normalizeLockFacts,
+	normalizeSnapshotRecord,
 } = (await import(IDENTITY_URL)) as {
 	CANDIDATE_IDENTITY_PLACEHOLDER: string;
 	PARTICIPATION_PATHS_V1: string[];
@@ -68,9 +67,8 @@ const {
 		head: string;
 		entries: IdentityEntry[];
 	};
-	normalizeApplyProgress: (bytes: string) => string;
-	normalizeConfigYaml: (bytes: string) => string;
 	normalizeLockFacts: (bytes: string) => string;
+	normalizeSnapshotRecord: (bytes: string) => string;
 };
 
 const execFileAsync = promisify(execFile);
@@ -112,9 +110,9 @@ function readJson(path: string): Record<string, any> {
 }
 
 /**
- * Returns every violation of the design §6.2/§6.3 lock-fact contract for the
- * given record against the repository at `root`. Used both to validate the real
- * record (must be empty) and to reject mutated records (negative cases).
+ * Returns every violation of the lock-fact contract for the given record
+ * against the repository at `root`. Used both to validate the real record (must
+ * be empty) and to reject mutated records (negative cases).
  */
 function collectLockFactsViolations(
 	facts: any,
@@ -245,20 +243,24 @@ function collectLockFactsViolations(
 	}
 
 	const active = facts.activeChanges;
-	// Design §6.2: activeChanges is sorted and includes every real local OpenSpec
-	// change discovered at evidence time (pi-sdd-010-participation only while it
-	// was active — it is archived since 2026-08-15). Discover dynamically instead
-	// of hardcoding, so the record stays self-maintaining.
-	const changesDir = join(root, "openspec", "changes");
-	const discoveredActive = readdirSync(changesDir, { withFileTypes: true })
-		.filter((entry) => entry.isDirectory() && entry.name !== "archive")
-		.map((entry) => entry.name)
+	// activeChanges is sorted and lists every ODD feature document under
+	// `odd/tasks/` that still carries an unchecked task. Discover dynamically
+	// instead of hardcoding, so the record stays self-maintaining.
+	const tasksDir = join(root, "odd", "tasks");
+	const discoveredActive = readdirSync(tasksDir, { withFileTypes: true })
+		.filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+		.filter((entry) =>
+			readFileSync(join(tasksDir, entry.name), "utf8")
+				.split("\n")
+				.some((line) => /^\s*- \[ \]/.test(line)),
+		)
+		.map((entry) => entry.name.slice(0, -".md".length))
 		.sort();
 	if (
 		!Array.isArray(active) ||
 		active.join("\n") !== discoveredActive.join("\n")
 	) {
-		push("activeChanges must exactly match the discovered active OpenSpec changes");
+		push("activeChanges must exactly match the discovered active feature documents");
 	}
 	if (
 		!Array.isArray(active) ||
@@ -434,14 +436,11 @@ describe("program-lock-facts.json (design §6)", () => {
 	});
 });
 
-describe("compute-candidate-identity.mjs (design §7.2)", () => {
-	it("embeds the §13 whitelist plus planning inputs, lexicographically sorted", () => {
+describe("compute-candidate-identity.mjs", () => {
+	it("embeds the participation whitelist, lexicographically sorted", () => {
 		expect(PARTICIPATION_PATHS_V1).toEqual([...PARTICIPATION_PATHS_V1].sort());
 		expect(PARTICIPATION_PATHS_V1).toContain(
-			"openspec/changes/pi-sdd-010-participation/proposal.md",
-		);
-		expect(PARTICIPATION_PATHS_V1).toContain(
-			"openspec/changes/pi-sdd-010-participation/design.md",
+			"docs/architecture/current-test-state.yaml",
 		);
 		expect(PARTICIPATION_PATHS_V1).toContain(
 			"__tests__/capability-manifest.test.ts",
@@ -534,26 +533,15 @@ describe("compute-candidate-identity.mjs (design §7.2)", () => {
 		expect(normalizeLockFacts(normOriginal)).toBe(normOriginal);
 		expect(facts.candidateIdentity).toBeDefined();
 
-		const config =
+		const snapshot =
 			"current_test_state:\n  candidate_identity: dirty-sha256:abcd\nother: keep\n";
-		const configNorm = normalizeConfigYaml(config);
-		expect(configNorm).toContain(
+		const snapshotNorm = normalizeSnapshotRecord(snapshot);
+		expect(snapshotNorm).toContain(
 			`candidate_identity: ${CANDIDATE_IDENTITY_PLACEHOLDER}`,
 		);
-		expect(configNorm).toContain("other: keep");
-		expect(configNorm).not.toContain("abcd");
-		expect(normalizeConfigYaml(configNorm)).toBe(configNorm);
-
-		const progress =
-			"line one\n**Candidate identity:** dirty-sha256:zzz\nline two\n";
-		const progressNorm = normalizeApplyProgress(progress);
-		expect(progressNorm).toContain(
-			`**Candidate identity:${CANDIDATE_IDENTITY_PLACEHOLDER}`,
-		);
-		expect(progressNorm).toContain("line one");
-		expect(progressNorm).toContain("line two");
-		expect(progressNorm).not.toContain("zzz");
-		expect(normalizeApplyProgress(progressNorm)).toBe(progressNorm);
+		expect(snapshotNorm).toContain("other: keep");
+		expect(snapshotNorm).not.toContain("abcd");
+		expect(normalizeSnapshotRecord(snapshotNorm)).toBe(snapshotNorm);
 	});
 
 	it("exits non-zero when no allowlisted candidate change exists", async () => {
