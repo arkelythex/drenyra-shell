@@ -15,10 +15,10 @@
 
     <!-- eyebrow -->
     <text x="36" y="52" fill="#824f16" font-size="12.5" font-weight="700" letter-spacing="2.6">ORGANIC DRIVEN DEVELOPMENT · FOR THE BOOKS</text>
-    <text x="1204" y="52" fill="#5f4f3f" font-size="13" text-anchor="end">small work stays light · material work becomes a mission</text>
+    <text x="1204" y="52" fill="#554638" font-size="13" text-anchor="end">small work stays light · material work becomes a mission</text>
 
     <!-- phase brackets -->
-    <g fill="#5f4f3f" font-size="11" font-weight="700" letter-spacing="2" text-anchor="middle">
+    <g fill="#554638" font-size="11" font-weight="700" letter-spacing="2" text-anchor="middle">
       <text x="240" y="98">SCOPE</text>
       <text x="606" y="98">DECIDE</text>
       <text x="994" y="98">PROVE</text>
@@ -54,12 +54,12 @@
       <rect x="36" y="204" width="124" height="120" rx="14" fill="#fff7ea" stroke="#8a7358"/>
       <rect x="178" y="204" width="124" height="120" rx="14" fill="#fff7ea" stroke="#8a7358"/>
       <rect x="320" y="204" width="124" height="120" rx="14" fill="#fff7ea" stroke="#8a7358"/>
-      <rect x="462" y="204" width="124" height="120" rx="14" fill="#f6e3cf" stroke="#a7471c" stroke-width="1.5"/>
+      <rect x="462" y="204" width="124" height="120" rx="14" fill="#e6d7c4" stroke="#a7471c" stroke-width="1.5"/>
       <rect x="626" y="152" width="124" height="96" rx="14" fill="#f3eadc" stroke="#8a7358" stroke-dasharray="5 5"/>
-      <rect x="626" y="280" width="124" height="96" rx="14" fill="#f6e3cf" stroke="#824f16" stroke-width="1.5"/>
+      <rect x="626" y="280" width="124" height="96" rx="14" fill="#e6d7c4" stroke="#824f16" stroke-width="1.5"/>
       <rect x="790" y="204" width="124" height="120" rx="14" fill="#fff7ea" stroke="#8a7358"/>
       <rect x="932" y="204" width="124" height="120" rx="14" fill="#fff7ea" stroke="#8a7358"/>
-      <rect x="1074" y="204" width="124" height="120" rx="14" fill="#e9eedf" stroke="#315b31" stroke-width="1.5"/>
+      <rect x="1074" y="204" width="124" height="120" rx="14" fill="#fff7ea" stroke="#315b31" stroke-width="1.5"/>
     </g>
 
     <!-- step numbers -->
@@ -118,7 +118,7 @@
       <text x="944" y="276">Verify</text>
       <text x="1086" y="276">Approve</text>
     </g>
-    <g fill="#5f4f3f" font-size="12.5">
+    <g fill="#554638" font-size="12.5">
       <text x="48" y="296">read-only until</text>
       <text x="48" y="312">you ask</text>
       <text x="190" y="296">RUC + period</text>
@@ -142,9 +142,9 @@
     <g fill="none" stroke="#824f16" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(56 436)">
       <path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/>
     </g>
-    <text x="92" y="453" font-size="15.5"><tspan fill="#17120d" font-weight="700">Resume where you stopped</tspan><tspan fill="#5f4f3f" dx="10">The durable mission store keeps every phase; Engram informs what to propose, never how much review.</tspan></text>
+    <text x="92" y="453" font-size="15.5"><tspan fill="#17120d" font-weight="700">Resume where you stopped</tspan><tspan fill="#554638" dx="10">The durable mission store keeps every phase; Engram informs what to propose, never how much review.</tspan></text>
 
     <!-- authority footer -->
-    <text x="620" y="512" fill="#5f4f3f" font-size="12.5" font-weight="700" letter-spacing="1.6" text-anchor="middle">DRENYRA SHELL OPERATES  ·  DRENYRA AI VALIDATES  ·  THE PROFESSIONAL DECIDES</text>
+    <text x="620" y="512" fill="#554638" font-size="12.5" font-weight="700" letter-spacing="1.6" text-anchor="middle">DRENYRA SHELL OPERATES  ·  DRENYRA AI VALIDATES  ·  THE PROFESSIONAL DECIDES</text>
   </g>
 </svg>
