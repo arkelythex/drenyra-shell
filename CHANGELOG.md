@@ -41,6 +41,16 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ### Documentation
 
+- **ODD for the books and focused accounting agents.** The README gains two
+  "How it works" sections with light and dark diagrams under `docs/diagrams/`:
+  Organic Driven Development mapped onto accounting work (scope, evidence,
+  Core-decided materiality forking light work from durable missions, proposal,
+  refutation, approval, and signed receipt), and the ten Shell agents grouped by
+  authority ceiling with the Core and the professional as the only deciders.
+  Every step links to the command, spec, or module that implements it.
+  Both variants use only the canonical Dreamcoder OS tokens: Dreamcoder Light
+  (Cocoa/Lúcuma) and Dreamcoder Dark (OLED canvas, indigo and lavender accents).
+
 - **README and documentation quality pass.** The README is restructured around a
   hero, an explicit status section, per-topic sections that link to their deep
   document, collapsible detail, and a documentation index — following the

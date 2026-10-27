@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="560" viewBox="0 0 1240 560" role="img" aria-labelledby="dag-dk-title dag-dk-desc">
+  <title id="dag-dk-title">Focused accounting agents with a return path</title>
+  <desc id="dag-dk-desc">One operator session holds the RUC and period scope and delegates bounded work to three groups of accounting agents: map and gather agents that only analyze, proposing agents whose candidates may be informed by institutional memory, and independent agents that refute findings and review candidates. Every agent returns cited results to the operator session. Candidates go to the pinned Drenyra AI core, which alone accepts or rejects a transition; findings and gated candidates reach the professional, who alone approves.</desc>
+  <defs>
+    <pattern id="dag-dk-rules" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M0 23.5H24" stroke="#3a3a3a" stroke-opacity="0.08"/></pattern>
+    <marker id="dag-dk-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" viewBox="0 0 8 8" refX="7" refY="4" orient="auto"><path d="M0 0.5 7 4 0 7.5z" fill="#a5b4fc"/></marker>
+    <marker id="dag-dk-arrow-sage" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" viewBox="0 0 8 8" refX="7" refY="4" orient="auto"><path d="M0 0.5 7 4 0 7.5z" fill="#34d399"/></marker>
+  </defs>
+
+  <!-- canvas -->
+  <rect width="1240" height="560" rx="24" fill="#000000"/>
+  <rect width="1240" height="560" rx="24" fill="url(#dag-dk-rules)"/>
+  <rect x="0.5" y="0.5" width="1239" height="559" rx="23.5" fill="none" stroke="#3a3a3a" stroke-opacity="0.45"/>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+
+    <!-- eyebrow -->
+    <text x="36" y="52" fill="#a5b4fc" font-size="12.5" font-weight="700" letter-spacing="2.6">FOCUSED ACCOUNTING AGENTS</text>
+    <text x="1204" y="52" fill="#a7a7a7" font-size="13" text-anchor="end">one session stays accountable · agents propose, never approve</text>
+
+    <!-- delegation (solid) and return (dashed) paths -->
+    <g fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#dag-dk-arrow)">
+      <path d="M300 230C350 230 350 128 398 128"/>
+      <path d="M300 262H398"/>
+      <path d="M300 292C350 292 350 392 398 392"/>
+    </g>
+    <g fill="none" stroke="#a5b4fc" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#dag-dk-arrow)">
+      <path d="M398 152C344 152 354 248 302 248"/>
+      <path d="M398 280H302"/>
+      <path d="M398 416C344 416 354 310 302 310"/>
+    </g>
+
+    <!-- legend -->
+    <g stroke="#a5b4fc" stroke-linecap="round" fill="none">
+      <path d="M56 410H84" stroke-width="2"/>
+      <path d="M156 410H184" stroke-width="1.6" stroke-opacity="0.55" stroke-dasharray="4 5"/>
+    </g>
+    <g fill="#a7a7a7" font-size="12" font-weight="700" letter-spacing="0.6">
+      <text x="92" y="414">task</text>
+      <text x="192" y="414">cited result</text>
+    </g>
+
+    <!-- operator session -->
+    <rect x="36" y="158" width="264" height="220" rx="16" fill="#1f1f1f" stroke="#a5b4fc" stroke-width="1.5"/>
+    <g fill="none" stroke="#a5b4fc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(56 178)">
+      <rect x="2" y="4" width="20" height="15" rx="2"/><path d="M6 9l3 2.5-3 2.5M12 14h5"/>
+    </g>
+    <text x="56" y="232" fill="#f5f5f5" font-size="19" font-weight="700">Operator session</text>
+    <g fill="#a7a7a7" font-size="13">
+      <text x="56" y="260">holds the RUC + period scope</text>
+      <text x="56" y="282">delegates for a reason</text>
+      <text x="56" y="304">synthesizes cited results</text>
+      <text x="56" y="326">fails closed without scope</text>
+    </g>
+    <text x="56" y="358" fill="#a5b4fc" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" font-weight="700">/drenyra:mission</text>
+
+    <!-- lanes -->
+    <g stroke-width="1">
+      <rect x="400" y="88" width="430" height="96" rx="14" fill="#0d0d0f" stroke="#3a3a3a"/>
+      <rect x="400" y="208" width="430" height="120" rx="14" fill="#0d0d0f" stroke="#3a3a3a"/>
+      <rect x="400" y="352" width="430" height="96" rx="14" fill="#0d0d0f" stroke="#7dd3fc" stroke-width="1.5"/>
+    </g>
+    <g fill="#f5f5f5" font-size="16.5" font-weight="700">
+      <text x="420" y="118">Map and gather</text>
+      <text x="420" y="238">Propose</text>
+      <text x="420" y="382">Refute and review</text>
+    </g>
+    <g font-size="11" font-weight="700" letter-spacing="1.4" text-anchor="end">
+      <text x="810" y="118" fill="#a5b4fc">ANALYZE · READ-ONLY</text>
+      <text x="810" y="238" fill="#a5b4fc">ANALYZE / PREPARE · MEMORY-INFORMED</text>
+      <text x="810" y="382" fill="#7dd3fc">INDEPENDENT · NO PRECEDENT</text>
+    </g>
+    <g fill="#c7c7c7" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5">
+      <text x="420" y="146">accounting-scout · ledger-analyst</text>
+      <text x="420" y="166">evidence-builder</text>
+      <text x="420" y="266">journal-candidate-agent · reconciliation-agent</text>
+      <text x="420" y="286">invoice-sire-agent · tax-controller-pe</text>
+      <text x="420" y="306">close-controller</text>
+      <text x="420" y="410">anomaly-refuter · guardian-angel</text>
+      <text x="420" y="430" fill="#a7a7a7" font-family="Arial, Helvetica, sans-serif" font-size="12.5">refutation runs before any finding is elevated</text>
+    </g>
+
+    <!-- candidates to Core, findings to the professional -->
+    <g fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#dag-dk-arrow)">
+      <path d="M830 268H852Q862 268 862 258V218Q862 208 872 208H884"/>
+      <path d="M1044 260V290"/>
+    </g>
+    <path d="M830 400H852Q862 400 862 390V360Q862 350 872 350H884" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#dag-dk-arrow-sage)"/>
+    <g fill="#a7a7a7" font-size="11.5" font-weight="700" letter-spacing="0.6">
+      <text x="836" y="286">candidates</text>
+      <text x="1054" y="280">gated</text>
+      <text x="842" y="422">findings</text>
+    </g>
+
+    <!-- core -->
+    <rect x="886" y="160" width="318" height="100" rx="16" fill="#0d0d0f" stroke="#a5b4fc" stroke-width="1.5"/>
+    <g fill="none" stroke="#a5b4fc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(1166 172) scale(0.8)">
+      <path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/>
+    </g>
+    <text x="906" y="194" fill="#f5f5f5" font-size="17" font-weight="700">Drenyra AI Core</text>
+    <text x="906" y="218" fill="#a7a7a7" font-size="13">alone accepts or rejects a transition</text>
+    <text x="906" y="242" fill="#a5b4fc" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5">materiality · gates · receipts</text>
+
+    <!-- professional -->
+    <rect x="886" y="292" width="318" height="100" rx="16" fill="#0d0d0f" stroke="#34d399" stroke-width="1.5"/>
+    <g fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(1166 304) scale(0.8)">
+      <circle cx="12" cy="10" r="6"/><path d="M9 15l-2 6 5-2 5 2-2-6"/><path d="M9.5 10l2 2 3-3.5"/>
+    </g>
+    <text x="906" y="326" fill="#f5f5f5" font-size="17" font-weight="700">The professional</text>
+    <text x="906" y="350" fill="#a7a7a7" font-size="13">alone approves and owns the outcome</text>
+    <text x="906" y="374" fill="#34d399" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5">approval record · signed receipt</text>
+
+    <!-- boundary band -->
+    <rect x="36" y="476" width="1168" height="52" rx="14" fill="#0d0d0f" stroke="#3a3a3a"/>
+    <g fill="none" stroke="#a5b4fc" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(56 490)">
+      <path d="M12 3 19 6v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/>
+    </g>
+    <text x="92" y="507" font-size="15"><tspan fill="#f5f5f5" font-weight="700">Authority stays where it belongs</tspan><tspan fill="#a7a7a7" dx="10">Every agent cites evidence nodes, persists before it responds, and has no EXECUTE permission.</tspan></text>
+  </g>
+</svg>
