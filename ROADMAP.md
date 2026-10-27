@@ -50,7 +50,7 @@ Extracted via vertical PRs and versioned releases, **not** a bulk move:
 - [x] Slice 2: `/drenyra:status` + `/drenyra:company` + `/drenyra:period` context threading
 - [x] Slice 3: `/drenyra:mission` + `/drenyra:receipt` + `/drenyra:ledger`
 - [x] Slice 4: monthly-close chain (R2 gate, explicit approval)
-- [ ] Slice 5: Drenyra Engram integration (context, memory reads) — read-only institutional context on `/drenyra:context` shipped (`pi-engram-integration`); proposal-informing memory reads remain open
+- [ ] Slice 5: Drenyra Engram integration (context, memory reads) — read-only institutional context on `/drenyra:context` shipped (`pi-engram-integration`); proposal-informing memory reads shipped for `journal-candidate-agent` only (`pi-engram-memory-reads`); the other 9 agents remain uncovered
 - [ ] Package released as `drenyra-shell` on npm with pinned `drenyra-ai`
 
 Slices 1–4 are shipped and covered by repository tests, which makes them
@@ -58,10 +58,14 @@ Slices 1–4 are shipped and covered by repository tests, which makes them
 is an in-process fixture, not an operational end-to-end run. Slice 5 is partial:
 `/drenyra:context` reads Drenyra Engram institutional context read-only once a
 company RUC is already known (`pi-engram-integration`, `capability-manifest.yaml`
-`engram-integration: partial`); the active company/period pointer itself is
-still the development-grade local JSON store (Engram's scope model has no
-session-pointer concept to hold it), and no command reads memory to shape a
-proposal yet — both remain open, so the checkbox above stays unchecked.
+`engram-integration: partial`); `journal-candidate-agent` can also call
+`drenyra_institutional_memory` to inform which candidate it drafts
+(`pi-engram-memory-reads`), never wired to any gate or the materiality policy.
+The active company/period pointer itself is still the development-grade local
+JSON store (Engram's scope model has no session-pointer concept to hold it) —
+that gap is upstream in Drenyra Engram, not fixable from this package. The
+other 9 agents have no memory-read access, so the checkbox above stays
+unchecked.
 
 ## Phase 3 — Ecosystem maturity (alpha → beta)
 
