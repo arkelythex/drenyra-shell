@@ -2,8 +2,8 @@
   "schemaVersion": "drenyra.program-lock-facts.v1",
   "participantCheckpoint": true,
   "authorityNotice": "Pi-local input; does not modify or promote the program master",
-  "headSha": "60044334946f1144bdd81275e487c0eba6d102d8",
-  "candidateIdentity": "dirty-sha256:86f69ef8db901ffb679fe26323281c86489c354c289cf52705d8909faac1ecb2",
+  "headSha": "d07027e12522fcf8d1359a572a96451376da3f95",
+  "candidateIdentity": "dirty-sha256:23d4a51d80d9c8d761bcd55a011e0e1468d163a6cb41bd9227f619a0fb302032",
   "packageVersion": "0.1.0",
   "contracts": {
     "consumed": [
