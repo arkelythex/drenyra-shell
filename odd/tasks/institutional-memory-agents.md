@@ -15,10 +15,10 @@
 
 ## Tasks
 
-- [ ] **T1** — RED tests in `__tests__/agents.test.ts`: inclusion set, exclusion set, no `accounting_*`/`engram_*` tools, memory section present in each covered agent. *(S1, S2, S3, S4)*
-- [ ] **T2** — Add the tool and role-adapted section to the three agents; mirror to `assets/agents/`. *(S1, S4)*
-- [ ] **T3** — Spec, contract, README, agents README, manifest, ROADMAP, CHANGELOG, `register.ts` comment. *(S5)*
-- [ ] **T4** — Gates and lock-facts refresh. *(S6)*
+- [x] **T1** — RED tests in `__tests__/agents.test.ts`: inclusion set, exclusion set, no `accounting_*`/`engram_*` tools, memory section present in each covered agent. *(S1, S2, S3, S4)* — `2129abc`
+- [x] **T2** — Add the tool and role-adapted section to the three agents; mirror to `assets/agents/`. *(S1, S4)* — `2129abc`
+- [x] **T3** — Spec, contract, README, agents README, manifest, ROADMAP, CHANGELOG, `register.ts` comment. *(S5)* — `2129abc`
+- [x] **T4** — Gates and lock-facts refresh. *(S6)* — `2129abc`
 
 ## Log
 
@@ -54,3 +54,14 @@ Proposed 3 of 9 (invoice-sire-agent, reconciliation-agent, tax-controller-pe) wi
 
 - `extensions/register.ts:1512` registers `drenyra_institutional_memory` globally; no per-agent check in code. The agent frontmatter `tools:` line is the sole gate, hence S2's tests.
 - The tool's scope comes from the local pointer, never from the agent (`register.ts:714-748`); no change to the tool is needed.
+
+### L5 — 2026-10-27 — verification (`2129abc`)
+
+Observed on the committed tree:
+
+- RED before T2: `__tests__/agents.test.ts` failed exactly the three new-reader cases (invoice-sire-agent, reconciliation-agent, tax-controller-pe); journal-candidate-agent and all six exclusion cases passed.
+- GREEN after T2: `agents.test.ts` 104/104.
+- `bun run typecheck` clean; `bun run test` 58 files / 846 passed (825 before + 21 new); `verify:capability` OK; `verify:style` OK.
+- `contracts/engram-dependency.md` changed intentionally, so `contracts/SHA256SUMS.json` was regenerated with `node scripts/verify-package-files.mjs --update`.
+- `refresh-program-lock-facts.mjs --check`: "program lock facts are current".
+- No change to `drenyra_institutional_memory` itself, to any gate, or to the materiality policy (REQ-ENG-006).
