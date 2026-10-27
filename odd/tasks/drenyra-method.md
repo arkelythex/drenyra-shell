@@ -16,11 +16,11 @@
 
 ## Tasks
 
-- [ ] **T1** — `docs/method.md`. *(S2, S3, S4, S6)*
-- [ ] **T2** — README: replace the ODD section with the method; rewrite the ecosystem section. *(S1, S2, S3)*
-- [ ] **T3** — Relabel and rename the diagram; update its references. *(S5)*
-- [ ] **T4** — AGENTS.md line and CHANGELOG. *(S6)*
-- [ ] **T5** — Gates, lock facts, PR. *(S7)*
+- [x] **T1** — `docs/method.md`. *(S2, S3, S4, S6)* — `a922b86`
+- [x] **T2** — README: replace the ODD section with the method; rewrite the ecosystem section. *(S1, S2, S3)* — `a922b86`
+- [x] **T3** — Relabel and rename the diagram; update its references. *(S5)* — `a922b86`
+- [x] **T4** — AGENTS.md line and CHANGELOG. *(S6)* — `a922b86`
+- [x] **T5** — Gates, lock facts, PR. *(S7)* — `a922b86`
 
 ## Log
 
@@ -41,3 +41,9 @@ The proposed naming was EDA · CDA · RDA, reusing the names that already exist.
 - The README Ecosystem section still says Drenyra Engram is a "planned integration", contradicting #89.
 - `extensions/fiscal-guard.ts:372` calls `record_receipt` "the RED (Receipt-Driven Execution) primitive". It is not renamed to RDA, because `record_receipt` is fail-open (README known limitations) and calling it an RDA primitive would overclaim. Left as a follow-up: a model-facing tool description is a behavior change, out of scope for a docs feature.
 - `AI_POLICY.md`'s "Receipt-Driven Development" is about reviewing contributions (the developer RDD), so it is correct as is.
+
+### L4 — 2026-10-27 — verification (`a922b86`)
+
+- typecheck clean; `bun run test` 59 files / 860 passed; `verify:capability` OK (the README conformance markers are kept); `verify:style` OK; lock facts current.
+- Both SVGs parse as XML after relabelling, contain no "ODD" or "Organic" string, and no reference to `drenyra-odd-workflow` remains outside history (`odd/`, `CHANGELOG.md`).
+- This is a documentation feature with no behavior change, so there is no RED/GREEN cycle. Verification is structural (the checks above).
