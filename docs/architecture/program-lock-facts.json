@@ -2,8 +2,8 @@
   "schemaVersion": "drenyra.program-lock-facts.v1",
   "participantCheckpoint": true,
   "authorityNotice": "Pi-local input; does not modify or promote the program master",
-  "headSha": "e59fec3dc018df5e6a514c210b05bab99eee1963",
-  "candidateIdentity": "dirty-sha256:c7fe9cb3dccb540b5e50d02c9d3349fa1acd56daf0acfdab91f84dc87111cebb",
+  "headSha": "d627d458f9ef888fa105a7ce834412150e719f5f",
+  "candidateIdentity": "dirty-sha256:46cf6f0b7ea611a1d411f67239d1281c9fe8507fa45e3f900e7187ac147dfd3b",
   "packageVersion": "0.1.0",
   "contracts": {
     "consumed": [
@@ -62,9 +62,7 @@
     "schemaVersion": "drenyra.capability-manifest.v1",
     "digestSha256": "ec61010b0a77d0b649b99b2e3e609ce3314f79755087ddd4c66eec72ebe7bfb5"
   },
-  "activeChanges": [
-    "books-operation-mode"
-  ],
+  "activeChanges": [],
   "snapshotRecord": {
     "evidenceScope": "historical",
     "evidenceSource": "docs/architecture/program-lock-facts.json#/tests (preserved verbatim; recorded 2026-09-09)",

@@ -19,12 +19,12 @@
 
 ## Tasks
 
-- [ ] **T1** — `lib/operation-mode.ts`: modes, allowlist, `evaluateToolPolicy`, `describeOperationMode`. *(S1, S2, S3, S4, S7)*
-- [ ] **T2** — `__tests__/operation-mode.test.ts`: RED first. Covers allow/deny per mode, unknown-tool denial, the three named mutations, and the reason text. *(S2, S3, S4, S7)*
-- [ ] **T3** — `extensions/operation-mode.ts`: `/drenyra:mode` command and the `tool_call` hook. *(S4, S5, S6)*
-- [ ] **T4** — Wire `registerOperationMode(pi)` in `extensions/register.ts`; add extension-level tests for the command and for `open`-mode non-regression. *(S5, S6, S8)*
-- [ ] **T5** — Docs: `specs/authority/spec.md` REQ-AUTH-010 + SC-AUTH-007/008, README status/limitations rows, CHANGELOG. *(S9)*
-- [ ] **T6** — Gates and lock-facts refresh. *(S10)*
+- [x] **T1** — `lib/operation-mode.ts`: modes, allowlist, `evaluateToolPolicy`, `describeOperationMode`. *(S1, S2, S3, S4, S7)* — `d627d45`
+- [x] **T2** — `__tests__/operation-mode.test.ts`: RED first. Covers allow/deny per mode, unknown-tool denial, the three named mutations, and the reason text. *(S2, S3, S4, S7)* — `d627d45`
+- [x] **T3** — `extensions/operation-mode.ts`: `/drenyra:mode` command and the `tool_call` hook. *(S4, S5, S6)* — `d627d45`
+- [x] **T4** — Wire `registerOperationMode(pi)` in `extensions/register.ts`; add extension-level tests for the command and for `open`-mode non-regression. *(S5, S6, S8)* — `d627d45`
+- [x] **T5** — Docs: `specs/authority/spec.md` REQ-AUTH-010 + SC-AUTH-007/008, README status/limitations rows, CHANGELOG. *(S9)* — `d627d45`
+- [x] **T6** — Gates and lock-facts refresh. *(S10)* — `d627d45`
 
 ## Log
 
@@ -53,3 +53,22 @@ Context: in the previous turn I closed with "un agente sin `bash`, sin `write`, 
 ### L4 — 2026-10-27 — requirement-number collision corrected
 
 `specs/authority/spec.md` already carried `REQ-AUTH-009 — Action boundaries per mode`, which is the **kernel's** authority modes (ASK/ANALYZE/PREPARE/EXECUTE), a different concept that merely shares the word "mode". S9 therefore targets **REQ-AUTH-010** with scenarios SC-AUTH-007 and SC-AUTH-008. Naming the new requirement 009 would have overwritten a live kernel requirement with a harness tool-surface rule — exactly the confusion REQ-AUTH-010's text now forbids ("it is not an authority level").
+
+### L5 — 2026-10-27 — verification (`d627d45`)
+
+Observed on the committed tree:
+
+- `bun run typecheck` — clean.
+- `bun run test` — **56 files / 815 passed / 0 failed** (baseline was 54 files / 798 passed; this feature adds 2 files and 17 tests).
+- `bun run verify:capability` — OK.
+- `bun run verify:style` — OK (diff-scoped, 117 owned files, 4 rules).
+- `node scripts/refresh-program-lock-facts.mjs --check` — "program lock facts are current".
+
+Two failures surfaced during the work and both were real, not noise:
+
+1. `TS2322` at `extensions/operation-mode.ts:86` — the hook read `decision.reason` where the type allowed `undefined`. Fixed by making `ToolPolicyDecision` a discriminated union (`{ allowed: true; reason?: undefined } | { allowed: false; reason: string }`), so the "denied implies a reason" invariant is enforced by the type instead of asserted by a comment.
+2. Two assertions in `__tests__/extension.test.ts` failed because the registered command surface grew from 20 to 21. The counts and both literal command arrays were updated; `provides` stays at 14 because the mode is a command, not a capability.
+
+Deliberate non-change: no typed fiscal tool was added. `propose_journal`, `close_period` and friends carry fiscal semantics and belong to the pinned kernel's `./journal`, `./fiscal` and `./candidates` exports; implementing them here would break the rule that this harness operates and never authorizes. Decision D4 stands.
+
+A note on the requirement number: the new requirement is REQ-AUTH-**010**, not 009. REQ-AUTH-009 already exists in the kernel for the authority modes (ASK / ANALYZE / PREPARE / EXECUTE). Numbering this one 009 would have silently overwritten a live kernel requirement with a harness tool-surface rule — exactly the kind of collision that makes a spec stop being trustworthy.
