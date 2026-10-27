@@ -218,3 +218,65 @@ describe("T-S6-001 no implicit escalation (REQ-AGENT-005)", () => {
     });
   }
 });
+
+/**
+ * Institutional-memory reach (REQ-ENG-005/006). The tool is registered
+ * globally, so each agent's frontmatter `tools:` line is the only gate: these
+ * sets pin which agents may read Drenyra Engram and which must not.
+ */
+const INSTITUTIONAL_MEMORY_TOOL = "drenyra_institutional_memory";
+
+/** Agents whose proposals an institutional precedent may shape. */
+const MEMORY_READERS = [
+  "journal-candidate-agent",
+  "invoice-sire-agent",
+  "reconciliation-agent",
+  "tax-controller-pe",
+] as const;
+
+/** Agents deliberately kept away from institutional memory. */
+const MEMORY_EXCLUDED = [
+  "guardian-angel",
+  "anomaly-refuter",
+  "evidence-builder",
+  "close-controller",
+  "accounting-scout",
+  "ledger-analyst",
+] as const;
+
+describe("institutional-memory reach (REQ-ENG-005, REQ-ENG-006)", () => {
+  it("partitions all ten roles into readers and excluded roles", () => {
+    expect([...MEMORY_READERS, ...MEMORY_EXCLUDED].sort()).toEqual([...REQUIRED_ROLES].sort());
+  });
+
+  for (const role of MEMORY_READERS) {
+    it(`${role} declares ${INSTITUTIONAL_MEMORY_TOOL} with the informs-never-authorizes contract`, () => {
+      const agent = parseAgent(`${role}.md`);
+      expect(agent.tools).toContain(INSTITUTIONAL_MEMORY_TOOL);
+      const lowered = agent.body.toLowerCase();
+      expect(lowered).toContain("## institutional memory (informs proposals, never authority)");
+      expect(lowered).toContain(INSTITUTIONAL_MEMORY_TOOL);
+      expect(lowered).toContain("never changes review depth");
+      expect(lowered).toContain("never grants authority");
+      expect(lowered).toContain("never itself cited as sufficient evidence");
+      expect(lowered).toContain("never blocks you");
+    });
+  }
+
+  for (const role of MEMORY_EXCLUDED) {
+    it(`${role} does not declare ${INSTITUTIONAL_MEMORY_TOOL}`, () => {
+      const agent = parseAgent(`${role}.md`);
+      expect(agent.tools).not.toContain(INSTITUTIONAL_MEMORY_TOOL);
+      expect(agent.body).not.toContain(INSTITUTIONAL_MEMORY_TOOL);
+    });
+  }
+
+  for (const role of REQUIRED_ROLES) {
+    it(`${role} declares no accounting_* or engram_* tool (contracts/engram-dependency.md rule 6)`, () => {
+      const agent = parseAgent(`${role}.md`);
+      for (const tool of agent.tools) {
+        expect(tool, `${role} must not declare ${tool}`).not.toMatch(/^(accounting_|engram_)/);
+      }
+    });
+  }
+});

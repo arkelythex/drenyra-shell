@@ -703,13 +703,15 @@ export function registerDrenyraShellExtension(
   }
 
   /**
-   * `drenyra_institutional_memory` tool (REQ-ENG-005, REQ-ENG-006): lets
-   * `journal-candidate-agent` search Drenyra Engram's general institutional
+   * `drenyra_institutional_memory` tool (REQ-ENG-005, REQ-ENG-006): lets the
+   * proposing agents that declare it (`journal-candidate-agent`,
+   * `invoice-sire-agent`, `reconciliation-agent`, `tax-controller-pe`; pinned
+   * by `__tests__/agents.test.ts`) search Drenyra Engram's general institutional
    * memory (`engram_search`, read-only) with its own query, scoped to the
    * company RUC already known from the local pointer — the agent supplies
    * only the query, never the scope. The result shapes which candidate the
    * agent drafts; it is never wired to any gate, the materiality policy, or
-   * the agent's PREPARE authority ceiling.
+   * the calling agent's authority ceiling.
    */
   async function institutionalMemoryExecute(
     _toolCallId: string,

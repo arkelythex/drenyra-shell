@@ -68,9 +68,9 @@ The pinned build (`0.2.1-SNAPSHOT-6a371a9`) is an explicit pre-release snapshot,
 | Package-local, never PATH | same module — resolves only `<packageRoot>/vendored/drenyra-engram/<artifact>`, never `PATH` |
 | Verification / fail-closed | same module — checksum mismatch, missing artifact, or unsupported platform all report a typed failure, never a silent pass |
 | Child-process lifecycle | `runtime/engram-client.ts` — spawn, `initialize` handshake, graceful shutdown (see `design.md` §6) |
-| Read-only consumption surface | `extensions/register.ts`'s `:context` handler (`engram_context`) and `drenyra_institutional_memory` tool (`engram_search`, reachable only by `journal-candidate-agent`) — the only two callers |
+| Read-only consumption surface | `extensions/register.ts`'s `:context` handler (`engram_context`) and `drenyra_institutional_memory` tool (`engram_search`, reachable only by `journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` through their frontmatter `tools:`) — the only two callers |
 
-Conformance tests: `__tests__/engram-pin.test.ts`, `__tests__/engram-client.test.ts`.
+Conformance tests: `__tests__/engram-pin.test.ts`, `__tests__/engram-client.test.ts`, and `__tests__/agents.test.ts` (which agents may and may not declare `drenyra_institutional_memory`; no agent declares an `accounting_*` or `engram_*` tool).
 
 ## Migration notes
 

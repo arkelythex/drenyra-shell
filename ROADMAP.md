@@ -50,7 +50,7 @@ Extracted via vertical PRs and versioned releases, **not** a bulk move:
 - [x] Slice 2: `/drenyra:status` + `/drenyra:company` + `/drenyra:period` context threading
 - [x] Slice 3: `/drenyra:mission` + `/drenyra:receipt` + `/drenyra:ledger`
 - [x] Slice 4: monthly-close chain (R2 gate, explicit approval)
-- [ ] Slice 5: Drenyra Engram integration (context, memory reads) — read-only institutional context on `/drenyra:context` shipped (`pi-engram-integration`); proposal-informing memory reads shipped for `journal-candidate-agent` only (`pi-engram-memory-reads`); the other 9 agents remain uncovered
+- [ ] Slice 5: Drenyra Engram integration (context, memory reads) — read-only institutional context on `/drenyra:context` shipped (`pi-engram-integration`); proposal-informing memory reads shipped for the four proposing agents (`journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, `tax-controller-pe`; `pi-engram-memory-reads`, `institutional-memory-agents`), with the other six excluded by design; the session pointer is still local
 - [ ] Package released as `drenyra-shell` on npm with pinned `drenyra-ai`
 
 Slices 1–4 are shipped and covered by repository tests, which makes them
@@ -58,14 +58,17 @@ Slices 1–4 are shipped and covered by repository tests, which makes them
 is an in-process fixture, not an operational end-to-end run. Slice 5 is partial:
 `/drenyra:context` reads Drenyra Engram institutional context read-only once a
 company RUC is already known (`pi-engram-integration`, `capability-manifest.yaml`
-`engram-integration: partial`); `journal-candidate-agent` can also call
-`drenyra_institutional_memory` to inform which candidate it drafts
-(`pi-engram-memory-reads`), never wired to any gate or the materiality policy.
+`engram-integration: partial`); `journal-candidate-agent`, `invoice-sire-agent`,
+`reconciliation-agent`, and `tax-controller-pe` can also call
+`drenyra_institutional_memory` to inform what they propose
+(`pi-engram-memory-reads`, `institutional-memory-agents`), never wired to any
+gate or the materiality policy.
 The active company/period pointer itself is still the development-grade local
 JSON store (Engram's scope model has no session-pointer concept to hold it) —
-that gap is upstream in Drenyra Engram, not fixable from this package. The
-other 9 agents have no memory-read access, so the checkbox above stays
-unchecked.
+that gap is upstream in Drenyra Engram, not fixable from this package, and it
+is why the checkbox above stays unchecked. The other six agents have no
+memory-read access on purpose (see `agents/README.md#institutional-memory`):
+their absence is a design decision, not missing coverage.
 
 ## Phase 3 — Ecosystem maturity (alpha → beta)
 
