@@ -107,34 +107,59 @@ Those are consumed from the pinned runtime's public kernel entry points
 
 ---
 
-### ODD for the books — the everyday accounting workflow
+### The Drenyra method — EDA · CDA · RDA
+
+Software teams have ODD, TDD, and RDD. Agentic accounting needs the same
+disciplines in its own vocabulary, because the material is different: evidence,
+materiality, controls, entries, and a SUNAT filing that cannot be cheaply undone.
+
+| Discipline | Rule | Inspired by |
+| --- | --- | --- |
+| **EDA — Evidence-Driven Accounting** | No conclusion without a cited source, and materiality, not the agent, decides how much process the work gets | ODD |
+| **CDA — Control-Driven Accounting** | The control comes before the entry, and the controls themselves are tested | TDD |
+| **RDA — Receipt-Driven Accounting** | No receipt, no mutation | RDD |
+
+#### EDA — how one piece of accounting work flows
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/drenyra-odd-workflow.dark.svg">
-  <img width="100%" src="docs/diagrams/drenyra-odd-workflow.light.svg" alt="Organic Driven Development for accounting as eight steps in one left-to-right flow: Authorize, Bind scope, and Evidence set the scope; Classify asks the pinned core how material the work is, so work below R2 stays light while R2 and above becomes a durable mission; both paths converge on Propose, Verify, and Approve with a signed receipt, above a band noting that the durable mission store lets work resume and that Engram informs what to propose, never how much review">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/drenyra-eda-workflow.dark.svg">
+  <img width="100%" src="docs/diagrams/drenyra-eda-workflow.light.svg" alt="Evidence-Driven Accounting as eight steps in one left-to-right flow: Authorize, Bind scope, and Evidence set the scope; Classify asks the pinned core how material the work is, so work below R2 stays light while R2 and above becomes a durable mission; both paths converge on Propose, Verify, and Approve with a signed receipt, above a band noting that the durable mission store lets work resume and that Engram informs what to propose, never how much review">
 </picture>
 
-**Organic Driven Development (ODD)** is how this repository is built, and it is
-also the shape of the accounting work the Shell operates. The same discipline —
-read-only until a change is asked for, understand before acting, keep small work
-small, track substantial work durably, close with proof — maps onto the books:
-
-| ODD step | In the books | Where it lives |
+| Move | In the books | Where it lives |
 | --- | --- | --- |
-| Authorize | Questions, reviews, and status stay read-only; `/drenyra:mode books` denies `bash`, `write`, and `edit` by default | [Control and safety](#control) |
-| Explore | Bind the complete RUC + period scope, then ingest and cite every source as an evidence node | `/drenyra:scope`, `/drenyra:evidence` |
-| Classify | Materiality and the route (`direct`, `delegated`, `durable`) are decided by the pinned Core, never by the Shell or a model | `lib/routing/types.ts`, [`specs/authority`](specs/authority/spec.md) |
-| Track | Material work (R2 and above, such as a monthly close) runs as a durable mission over the 13 EDA phases | `/drenyra:mission`, `/drenyra:resume` |
-| Implement | Agents propose candidates — journal entries, reconciliations, compliance findings — that are recorded, never posted | [`agents/`](agents/README.md) |
-| Verify | Refutation runs before any finding is elevated; Guardian Angel reviews independently | `/drenyra:verify` |
-| Close | The professional approves; the Core seals the outcome with a signed receipt | `/drenyra:receipt` |
+| Scope | Questions, reviews, and status stay read-only; work binds the complete RUC + period scope; `/drenyra:mode books` denies `bash`, `write`, and `edit` | `/drenyra:scope`, [Control and safety](#control) |
+| Evidence | Every source is ingested and cited as an evidence node; memory may shape what is proposed, never what counts as evidence | `/drenyra:evidence` |
+| Decide the path | The pinned Core's materiality policy routes the work (`direct`, `delegated`, `durable`); R2 and above runs as a durable mission over the 13 EDA phases | `/drenyra:mission`, `/drenyra:resume` |
+| Propose → refute → approve | Agents propose candidates that are recorded, never posted; refutation runs before any finding is elevated; Guardian Angel reviews independently; the professional approves | [`agents/`](agents/README.md), `/drenyra:verify` |
 
 The fork is the point. A reversible lookup does not need a 13-phase mission, and a
-monthly close must never be treated as a lookup — so the deterministic materiality
-policy, not the agent's judgment, decides which path the work takes. Missing
-materiality inputs fail closed; they never default to R0.
+monthly close must never be treated as a lookup. That is why the deterministic
+materiality policy, not the agent's judgment, decides which path the work takes.
+Missing materiality inputs fail closed; they never default to R0.
 
-**[Mission protocol →](specs/mission-protocol/spec.md)**
+#### CDA — the control before the entry
+
+The control fails first (the bank is off by S/ 1,180.00, or SIRE and the ERP
+disagree), and an entry is proposed to clear it, citing the evidence. The entry is
+right when the control passes, not when it looks right. The controls themselves are
+mutation-tested: `bun run eval:controls` injects 25 known bookkeeping defects, and
+the pinned kernel rejects **18 (7200 bps)** with no false alarms. The 7 it lets
+through are listed as kernel gaps in [`docs/evals/control-mutation.md`](docs/evals/control-mutation.md).
+CDA is defined by the Shell and has not yet been formalized in Drenyra AI.
+
+#### RDA — no receipt, no mutation
+
+Every material action ends in an immutable, signed Ed25519 receipt that carries
+scope, before and after state, evidence, and approver. The receipt is what an
+auditor reads, not the chat. The command chains (close, reconcile, verify,
+evidence) are RDA chains, and `propose_journal_entry` carries no receipt
+because a proposal is not yet material.
+
+ODD remains how this repository is *built* ([`AGENTS.md`](AGENTS.md)). EDA, CDA,
+and RDA are how the books are *kept*.
+
+**[The Drenyra method →](docs/method.md)** · **[Mission protocol →](specs/mission-protocol/spec.md)**
 
 ---
 
@@ -506,15 +531,19 @@ independent fiscal versioning and validity history.
 
 ## 🌐 Ecosystem
 
-| Project | Role |
-| --- | --- |
-| [Drenyra Command Center](https://github.com/arkelythex/drenyra-command-center) | Command Center — web application (consumes AI) |
-| [Drenyra AI](https://github.com/arkelythex/drenyra-ai) | Agent ecosystem (installed, pinned) |
-| [Drenyra Engram](https://github.com/arkelythex/drenyra-engram) | Institutional accounting memory (planned integration) |
+Drenyra follows the same shape as the Gentle AI ecosystem (gentle-ai,
+gentle-shell, gentle-engram), adapted to accounting:
 
-**Direction rule:** Drenyra Shell depends on Drenyra AI; Drenyra Engram integration
-is planned. Drenyra Shell never leaks into Drenyra AI's contracts, and Drenyra AI
-never knows Drenyra Shell exists.
+| Project | Gentle AI counterpart | Role |
+| --- | --- | --- |
+| [Drenyra AI](https://github.com/arkelythex/drenyra-ai) | gentle-ai | Fiscal kernel and program master: missions, candidates, materiality, gates, approvals, receipts (pinned, checksum-verified) |
+| **Drenyra Shell** (this repository) | gentle-shell | Agentic harness: persona, commands, chains, agents, scope context (operates, never authorizes) |
+| [Drenyra Engram](https://github.com/arkelythex/drenyra-engram) | gentle-engram | Institutional accounting memory (pinned binary, read-only `engram_context` and `engram_search`; informs, never authorizes) |
+| [Drenyra Command Center](https://github.com/arkelythex/drenyra-command-center) | — | Web application for the professional (consumes Drenyra AI) |
+
+**Direction rule:** Drenyra Shell depends on Drenyra AI and Drenyra Engram, both
+pinned. Drenyra Shell never leaks into Drenyra AI's contracts, and Drenyra AI never
+knows Drenyra Shell exists.
 
 Drenyra Shell participates in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion),
 the federated program master in `drenyra-ai` that fixes vision, authority,
