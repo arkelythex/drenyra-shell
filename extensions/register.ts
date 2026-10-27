@@ -61,6 +61,7 @@ import {
 import { loadEvidenceStatus } from "../lib/evidence-status.js";
 import { showStartupPanel, type StartupPanelDeps } from "./startup-panel.js";
 import { registerFiscalGuard } from "./fiscal-guard.js";
+import { registerOperationMode } from "./operation-mode.js";
 import {
   renderContinueResult,
   renderMissionStarted,
@@ -233,6 +234,7 @@ export const drenyraShellExtension = {
     "/drenyra:install",
     "/drenyra:sync",
     "/drenyra:persona",
+    "/drenyra:mode",
   ] as const,
   runtime: {
     package: DEFAULT_PIN.package,
@@ -1591,6 +1593,7 @@ export function registerDrenyraShellExtension(
     handler: syncHandler,
   });
   registerFiscalGuard(pi);
+  registerOperationMode(pi);
 }
 
 /**

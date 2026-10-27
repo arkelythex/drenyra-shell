@@ -178,6 +178,7 @@ describe("drenyraShellExtension descriptor", () => {
       "/drenyra:install",
       "/drenyra:sync",
       "/drenyra:persona",
+      "/drenyra:mode",
     ]);
     expect(drenyraShellExtension.runtime.package).toBe("drenyra-ai");
     expect(drenyraShellExtension.runtime.version).toBe("0.4.1");
@@ -210,6 +211,7 @@ describe("registerDrenyraShellExtension", () => {
       "drenyra:install",
       "drenyra:sync",
       "drenyra:persona",
+      "drenyra:mode",
     ]);
     for (const command of registered) {
       expect(command.description.length).toBeGreaterThan(0);
@@ -372,7 +374,7 @@ describe("selector-change isolation at protected command handlers", () => {
 });
 
 describe("T-S4B-004 complete command surface (REQ-CMD-001/002; SC-CMD-001)", () => {
-  it("registers the 15 intended commands plus company, context, install and sync (19 commands)", () => {
+  it("registers the 15 intended commands plus company, context, install and sync (20 commands)", () => {
     const { pi, registered } = makeMockPi();
     registerDrenyraShellExtension(pi);
     const names = registered.map((c) => c.name);
@@ -381,9 +383,9 @@ describe("T-S4B-004 complete command surface (REQ-CMD-001/002; SC-CMD-001)", () 
     }
     expect(names).toContain("drenyra:company");
     expect(names).toContain("drenyra:context");
-    expect(registered).toHaveLength(20);
+    expect(registered).toHaveLength(21);
     // Descriptor mirrors the registered surface (SC-CMD-001 conformance).
-    expect(drenyraShellExtension.commands).toHaveLength(20);
+    expect(drenyraShellExtension.commands).toHaveLength(21);
     expect(drenyraShellExtension.provides).toHaveLength(14);
   });
 

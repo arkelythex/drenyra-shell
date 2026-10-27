@@ -51,11 +51,12 @@ operational integration.
 
 | Works today | Does not exist yet |
 | --- | --- |
-| 20 `/drenyra:*` commands, all registered | Publication on npm |
+| 21 `/drenyra:*` commands, all registered | Publication on npm |
 | Pinned `drenyra-ai@0.4.1` with checksum verification that fails closed | Typed fiscal tools (`ingest_cpe`, `propose_journal`, `close_period`) |
-| Signed, verifiable receipts through `ReceiptStore` | A mode where a bookkeeping session has no `bash`, `write`, or database credentials |
-| Fiscal scope (RUC + period) threading and fail-closed guards | Executable Drenyra Engram memory reads |
-| RDA command chains, persona, startup panel, 11 packaged skills | A measured eval set against a professional's own work |
+| Signed, verifiable receipts through `ReceiptStore` | Executable Drenyra Engram memory reads |
+| A `books` operation mode where `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool by default | A measured eval set against a professional's own work |
+| Fiscal scope (RUC + period) threading and fail-closed guards | — |
+| RDA command chains, persona, startup panel, 11 packaged skills | — |
 
 Everything below is written against that table. If a claim is not backed by a
 `file:line` you can open, it does not belong in this README.
@@ -313,6 +314,7 @@ Bootstrap, context, and read commands run **before** the scope is complete
 | `/drenyra:models` | Model routing registry (advisory) |
 | `/drenyra:preflight` | Scope + pinned runtime preflight (read-only) |
 | `/drenyra:persona` | Toggle the fiscal operator persona on/off |
+| `/drenyra:mode` | Report or switch the operation mode: `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool; `/drenyra:mode open` restores the default |
 | `/drenyra:install` | Render the managed composition + pin asset under `~/.drenyra` |
 | `/drenyra:sync` | Synchronize the managed composition with the packaged version (idempotent) |
 
@@ -345,11 +347,13 @@ guards. They are not a fiscal boundary, and they do not protect a ledger.**
 | **SQL** `extensions/fiscal-guard.ts:171` | `bash` only | Case-sensitive `String.includes` on `DELETE FROM`, `DROP TABLE`, `TRUNCATE`, and `WHERE ruc =` without `:currentRuc` | A lowercase `delete from`, a different client, or `python -c` passes. A regex over a command string is not a boundary. |
 | **RUC path** `extensions/fiscal-guard.ts:211` | `read` and `edit` | A path containing `/ruc/` without a `:ruc` placeholder | Any access not expressed as a file path. |
 
-> **The boundary that would matter is different.** In accounting, the real control
-> is that the agent **does not have** `bash`, `write`, or database credentials
-> during a bookkeeping session. This harness runs inside a full coding agent and
-> does not yet offer that mode. Treating these guards as protection is the failure
-> this section exists to prevent.
+> **The boundary that matters is a different mechanism.** In accounting, the real
+> control is that the agent **does not have** `bash`, `write`, or database
+> credentials during a bookkeeping session. That is what `/drenyra:mode books`
+> does: it denies every tool absent from a fixed allowlist, so an unlisted MCP or
+> database client is unreachable rather than merely discouraged. Switch to it
+> before a bookkeeping session and back with `/drenyra:mode open`. Treating the
+> guards above as protection is the failure this section exists to prevent.
 
 **[Trust model →](docs/architecture/trust-model.md)**
 
@@ -366,7 +370,6 @@ documentation bug worth reporting.
 | --- | --- | --- |
 | **`record_receipt` is fail-open** | `extensions/fiscal-guard.ts:398-409` | The id is `Date.now()` + `Math.random().toString(36)`, `beforeState`/`afterState` are supplied by the caller, and `hash` is `""` with `// TODO: hash over receipt fields`. A record from this path is a log line, **not proof**. The signed path is `ReceiptStore` (`lib/receipt-store.ts:270`). |
 | **Guards are hygiene, not enforcement** | `extensions/fiscal-guard.ts:133`, `:171`, `:211` | See [Control and safety](#control). |
-| **No operation mode without `bash`/`write`** | — | The harness has no reduced-capability mode for a bookkeeping session. |
 | **No typed fiscal tool surface** | — | There is no `ingest_cpe`, `propose_journal`, `close_period`, or equivalent. Fiscal actions are command chains over the pinned runtime. |
 | **No end-to-end validation** | `capability-manifest.yaml` | No capability is `validated-end-to-end`; every one is `declared-only`, `implemented`, or `unit-or-contract-tested`. |
 | **Engram reads are not executable** | [Engram dependency](contracts/engram-dependency.md) | Memory integration is designed and bounded, not shipped. |
