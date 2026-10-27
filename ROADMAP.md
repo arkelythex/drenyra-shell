@@ -13,7 +13,7 @@
 
 ## Program alignment
 
-Drenyra Shell participates in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion), the federated program master in `drenyra-ai` that fixes vision, authority, contracts, dependencies, gates, and sequencing across every Drenyra repository. The roadmap phases below align to the program waves:
+Drenyra Shell participates in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/program/drenyra-dominion), the federated program master in `drenyra-ai` that fixes vision, authority, contracts, dependencies, gates, and sequencing across every Drenyra repository. The roadmap phases below align to the program waves:
 
 | Roadmap phase | Drenyra Dominion wave |
 | --- | --- |
@@ -22,7 +22,7 @@ Drenyra Shell participates in the [Drenyra Dominion Program](https://github.com/
 | Phase 3 — Ecosystem maturity | Waves 2–3 (Fiscal intelligence and flagship product) |
 
 **Gate note (reference-only, 2026-08-14):** SDD-020 — the configurator capability
-Drenyra Shell serves — is **planned** in the master and gated by master [Gate 0](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion/gate-0.md)
+Drenyra Shell serves — is **planned** in the master and gated by master [Gate 0](https://github.com/arkelythex/drenyra-ai/blob/main/program/drenyra-dominion/gate-0.md)
 (**in progress**) / Wave 1 readiness. **No Pi-local implementation of SDD-020
 proceeds until the master promotes readiness.** The master owns the full SDD
 catalog (SDD-000/010/050/060/070/080/090/100/110); Drenyra Shell references these,

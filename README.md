@@ -547,7 +547,7 @@ gentle-shell, gentle-engram), adapted to accounting:
 pinned. Drenyra Shell never leaks into Drenyra AI's contracts, and Drenyra AI never
 knows Drenyra Shell exists.
 
-Drenyra Shell participates in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion),
+Drenyra Shell participates in the [Drenyra Dominion Program](https://github.com/arkelythex/drenyra-ai/tree/main/program/drenyra-dominion),
 the federated program master in `drenyra-ai` that fixes vision, authority,
 contracts, dependencies, gates, and sequencing across every Drenyra repository.
 The program follows a master + vertical SDD model: one master SDD fixes the
@@ -563,9 +563,9 @@ requirements baseline in [`specs/`](specs) and its delivery workflow in
 
 | SDD | Role in Drenyra Shell |
 | --- | --- |
-| [SDD-020 — Universal Agent Configurator](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion/sdds/sdd-020-configurator) | Pre-Wave-1 scaffolding: `install`, `doctor`, and `sync` consume the public configurator contract; this is not the Wave-1 SDD-020 implementation |
-| [SDD-030 — Organic Accounting Work Routing](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion/sdds/sdd-030-routing) | Direct / delegated / durable-mission routing from evidence and risk |
-| [SDD-040 — Receipt-Driven Accounting v2](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion/sdds/sdd-040-rda-v2) | Frozen candidate, proportional review, bounded correction, reusable receipt (RDA v2 chains) |
+| [SDD-020 — Universal Agent Configurator](https://github.com/arkelythex/drenyra-ai/tree/main/program/drenyra-dominion/sdds/sdd-020-configurator) | Pre-Wave-1 scaffolding: `install`, `doctor`, and `sync` consume the public configurator contract; this is not the Wave-1 SDD-020 implementation |
+| [SDD-030 — Organic Accounting Work Routing](https://github.com/arkelythex/drenyra-ai/tree/main/program/drenyra-dominion/sdds/sdd-030-routing) | Direct / delegated / durable-mission routing from evidence and risk |
+| [SDD-040 — Receipt-Driven Accounting v2](https://github.com/arkelythex/drenyra-ai/tree/main/program/drenyra-dominion/sdds/sdd-040-rda-v2) | Frozen candidate, proportional review, bounded correction, reusable receipt (RDA v2 chains) |
 
 The master owns the full program catalog — SDD-010 (ecosystem contracts / release
 train), SDD-050 (monthly close), SDD-070 (skills), SDD-080 (Engram memory), SDD-090
@@ -573,7 +573,7 @@ train), SDD-050 (monthly close), SDD-070 (skills), SDD-080 (Engram memory), SDD-
 references only and never duplicates.
 
 SDD-020 remains **planned** (Wave 1) in the master and gated by the master's
-[Gate 0](https://github.com/arkelythex/drenyra-ai/tree/main/openspec/programs/drenyra-dominion/gate-0.md) —
+[Gate 0](https://github.com/arkelythex/drenyra-ai/blob/main/program/drenyra-dominion/gate-0.md) —
 **in progress**. Drenyra Shell's existing `/drenyra:install`, `/drenyra:doctor` and
 `/drenyra:sync` are legitimate pre-Wave-1 scaffolding that consume the public
 configurator contract; they do not claim delivery of the master SDD. The historical

@@ -20,7 +20,7 @@ subagents, per-phase model routing, and a strict no-execution boundary.
 
 **Numbering reconciliation.** That draft reused the `SDD-050` number. In the
 Drenyra Dominion program master
-(`drenyra-ai/openspec/programs/drenyra-dominion/sdds/`) the `SDD-050` number
+(`drenyra-ai/program/drenyra-dominion/sdds/`) the `SDD-050` number
 belongs to **`sdd-050-monthly-close`** (monthly close), not to the harness. The
 harness described by the draft was actually delivered through:
 
