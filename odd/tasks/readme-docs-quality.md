@@ -47,7 +47,7 @@ Branch: `docs/readme-quality-gentle-shell`. Delivery: single PR. Runner: `vitest
 - [x] **T2** — Rewrite the safety/control section to S7 with exact guard scope. Route: inline.
 - [x] **T3** — Align `docs/intended-usage.md` with the README's limitation statements. Route: inline.
 - [x] **T4** — Run gates (S10) and refresh program lock facts. Route: inline.
-- [ ] **T5** — Close: check off this document and refresh lock facts so `activeChanges` returns to `[]`. Route: inline.
+- [x] **T5** — Close: check off this document and refresh lock facts so `activeChanges` returns to `[]`. Route: inline. Evidence: `66d3ad1`.
 
 ## Log
 
@@ -111,3 +111,21 @@ Every claim that reaches the README was checked against the tree at `main`
   `ingest_cpe`, `propose_journal`, `reconcile` and `close_period` as the future
   tool surface. They are **not** in this tree and are not documented as if they
   were.
+
+### L4 — 2026-10-27 — verification
+
+- `bun run typecheck` clean; `bun run test` → 54 files / 798 passed / 0 failed;
+  `bun run verify:style` OK; `bun run verify:capability` OK.
+- The first test run after the rewrite failed three tests for two real reasons,
+  both expected: `capability-manifest.test.ts` requires the README to carry
+  `conformance:surface id=readme authority=pi-operates-never-authorizes` (the
+  rewrite had dropped the marker, which was restored), and `lock-facts.test.ts`
+  requires `activeChanges` to match the feature documents on disk, so it named
+  `readme-docs-quality` until the refresh ran.
+- The candidate identity needed one extra convergence pass: writing the mirror in
+  `docs/architecture/current-test-state.yaml` after a `--write` left the recorded
+  identity one generation behind. Repeating write-then-mirror until `--check` and
+  `verify:capability` both pass converges; the final value is
+  `dirty-sha256:26293c9384f2e575bdd9dc864f75a5614bc08d996651f2ca357154f9f97391f3`.
+- `docs/architecture.md` and `assets/branding/*` are not participation paths, so
+  the README and the diagrams required no identity work of their own.
