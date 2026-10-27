@@ -2,8 +2,8 @@
   "schemaVersion": "drenyra.program-lock-facts.v1",
   "participantCheckpoint": true,
   "authorityNotice": "Pi-local input; does not modify or promote the program master",
-  "headSha": "35d47f3faee8d8de6f6202f3caca71902a0da8e7",
-  "candidateIdentity": "dirty-sha256:94805566fc56e6bd5358ed90747d9e9217b5338265eaf267224d2504b37a0170",
+  "headSha": "71a0097b246fe6459ac12d8410a266ebdb8f4e79",
+  "candidateIdentity": "dirty-sha256:3c8e77b0294b9532eb2caedca754ddca3495c47f093707c767cc715c8c4f4d91",
   "packageVersion": "0.1.0",
   "contracts": {
     "consumed": [
@@ -54,24 +54,26 @@
     "pinEntrySha256": "09df8d696204337a9b62ddd28c354b414b62e81924caaf68a50b61131d5b7600",
     "contentManifest": {
       "path": "contracts/SHA256SUMS.json",
-      "sha256": "f07e89bc3fd996b648a2ab03b0cc92e5eb11b57cf2ef14bd5194e2e07883aa6a"
+      "sha256": "3aebf5c4f003ffc98647d6b1e312b0dfba3c500d5a5a6caa875185983e310e9b"
     }
   },
   "capabilityStates": {
     "manifest": "capability-manifest.yaml",
     "schemaVersion": "drenyra.capability-manifest.v1",
-    "digestSha256": "e98d523cb01b7a6a6a9fd1e57e86178d57834b8d8afbcb3a3994e3e4d7a82c12"
+    "digestSha256": "050caa4bd547be68934c9659b0cb876be012347070d3af94a83b01c3cda90f36"
   },
-  "activeChanges": [],
+  "activeChanges": [
+    "sdd-to-odd-migration"
+  ],
   "snapshotRecord": {
     "evidenceScope": "historical",
-    "evidenceSource": "openspec/changes/archive/2026-09-09-pi-accounting-orchestration/verify-report.md",
+    "evidenceSource": "docs/architecture/program-lock-facts.json#/tests (preserved verbatim; recorded 2026-09-09)",
     "labelledFields": [
       "tests",
       "evidenceDate",
       "derivationCommands"
     ],
-    "note": "`tests`, `evidenceDate`, and the older `derivationCommands` describe their recorded evidence date (2026-09-09, 48 files / 738 tests) and are preserved verbatim by scripts/refresh-program-lock-facts.mjs. They do not claim current test counts. `candidateIdentity` is generated and does identify the live dirty candidate; the canonical current snapshot is published in openspec/config.yaml#/current_test_state."
+    "note": "`tests`, `evidenceDate`, and the older `derivationCommands` describe their recorded evidence date (2026-09-09, 48 files / 738 tests) and are preserved verbatim by scripts/refresh-program-lock-facts.mjs. They do not claim current test counts. `candidateIdentity` is generated and does identify the live dirty candidate; the canonical current snapshot is published in docs/architecture/current-test-state.yaml#/current_test_state."
   },
   "evidenceDate": "2026-09-09",
   "derivationCommands": [

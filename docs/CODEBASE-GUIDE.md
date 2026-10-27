@@ -51,7 +51,8 @@ docs/               Architecture series, boundary docs, style
 assets/             Static assets (branding, chain maps, policies, schemas)
 vendored/           Pinned drenyra-ai release tarball (never PATH)
 scripts/            Build, package-verification, and capability-verification tooling
-openspec/           SDD artifacts (changes/, specs/)
+specs/              Living requirements baseline (one spec per capability)
+odd/                ODD feature documents (odd/tasks/<feature>.md)
 __tests__/          Test suites for commands, chains, and permissions
 ```
 

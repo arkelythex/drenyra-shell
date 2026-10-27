@@ -1,7 +1,7 @@
 # drenyra-shell — formatter exclusions
 #
 # These artifacts must stay strict JSON (the JSON-compatible YAML 1.2 profile
-# required by the SDD-010 participation design) so they remain parseable by the
+# required by the participation contract) so they remain parseable by the
 # zero-dependency validators and by master YAML tooling. Prettier-style
 # auto-formatters expand JSON into YAML-ish layouts with trailing commas, which
 # breaks the strict-JSON contract. Excluded here so no tool reformats them.

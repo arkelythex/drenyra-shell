@@ -1,24 +1,23 @@
 #!/usr/bin/env node
 /**
- * compute-candidate-identity.mjs — deterministic dirty-candidate identity (D4/§7).
+ * compute-candidate-identity.mjs — deterministic dirty-candidate identity.
  *
  * Prints one line `dirty-sha256:<64 lowercase hex>` that identifies the exact
- * uncommitted final candidate over the immutable §13 apply-whitelist path set
- * plus the planning inputs (proposal.md, design.md), relative to HEAD
- * (`c354274...` at this baseline). Exits non-zero if Git/HEAD cannot be read,
+ * uncommitted final candidate over the immutable participation whitelist
+ * (PARTICIPATION_PATHS_V1), relative to HEAD. Exits non-zero if Git/HEAD cannot be read,
  * an allowlisted path cannot be classified, normalization fails, or no
  * allowlisted candidate change exists.
  *
- * Canonical algorithm (design §7.2):
+ * Canonical algorithm:
  *   1. `git rev-parse HEAD` → full 40 lowercase hex.
  *   2. Immutable lexicographically-sorted PARTICIPATION_PATHS_V1.
  *   3. Classify changed entries A (new) / M (modified) / D (deleted), staged +
  *      unstaged; working-tree bytes hashed; deleted digest is "-".
  *   4. Git mode 100644/100755 from HEAD for tracked entries, executable bit for
  *      new entries, HEAD mode for deletions.
- *   5. Normalize self-references only: lock-facts `candidateIdentity`,
- *      `current_test_state.candidate_identity` in openspec/config.yaml, and
- *      values after the literal label `Candidate identity:` in apply-progress.md.
+ *   5. Normalize self-references only: lock-facts `candidateIdentity` and
+ *      `current_test_state.candidate_identity` in
+ *      docs/architecture/current-test-state.yaml.
  *   6. Lowercase sha-256 per normalized byte sequence.
  *   7. UTF-8 canonical manifest with literal NUL separators, entries sorted by
  *      path.
@@ -38,9 +37,9 @@ export const CANDIDATE_FORMAT = "drenyra.pi.participation.v1";
 export const CANDIDATE_IDENTITY_PLACEHOLDER = "__CANDIDATE_IDENTITY__";
 
 /**
- * Design §13 apply whitelist plus the immutable planning inputs, in immutable
- * lexicographic (byte) order. Change-proof: any new apply-owned path must be
- * added here before it can participate in the candidate identity.
+ * Identity-participation whitelist, in immutable lexicographic (byte) order.
+ * Change-proof: any new path that must move the candidate identity has to be
+ * added here before it can participate.
  */
 export const PARTICIPATION_PATHS_V1 = [
 	"ROADMAP.md",
@@ -52,15 +51,8 @@ export const PARTICIPATION_PATHS_V1 = [
 	"contracts/SHA256SUMS.json",
 	"contracts/package-contract.md",
 	"contracts/runtime-dependency.md",
+	"docs/architecture/current-test-state.yaml",
 	"docs/architecture/program-lock-facts.json",
-	"openspec/changes/pi-sdd-010-participation/apply-progress.md",
-	"openspec/changes/pi-sdd-010-participation/design.md",
-	"openspec/changes/pi-sdd-010-participation/proposal.md",
-	"openspec/changes/pi-sdd-010-participation/spec.md",
-	"openspec/changes/pi-sdd-010-participation/specs/README.md",
-	"openspec/changes/pi-sdd-010-participation/specs/participation/spec.md",
-	"openspec/changes/pi-sdd-010-participation/tasks.md",
-	"openspec/config.yaml",
 	"package.json",
 	"scripts/compute-candidate-identity.mjs",
 	"scripts/verify-capability-manifest.mjs",
@@ -84,7 +76,7 @@ function canonicalStringify(value) {
 	return JSON.stringify(value);
 }
 
-/** Normalize the lock-facts `candidateIdentity` field (D4). */
+/** Normalize the lock-facts `candidateIdentity` field. */
 export function normalizeLockFacts(bytes) {
 	let data;
 	try {
@@ -100,42 +92,26 @@ export function normalizeLockFacts(bytes) {
 	return `${canonicalStringify(data)}\n`;
 }
 
-/** Normalize only the `current_test_state.candidate_identity` scalar (D4). */
-export function normalizeConfigYaml(bytes) {
+/** Normalize only the `current_test_state.candidate_identity` scalar. */
+export function normalizeSnapshotRecord(bytes) {
 	return bytes.replace(
 		/^(\s*candidate_identity:\s*).*$/gm,
 		`$1${CANDIDATE_IDENTITY_PLACEHOLDER}`,
 	);
 }
 
-/** Normalize only values after the literal label `Candidate identity:` (D4). */
-export function normalizeApplyProgress(bytes) {
-	return bytes
-		.split("\n")
-		.map((line) => {
-			const label = "Candidate identity:";
-			const idx = line.indexOf(label);
-			if (idx === -1) return line;
-			return line.slice(0, idx + label.length) + CANDIDATE_IDENTITY_PLACEHOLDER;
-		})
-		.join("\n");
-}
-
 function normalizeBytesFor(path, bytes) {
 	if (path === "docs/architecture/program-lock-facts.json") {
 		return normalizeLockFacts(bytes);
 	}
-	if (path === "openspec/config.yaml") {
-		return normalizeConfigYaml(bytes);
-	}
-	if (path === "openspec/changes/pi-sdd-010-participation/apply-progress.md") {
-		return normalizeApplyProgress(bytes);
+	if (path === "docs/architecture/current-test-state.yaml") {
+		return normalizeSnapshotRecord(bytes);
 	}
 	return bytes;
 }
 
 /**
- * Build the NUL-separated canonical manifest (design §7.2 step 7). Entries are
+ * Build the NUL-separated canonical manifest (step 7). Entries are
  * expected to be sorted by path; the digest is computed over the exact bytes.
  */
 export function buildCanonicalManifest({ head, entries }) {

@@ -16,12 +16,14 @@
  *   - partial without limitation fails;
  *   - planned without plan fails;
  *   - missing or path-escaping evidence path fails;
- *   - snapshot evidence records (openspec/config.yaml and the generated lock
- *     facts) are complete, labeled, and agree on the current candidate;
+ *   - snapshot evidence records (docs/architecture/current-test-state.yaml and
+ *     the generated lock facts) are complete, labeled, and agree on the current
+ *     candidate;
  *   - the real repository capability-manifest.yaml validates.
  *
- * PR 3 fixture note: every deterministic temp root now also carries an
- * `openspec/config.yaml` current snapshot record and a lock-facts record, and every
+ * PR 3 fixture note: every deterministic temp root now also carries a
+ * `docs/architecture/current-test-state.yaml` current snapshot record and a
+ * lock-facts record, and every
  * root manifest declares `currentProjection.evidenceRecords`/`currentSnapshot`.
  * The guard reads the two evidence records by fixed repository-relative path, so a
  * root that omits the declaration is rejected rather than skipped.
@@ -114,9 +116,10 @@ interface Manifest {
 }
 
 /** PR 3 snapshot-evidence vocabulary shared with the verifier. */
-const CONFIG_RECORD_REL = "openspec/config.yaml";
+const SNAPSHOT_RECORD_REL = "docs/architecture/current-test-state.yaml";
 const LOCK_FACTS_RECORD_REL = "docs/architecture/program-lock-facts.json";
-const CURRENT_SNAPSHOT_LOCATOR = "openspec/config.yaml#/current_test_state";
+const CURRENT_SNAPSHOT_LOCATOR =
+	"docs/architecture/current-test-state.yaml#/current_test_state";
 const LIVE_IDENTITY_REF =
 	"docs/architecture/program-lock-facts.json#/candidateIdentity";
 const FIXTURE_IDENTITY = `dirty-sha256:${"a".repeat(64)}`;
@@ -300,7 +303,7 @@ function writeValidRoot(): { root: string; manifestPath: string } {
 		schemaVersion: "drenyra.capability-manifest.v1",
 		currentProjection: {
 			surfaces: PROJECTION_SURFACES,
-			evidenceRecords: [CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL],
+			evidenceRecords: [SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL],
 			currentSnapshot: CURRENT_SNAPSHOT_LOCATOR,
 		},
 		repository: {
@@ -333,18 +336,18 @@ function writeValidRoot(): { root: string; manifestPath: string } {
 		derivedFrom: ["arkelythex/drenyra-ai@4975f4f"],
 	};
 	const manifestPath = writeManifest(root, manifest);
-	writeConfigRecord(root);
+	writeSnapshotRecord(root);
 	writeLockFactsRecord(root);
 	addProjection(root, manifestPath);
 	return { root, manifestPath };
 }
 
 /**
- * Renders the OpenSpec project-context record. `undefined` omits a field so the
+ * Renders the current-test-state record. `undefined` omits a field so the
  * negative cases can present incomplete records; `>-` renders a block scalar as
  * scalarValue producers do.
  */
-function configRecordText(
+function snapshotRecordText(
 	overrides: Record<string, string | number | boolean | undefined> = {},
 ): string {
 	const fields: Record<string, string | number | boolean | undefined> = {
@@ -370,13 +373,13 @@ function configRecordText(
 	return `${lines.join("\n")}\n`;
 }
 
-function writeConfigRecord(
+function writeSnapshotRecord(
 	root: string,
 	overrides: Record<string, string | number | boolean | undefined> = {},
 ): void {
-	const target = join(root, CONFIG_RECORD_REL);
+	const target = join(root, SNAPSHOT_RECORD_REL);
 	mkdirSync(dirname(target), { recursive: true });
-	writeFileSync(target, configRecordText(overrides));
+	writeFileSync(target, snapshotRecordText(overrides));
 }
 
 /** Renders the generated lock-facts evidence record. */
@@ -457,7 +460,7 @@ function addProjection(
 	const manifest = readManifest(manifestPath);
 	manifest.currentProjection = {
 		surfaces: PROJECTION_SURFACES,
-		evidenceRecords: [CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL],
+		evidenceRecords: [SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL],
 		currentSnapshot: CURRENT_SNAPSHOT_LOCATOR,
 	};
 	writeManifestObject(manifestPath, manifest);
@@ -843,7 +846,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		manifest.evidenceSnapshot.candidateIdentityRef = undefined;
 		manifest.evidenceSnapshot.evidenceScope = "historical";
 		manifest.evidenceSnapshot.evidenceSource =
-			"openspec/changes/archive/2026-08-15-pi-sdd-010-participation/verify-report.md";
+			"docs/architecture/current-test-state.yaml#/current_test_state";
 		writeManifestObject(manifestPath, manifest);
 		const baseline = await runValidator([
 			"--manifest",
@@ -1063,7 +1066,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		const reversedManifest = readManifest(reversed.manifestPath);
 		reversedManifest.currentProjection = {
 			surfaces: [...PROJECTION_SURFACES].reverse(),
-			evidenceRecords: [CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL],
+			evidenceRecords: [SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL],
 			currentSnapshot: CURRENT_SNAPSHOT_LOCATOR,
 		};
 		writeManifestObject(reversed.manifestPath, reversedManifest);
@@ -1133,7 +1136,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		const escaping = readManifest(manifestPath);
 		escaping.currentProjection = {
 			surfaces: [MATRIX_SURFACE, "../outside.md"],
-			evidenceRecords: [CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL],
+			evidenceRecords: [SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL],
 			currentSnapshot: CURRENT_SNAPSHOT_LOCATOR,
 		};
 		writeManifestObject(manifestPath, escaping);
@@ -1154,7 +1157,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		const absent = readManifest(manifestPath);
 		absent.currentProjection = {
 			surfaces: ["docs/architecture/absent-surface.md"],
-			evidenceRecords: [CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL],
+			evidenceRecords: [SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL],
 			currentSnapshot: CURRENT_SNAPSHOT_LOCATOR,
 		};
 		writeManifestObject(manifestPath, absent);
@@ -1197,7 +1200,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 
 	it("rejects incomplete, unlabeled, or unsourced snapshot evidence records", async () => {
 		const { root, manifestPath } = writeValidRoot();
-		writeConfigRecord(root, {
+		writeSnapshotRecord(root, {
 			classification: undefined,
 			evidence_scope: undefined,
 			candidate_identity: undefined,
@@ -1222,7 +1225,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 			"files",
 		]) {
 			expect(result.stdout).toContain(
-				`missing current snapshot field in ${CONFIG_RECORD_REL}: ${field}`,
+				`missing current snapshot field in ${SNAPSHOT_RECORD_REL}: ${field}`,
 			);
 		}
 		expect(result.stdout).toContain(
@@ -1233,7 +1236,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 
 	it("rejects an unsupported evidence scope and an unlabeled non-current record", async () => {
 		const { root, manifestPath } = writeValidRoot();
-		writeConfigRecord(root, { evidence_scope: "evergreen" });
+		writeSnapshotRecord(root, { evidence_scope: "evergreen" });
 		writeLockFactsRecord(root, {
 			snapshotRecord: { evidenceScope: "generated", evidenceSource: undefined },
 		});
@@ -1245,7 +1248,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		]);
 		expect(result.code).toBe(1);
 		expect(result.stdout).toContain(
-			`missing evidence scope label for current_test_state in ${CONFIG_RECORD_REL}`,
+			`missing evidence scope label for current_test_state in ${SNAPSHOT_RECORD_REL}`,
 		);
 		expect(result.stdout).toContain(
 			`unlabeled generated snapshot in ${LOCK_FACTS_RECORD_REL}: snapshotRecord`,
@@ -1255,7 +1258,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 
 	it("rejects a mismatched dirty identity, a baseline presented as current, and a stale count", async () => {
 		const { root, manifestPath } = writeValidRoot();
-		writeConfigRecord(root, {
+		writeSnapshotRecord(root, {
 			candidate_identity: `dirty-sha256:${"b".repeat(64)}`,
 		});
 		const mismatched = await runValidator([
@@ -1266,10 +1269,10 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		]);
 		expect(mismatched.code).toBe(1);
 		expect(mismatched.stdout).toContain(
-			`conflicting current snapshot identity in ${CONFIG_RECORD_REL}: dirty-sha256:${"b".repeat(64)} != ${FIXTURE_IDENTITY}`,
+			`conflicting current snapshot identity in ${SNAPSHOT_RECORD_REL}: dirty-sha256:${"b".repeat(64)} != ${FIXTURE_IDENTITY}`,
 		);
 
-		writeConfigRecord(root, {
+		writeSnapshotRecord(root, {
 			classification: "baseline",
 			candidate_identity: "git-sha256:1234567",
 		});
@@ -1281,13 +1284,13 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		]);
 		expect(baseline.code).toBe(1);
 		expect(baseline.stdout).toContain(
-			`conflicting current snapshot identity in ${CONFIG_RECORD_REL}: git-sha256:1234567 != ${FIXTURE_IDENTITY}`,
+			`conflicting current snapshot identity in ${SNAPSHOT_RECORD_REL}: git-sha256:1234567 != ${FIXTURE_IDENTITY}`,
 		);
 		expect(baseline.stdout).toContain(
-			`conflicting current snapshot classification in ${CONFIG_RECORD_REL}: baseline != dirty-candidate`,
+			`conflicting current snapshot classification in ${SNAPSHOT_RECORD_REL}: baseline != dirty-candidate`,
 		);
 
-		writeConfigRecord(root, { files: 37, tests: 582 });
+		writeSnapshotRecord(root, { files: 37, tests: 582 });
 		const stale = await runValidator([
 			"--manifest",
 			manifestPath,
@@ -1296,7 +1299,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		]);
 		expect(stale.code).toBe(1);
 		expect(stale.stdout).toContain(
-			`conflicting current snapshot result in ${CONFIG_RECORD_REL}: 582 passed, 0 failed != 557 passed, 0 failed`,
+			`conflicting current snapshot result in ${SNAPSHOT_RECORD_REL}: 582 passed, 0 failed != 557 passed, 0 failed`,
 		);
 		rmSync(root, { recursive: true, force: true });
 	});
@@ -1306,7 +1309,8 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 		writeLockFactsRecord(root, {
 			snapshotRecord: {
 				evidenceScope: "current",
-				evidenceSource: "openspec/config.yaml#/current_test_state",
+				evidenceSource:
+					"docs/architecture/current-test-state.yaml#/current_test_state",
 			},
 			tests: { files: 48, total: 738, passed: 738, failed: 0 },
 			evidenceDate: "2026-09-09",
@@ -1403,7 +1407,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 			[...PROJECTION_SURFACES].sort(),
 		);
 		expect(declared?.evidenceRecords?.slice().sort()).toEqual(
-			[CONFIG_RECORD_REL, LOCK_FACTS_RECORD_REL].sort(),
+			[SNAPSHOT_RECORD_REL, LOCK_FACTS_RECORD_REL].sort(),
 		);
 		expect(declared?.currentSnapshot).toBe(CURRENT_SNAPSHOT_LOCATOR);
 		for (const rel of PROJECTION_SURFACES) {
@@ -1412,7 +1416,7 @@ describe("verify-capability-manifest.mjs (spawned CLI, deterministic temp roots)
 			);
 		}
 		// The checked-in evidence records are complete, labeled, and agree.
-		expect(readFileSync(join(REPO_ROOT, CONFIG_RECORD_REL), "utf8")).toContain(
+		expect(readFileSync(join(REPO_ROOT, SNAPSHOT_RECORD_REL), "utf8")).toContain(
 			"evidence_scope: current",
 		);
 		const lockFacts = JSON.parse(

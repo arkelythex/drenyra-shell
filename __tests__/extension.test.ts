@@ -643,7 +643,6 @@ describe("T-S6-004 packaged operating content (REQ-AGENT-009; REQ-SKPT-007)", ()
     ).toEqual([
       "chain-operation",
       "drenyra-chained-pr",
-      "drenyra-sdd",
       "evidence-citation",
       "fiscal-compliance",
       "fiscal-review",
