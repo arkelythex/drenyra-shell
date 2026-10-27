@@ -37,7 +37,7 @@ detection: 18/25 defects rejected (7200 bps)
 false alarms: 0/3 valid entries rejected (0 bps)
 ```
 
-### Survivors — kernel gaps
+### Survivors — kernel gaps ([arkelythex/drenyra-ai#123](https://github.com/arkelythex/drenyra-ai/issues/123))
 
 | Case | Defect | Harness mitigation |
 | --- | --- | --- |
