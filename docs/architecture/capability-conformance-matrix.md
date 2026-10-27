@@ -89,7 +89,7 @@ fixture.
 
 | Fact | Current statement | Evidence |
 | --- | --- | --- |
-| Current candidate snapshot | `bun test` → 767 passed / 0 failed (50 files), dirty candidate, 2026-09-11 | `docs/architecture/current-test-state.yaml#/current_test_state`; identity delegated to `docs/architecture/program-lock-facts.json#/candidateIdentity` |
+| Current candidate snapshot | `bun test` → 798 passed / 0 failed (54 files), dirty candidate, 2026-10-27 | `docs/architecture/current-test-state.yaml#/current_test_state`; identity delegated to `docs/architecture/program-lock-facts.json#/candidateIdentity` |
 | Command surface | 20 registered commands | `extensions/register.ts:1147-1247`; `__tests__/extension.test.ts:312` |
 | Runtime pin | `drenyra-ai@0.4.1` | `runtime/pin.ts:128`; `__tests__/pin.test.ts:73` |
 | Contracts | Shell-local package/runtime and schema families are Frozen v0.1 | `contracts/README.md:3-14` |

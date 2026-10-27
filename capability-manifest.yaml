@@ -233,9 +233,9 @@
     "evidenceScope": "current",
     "classification": "dirty-candidate",
     "command": "bun test",
-    "result": "773 passed, 0 failed",
-    "date": "2026-09-12",
+    "result": "798 passed, 0 failed",
+    "date": "2026-10-27",
     "candidateIdentityRef": "docs/architecture/program-lock-facts.json#/candidateIdentity",
-    "note": "Current PR 3 snapshot. `bun test` ran 773 tests across 52 files with 0 failures from the canonical repository root on 2026-09-12. The identity is delegated to the generated `docs/architecture/program-lock-facts.json#/candidateIdentity` because this manifest's bytes participate in that identity: restating the live value here would invalidate it. Preserved older snapshots (`testState` 44/700, lock-facts `tests` 48/738) remain historical, labeled, and sourced."
+    "note": "Verified current snapshot. `bun test` ran 798 tests across 54 files with 0 failures from the canonical repository root on 2026-10-27. The identity is delegated to the generated `docs/architecture/program-lock-facts.json#/candidateIdentity` because this manifest's bytes participate in that identity: restating the live value here would invalidate it. Preserved older snapshots (`testState` 44/700, lock-facts `tests` 48/738) remain historical, labeled, and sourced."
   }
 }
