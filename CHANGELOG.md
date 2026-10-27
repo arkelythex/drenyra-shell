@@ -11,6 +11,18 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ### Added
 
+- **Control mutation suite (`bun run eval:controls`).** Mutation testing
+  adapted to accounting. A synthetic journal proposal is mutated with 25 known
+  bookkeeping defects and 3 valid variants, and the pinned kernel's verdicts are
+  classified into a scoreboard in integer basis points. Against
+  `drenyra-ai@0.4.1`: 18/25 defects rejected (7200 bps), 0/3 false alarms.
+  The 7 survivors (zero amount, empty account code, no evidence items,
+  duplicate evidence ids, future capture date, wrong RUC check digit, empty
+  entry id) are kernel gaps reported upstream, never fixed in Pi. The suite
+  only classifies verdicts, and `__tests__/control-mutation.test.ts` pins the
+  scoreboard as a ratchet (REQ-CONF-009). The corpus is synthetic and not
+  professional-validated. Background: `docs/research/2026-10-agentic-accounting-landscape.md`.
+
 - **Institutional memory reaches the proposing agents.** `invoice-sire-agent`,
   `reconciliation-agent`, and `tax-controller-pe` now declare
   `drenyra_institutional_memory` (read-only `engram_search`), joining
