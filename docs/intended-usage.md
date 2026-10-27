@@ -15,7 +15,7 @@ It is a **Shell extension** — a thin operator layer, the accounting-domain cou
 
 - **Operator experience** — an accounting-operator persona, a startup panel that surfaces company and fiscal-period context, `/drenyra:*` commands (doctor, scope, status, capabilities, missions, receipts, evidence, verify, close), Shell-native subagents, model routing, and Receipt-Driven Accounting (RDA) command chains.
 - **Pinned, sealed runtime** — it installs and consumes an **exact, verified, package-local version of Drenyra AI** (`drenyra-ai@0.4.1`, checksum-verified, never `PATH`). Everything the harness runs is backed by that pinned kernel.
-- **Fiscal tooling with guards** — fiscal tools and write guards (money / SQL / RUC) registered through `extensions/fiscal-guard.ts`, with broad-deny, narrow-allow tool permissions.
+- **Development-hygiene guards** — three pre-tool guards (money / SQL / RUC path) registered through `extensions/fiscal-guard.ts`. They guard the code being written and the commands being run; they are **not** a fiscal boundary and do not protect a ledger. See [Known limitations](../README.md#known-limitations).
 
 ## What it is NOT
 
@@ -44,7 +44,7 @@ The professional should never have to learn to operate an agent orchestration. W
 
 1. Run `/drenyra:doctor` — the startup panel does the same — to confirm the pinned runtime is intact (checksum + version, fails closed on mismatch).
 2. Bind the fiscal scope with `/drenyra:scope` (RUC + period among the 10 canonical elements) — missions, chains, approvals, and receipt targets fail closed until the scope is complete.
-3. Start a mission (`/drenyra:mission <intent>`), follow the RDA chains, review evidence, and receive a signed, verifiable receipt for every material action.
+3. Start a mission (`/drenyra:mission <intent>`), follow the RDA chains, review evidence, and receive a signed, verifiable receipt from the `ReceiptStore` path (`lib/receipt-store.ts`) for a material action. A second, weaker record path exists and is disclosed in [Known limitations](../README.md#known-limitations); it is not a receipt.
 4. Approve or reject — the human decision, never the harness.
 
 Everything runs on the pinned `drenyra-ai@0.4.1` artifact; a missing or mismatched runtime stops mission work immediately (fail closed).
