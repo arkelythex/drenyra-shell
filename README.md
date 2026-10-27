@@ -573,7 +573,7 @@ train), SDD-050 (monthly close), SDD-070 (skills), SDD-080 (Engram memory), SDD-
 references only and never duplicates.
 
 SDD-020 remains **planned** (Wave 1) in the master and gated by the master's
-[Gate 0](https://github.com/arkelythex/drenyra-ai/tree/main/program/drenyra-dominion/gate-0.md) —
+[Gate 0](https://github.com/arkelythex/drenyra-ai/blob/main/program/drenyra-dominion/gate-0.md) —
 **in progress**. Drenyra Shell's existing `/drenyra:install`, `/drenyra:doctor` and
 `/drenyra:sync` are legitimate pre-Wave-1 scaffolding that consume the public
 configurator contract; they do not claim delivery of the master SDD. The historical
