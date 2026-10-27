@@ -219,9 +219,11 @@ touches an LLM.**
 
 | If you… | Use |
 | --- | --- |
-| Want to try it today | [From source](#from-source-the-only-path-that-works-today) |
-| Want `pi install` | [npm](#npm-not-yet-published) — **not published yet** |
+| Want to try it today | [From source](#from-source) |
+| Want `pi install` | [npm](#npm-pending) — **not published yet** |
 | Want to know what it will do to your machine | [What it touches](#what-it-touches) |
+
+<a id="from-source"></a>
 
 ### From source — the only path that works today
 
@@ -238,6 +240,8 @@ bun run verify:package
 ```
 
 Then install the built package into your Pi agent and restart Pi.
+
+<a id="npm-pending"></a>
 
 ### npm — not yet published
 
