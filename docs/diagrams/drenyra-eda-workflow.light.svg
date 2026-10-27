@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1240" height="548" viewBox="0 0 1240 548" role="img" aria-labelledby="dodd-title dodd-desc">
-  <title id="dodd-title">Organic Driven Development for accounting work</title>
-  <desc id="dodd-desc">One accounting request moves through seven ODD steps. Authorize keeps the session read-only until the professional asks for a change; bind the RUC and period scope; gather and cite evidence; then the pinned Drenyra AI core classifies materiality and picks the route: work below R2 stays light on a direct route, while R2 and above becomes a durable mission over thirteen phases. Both paths propose candidates that are never posted, verify them through refutation and an independent Guardian Angel review, and end with the professional's approval sealed by a signed receipt. The durable mission store lets work resume, and institutional memory informs what to propose but never how much review it gets.</desc>
+  <title id="dodd-title">Evidence-Driven Accounting (EDA) workflow</title>
+  <desc id="dodd-desc">One accounting request moves through the Evidence-Driven Accounting steps. Authorize keeps the session read-only until the professional asks for a change; bind the RUC and period scope; gather and cite evidence; then the pinned Drenyra AI core classifies materiality and picks the route: work below R2 stays light on a direct route, while R2 and above becomes a durable mission over thirteen phases. Both paths propose candidates that are never posted, verify them through refutation and an independent Guardian Angel review, and end with the professional's approval sealed by a signed receipt. The durable mission store lets work resume, and institutional memory informs what to propose but never how much review it gets.</desc>
   <defs>
     <pattern id="dodd-rules" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M0 23.5H24" stroke="#8a7358" stroke-opacity="0.08"/></pattern>
     <marker id="dodd-arrow" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" viewBox="0 0 8 8" refX="7" refY="4" orient="auto"><path d="M0 0.5 7 4 0 7.5z" fill="#824f16"/></marker>
@@ -14,7 +14,7 @@
   <g font-family="Arial, Helvetica, sans-serif">
 
     <!-- eyebrow -->
-    <text x="36" y="52" fill="#824f16" font-size="12.5" font-weight="700" letter-spacing="2.6">ORGANIC DRIVEN DEVELOPMENT · FOR THE BOOKS</text>
+    <text x="36" y="52" fill="#824f16" font-size="12.5" font-weight="700" letter-spacing="2.6">EVIDENCE-DRIVEN ACCOUNTING · EDA</text>
     <text x="1204" y="52" fill="#554638" font-size="13" text-anchor="end">small work stays light · material work becomes a mission</text>
 
     <!-- phase brackets -->

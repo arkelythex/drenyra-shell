@@ -53,6 +53,18 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ### Documentation
 
+- **The Drenyra method replaces ODD in the README.** The product workflow is now
+  presented as **EDA (Evidence-Driven Accounting)**, the name the kernel already
+  uses for its 13 mission phases, next to **CDA (Control-Driven Accounting)**,
+  which puts the control before the entry and mutation-tests the controls, and
+  **RDA (Receipt-Driven Accounting)**: no receipt, no mutation. The full reference
+  is `docs/method.md`. ODD stays as the way this repository is built
+  (`AGENTS.md`). The workflow diagram is relabelled and renamed to
+  `docs/diagrams/drenyra-eda-workflow.{light,dark}.svg`. The Ecosystem section
+  now mirrors the Gentle AI shape (drenyra-ai, drenyra-shell, drenyra-engram,
+  plus the Command Center) and no longer calls the shipped Engram integration
+  "planned". CDA is Shell-defined until Drenyra AI formalizes it.
+
 - **ODD for the books and focused accounting agents.** The README gains two
   "How it works" sections with light and dark diagrams under `docs/diagrams/`:
   Organic Driven Development mapped onto accounting work (scope, evidence,

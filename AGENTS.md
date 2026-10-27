@@ -24,6 +24,7 @@ Every change — code, docs, tests, or CI — must respect these. They are also 
 | --- | --- |
 | Understand what the project is and is not | [Intended Usage](docs/intended-usage.md) |
 | Conceptual architecture and boundaries | [Architecture](docs/architecture.md) |
+| The accounting method the product follows (EDA · CDA · RDA) | [The Drenyra method](docs/method.md) |
 | Codebase layout and conventions | [Codebase Guide](docs/CODEBASE-GUIDE.md) |
 | The living requirements baseline | [specs/](../specs) — one spec per capability |
 | The delivery workflow and feature documents | [odd/tasks/](../odd/tasks) — one document per feature |
@@ -57,7 +58,7 @@ __tests__/          Test suites for commands, chains, and permissions
 
 ## Delivery Workflow — ODD
 
-Organic Driven Development is the only delivery workflow. `specs/` holds the requirements baseline; `odd/tasks/<feature>.md` holds one feature document per feature, and it is the specification every worker reads by reference.
+Organic Driven Development is the only delivery workflow for building this repository. It is the developers' workflow, not the product's: the accounting work the Shell operates follows the Drenyra method — EDA, CDA, RDA ([`docs/method.md`](docs/method.md)) — and the README presents that method, not ODD. `specs/` holds the requirements baseline; `odd/tasks/<feature>.md` holds one feature document per feature, and it is the specification every worker reads by reference.
 
 1. **Authorize.** A request to investigate, explain, review, or plan is read-only. Only explicit change intent authorizes writes.
 2. **Explore** the existing code and the relevant `specs/` requirement before proposing anything.
