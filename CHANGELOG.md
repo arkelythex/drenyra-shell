@@ -53,6 +53,15 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ### Documentation
 
+- **`record_receipt` no longer calls itself the "RED (Receipt-Driven Execution)
+  primitive".** Its label and description now say what it is: an unsigned
+  receipt note, a log entry rather than proof, with the signed RDA path named
+  (`ReceiptStore`, `/drenyra:receipt`). The tool name and behaviour are unchanged.
+  Docs link the upstream issues: CDA formalization (drenyra-ai#124) and the seven
+  kernel gaps (drenyra-ai#123). The journal proposal test fixtures now use a
+  check-digit-valid RUC (`20123456786`). The old value is still used on purpose
+  as the invalid example in the scope tests.
+
 - **The Drenyra method replaces ODD in the README.** The product workflow is now
   presented as **EDA (Evidence-Driven Accounting)**, the name the kernel already
   uses for its 13 mission phases, next to **CDA (Control-Driven Accounting)**,

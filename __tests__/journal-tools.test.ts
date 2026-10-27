@@ -35,7 +35,7 @@ function register(scope: unknown): Map<string, RegisteredTool> {
 }
 
 const SCOPE = {
-  company: { ruc: "20123456789" },
+  company: { ruc: "20123456786" },
   period: { period: "202609" },
   canonical: { company: "company-1" },
 };

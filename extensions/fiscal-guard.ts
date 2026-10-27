@@ -367,9 +367,9 @@ export function registerFiscalGuard(pi: FiscalGuardExtensionAPI): void {
 
 	pi.registerTool({
 		name: "record_receipt",
-		label: "Record Receipt (RED)",
+		label: "Record Receipt Note (unsigned)",
 		description:
-			"Record an immutable receipt for a material accounting action. This is the RED (Receipt-Driven Execution) primitive.",
+			"Record an unsigned receipt note for a material accounting action. It is a log entry, not proof: its id, states, and hash are neither verified nor signed. Signed RDA receipts are issued through ReceiptStore (/drenyra:receipt).",
 		parameters: Type.Object({
 			action: Type.String({ description: "Description of the action" }),
 			actor: Type.String({ description: "Who performed it (agent/user)" }),

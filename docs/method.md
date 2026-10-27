@@ -43,9 +43,9 @@ TDD has a known weakness: a test that can't fail proves nothing. Software answer
 
 - The **control mutation suite** (`bun run eval:controls`, REQ-CONF-009) injects 25 known bookkeeping defects into a proposal and measures how many the kernel rejects.
 - Current result: **18/25 (7200 bps)**, with no false alarms on valid entries.
-- The 7 defects the kernel lets through are listed in [`docs/evals/control-mutation.md`](evals/control-mutation.md), as gaps to fix upstream in the kernel.
+- The 7 defects the kernel lets through are listed in [`docs/evals/control-mutation.md`](evals/control-mutation.md) and reported upstream as [arkelythex/drenyra-ai#123](https://github.com/arkelythex/drenyra-ai/issues/123).
 
-**Status:** CDA is defined by Drenyra Shell. The control mutation suite exists; control-first entry proposal is the direction, not yet a chain. CDA should be formalized in `drenyra-ai` before any other repository relies on the name.
+**Status:** CDA is defined by Drenyra Shell. The control mutation suite exists; control-first entry proposal is the direction, not yet a chain. Formalizing CDA in `drenyra-ai` is proposed in [arkelythex/drenyra-ai#124](https://github.com/arkelythex/drenyra-ai/issues/124); until it lands, no other repository should rely on the name.
 
 ## RDA — Receipt-Driven Accounting
 
@@ -67,7 +67,7 @@ The receipt is what an auditor reads. Logs and chat history are not.
 | Proposals that carry no receipt because they are not material yet | `propose_journal_entry` records but never posts (REQ-AUTH-011) |
 | Command chains that end in a receipt | the RDA chains: close, reconcile, verify, evidence (`chains/`) |
 
-RDA's honest edge: `record_receipt` (`extensions/fiscal-guard.ts`) is fail-open. Its output is a log line, not proof. The signed path is `ReceiptStore`. See the README's known limitations.
+RDA's honest edge: `record_receipt` (`extensions/fiscal-guard.ts`) is fail-open, and its description tells the agent so — it records an unsigned note, not proof. The signed path is `ReceiptStore`. See the README's known limitations.
 
 ---
 

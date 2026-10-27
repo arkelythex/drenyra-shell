@@ -146,7 +146,9 @@ right when the control passes, not when it looks right. The controls themselves 
 mutation-tested: `bun run eval:controls` injects 25 known bookkeeping defects, and
 the pinned kernel rejects **18 (7200 bps)** with no false alarms. The 7 it lets
 through are listed as kernel gaps in [`docs/evals/control-mutation.md`](docs/evals/control-mutation.md).
-CDA is defined by the Shell and has not yet been formalized in Drenyra AI.
+CDA is defined by the Shell; formalizing it in Drenyra AI is proposed in
+[drenyra-ai#124](https://github.com/arkelythex/drenyra-ai/issues/124), and the 7 gaps are
+[drenyra-ai#123](https://github.com/arkelythex/drenyra-ai/issues/123).
 
 #### RDA — no receipt, no mutation
 
