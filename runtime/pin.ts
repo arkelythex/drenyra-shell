@@ -13,7 +13,7 @@
  */
 
 export const RUNTIME_PACKAGE = "drenyra-ai";
-export const RUNTIME_VERSION = "0.5.0";
+export const RUNTIME_VERSION = "0.6.0";
 
 /**
  * Checksum placeholder while the pinned runtime has not been published yet.
@@ -111,19 +111,18 @@ export function createPin(overrides: Partial<RuntimePin> = {}): RuntimePin {
 /**
  * The pinned Drenyra AI runtime for this package.
  *
- * Released at v0.5.0 (github:arkelythex/drenyra-ai#v0.5.0; tag 2026-08-18,
- * GitHub Release 2026-10-27). checksumSha256 is the SHA-256 of the release's
- * entry artifact dist/cmd/cli.js (the artifact doctor() checksums for a
- * package-local install); the release tarball hash lives in the GitHub
- * Release checksums.txt.
+ * Released at v0.6.0 (github:arkelythex/drenyra-ai#v0.6.0, 2026-10-28) — the
+ * first drenyra-ai release published by its release workflow with npm Sigstore
+ * provenance; the GitHub Release tarball is the npm artifact byte for byte.
+ * checksumSha256 is the SHA-256 of the release's entry artifact dist/cmd/cli.js
+ * (the artifact doctor() checksums for a package-local install); it is
+ * identical to v0.5.0's. The release tarball hash lives in the GitHub Release
+ * checksums.txt.
  *
- * v0.5.0 is a MINOR addition over v0.4.1: the bank-reconciliation and
- * close-calculations engines, their monthly-close wiring, the authorization
- * gate, and the audit log. The kernel entry points the Shell consumes
- * (missions, candidates, gates, receipts, journal, evidence, tenant) keep
- * their shapes. The published tarball carries stale build files and no
- * Sigstore provenance (arkelythex/drenyra-ai#126); the compiled code matches
- * the tag.
+ * v0.6.0 is a MINOR addition over v0.5.0: the `./agents` public subpath and the
+ * `pe.renta-anual` skill card, plus clean release builds (no stale dist/
+ * files, arkelythex/drenyra-ai#126). The kernel entry points the Shell
+ * consumes keep their shapes.
  *
  * Upgrading the pin is itself a release of Drenyra Shell (see
  * contracts/runtime-dependency.md, "Upgrade is explicit").

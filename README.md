@@ -52,7 +52,7 @@ operational integration.
 | Works today | Does not exist yet |
 | --- | --- |
 | 21 `/drenyra:*` commands, all registered | Publication on npm |
-| Pinned `drenyra-ai@0.5.0` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
+| Pinned `drenyra-ai@0.6.0` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
 | Signed, verifiable receipts through `ReceiptStore` | A measured eval set against a professional's own work |
 | Checksum-pinned Drenyra Engram reads — `engram_search` and `engram_context` over the vendored, attested `v0.9.0` release, reachable by the four proposing agents | — |
 | A `books` operation mode where `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool by default | — |
@@ -213,7 +213,7 @@ You bind a fresh complete scope before running anything protected.
 ### The pinned runtime — never `PATH`
 
 The harness runs an **exact, verified, package-local** Drenyra AI
-(`drenyra-ai@0.5.0`, entry-artifact checksum
+(`drenyra-ai@0.6.0`, entry-artifact checksum
 `a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65`).
 `/drenyra:doctor` fails closed on any mismatch, and the startup panel runs the
 same check at activation.
@@ -372,7 +372,7 @@ Inside Pi, follow this order — each step's prerequisite is the previous one:
   `ReceiptStore`.
 - **Your Pi install** — the harness is a Pi extension; it does not modify your Pi
   configuration, models, or credentials.
-- **The pinned runtime** — `vendored/drenyra-ai-0.5.0.tgz`, verified against the
+- **The pinned runtime** — `vendored/drenyra-ai-0.6.0.tgz`, verified against the
   recorded checksum on every `doctor` run.
 
 </details>

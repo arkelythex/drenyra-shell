@@ -27,7 +27,7 @@ import {
   runMutationSuite,
 } from "../lib/control-mutation.js";
 
-/** Pinned against drenyra-ai@0.5.0 (unchanged from 0.4.1). A pin upgrade that moves any row fails here. */
+/** Pinned against drenyra-ai@0.6.0 (unchanged from 0.4.1). A pin upgrade that moves any row fails here. */
 const EXPECTED_KILLS: Record<string, string> = {
   "unbalanced-by-one-cent": "unbalanced",
   "negative-amount": "invalid-amount",
