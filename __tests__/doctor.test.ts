@@ -16,7 +16,7 @@ import {
   type FakeRuntime,
 } from "./helpers/fixture-runtime.js";
 
-const EXACT_VERSION = "0.5.0";
+const EXACT_VERSION = "0.6.0";
 
 describe("doctor — fail-closed matrix", () => {
   let fixture: FakeRuntime | undefined;

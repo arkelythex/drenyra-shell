@@ -9,6 +9,23 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Changed — runtime pin `drenyra-ai` 0.5.0 → 0.6.0 (release event)
+
+- **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.6.0`. The vendored
+  `vendored/drenyra-ai-0.6.0.tgz` (SHA-256 `fbd9e23b…9031`) is the GitHub Release
+  `v0.6.0` asset, the npm artifact byte for byte, and was verified against the
+  release `checksums.txt` with zero failures. The entry artifact
+  (`dist/cmd/cli.js`) is unchanged from 0.5.0
+  (`a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65`), so the
+  lock-facts trust anchor does not move.
+- **First pinned runtime with verifiable provenance.** 0.6.0 is the first
+  drenyra-ai release published by its release workflow with npm Sigstore
+  provenance (`npm audit signatures` verifies it). It ships no stale `dist/` files
+  (arkelythex/drenyra-ai#126): 695 files, no nested tarball.
+- **Migration note — contract impact: none.** 0.6.0 adds the `./agents` subpath and
+  the `pe.renta-anual` skill card; every kernel entry point the Shell consumes keeps
+  its shape.
+
 ### Changed — Drenyra Engram pin: snapshot → tagged `v0.9.0` (release event)
 
 - **Pin.** `runtime/engram-pin.ts` `ENGRAM_PIN_BUILD` = `0.9.0`, replacing the
