@@ -23,7 +23,7 @@ const CONTENT_MANIFEST_PATH = "contracts/SHA256SUMS.json";
 const CAPABILITY_MANIFEST_PATH = "capability-manifest.yaml";
 const ACTIVE_FEATURES_PATH = "odd/tasks";
 const PIN_ENTRY_SHA256 =
-	"09df8d696204337a9b62ddd28c354b414b62e81924caaf68a50b61131d5b7600";
+	"a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65";
 const AUTHORITY_NOTICE =
 	"Pi-local input; does not modify or promote the program master";
 

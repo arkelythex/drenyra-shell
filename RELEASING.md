@@ -72,7 +72,12 @@ follow it in order for every runtime pin change.
    `DEFAULT_PIN` doc comment, and `checksumSha256`. The checksum is the sha256 of
    the release's **entry artifact** `dist/cmd/cli.js` (from `checksums.txt`) —
    it may be **identical across versions** (cli.js was byte-identical across
-   0.3.0 → 0.4.0 → 0.4.1); confirm, never assume.
+   0.3.0 → 0.4.0 → 0.4.1, and changed at 0.5.0); confirm, never assume.
+   **When it changes, the pin trust anchor moves too.** The lock-facts generator
+   preserves `checksums.pinEntrySha256` and fails closed when it disagrees with
+   `PIN_ENTRY_SHA256` in `scripts/refresh-program-lock-facts.mjs`. Update both to
+   the new entry-artifact checksum in the same commit, deliberately: the
+   generator never derives a trust anchor.
 4. **Update the manifest and references.** `package.json` devDependency
    (`file:./vendored/drenyra-ai-<v>.tgz`), `bun.lock` (via install), then sed the
    exact version across the pin-asserting tests (`pin`, `installer`, `doctor`,

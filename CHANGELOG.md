@@ -9,6 +9,28 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Changed — runtime pin `drenyra-ai` 0.4.1 → 0.5.0 (release event)
+
+- **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.5.0`, entry-artifact
+  (`dist/cmd/cli.js`) checksum
+  `a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65`. The vendored
+  `vendored/drenyra-ai-0.5.0.tgz` (SHA-256 `3188ea01…a625`) is the GitHub Release
+  `v0.5.0` asset. It was verified against that release's `checksums.txt` with zero
+  failures, and it is the npm-published tarball byte for byte.
+- **Migration note — contract impact: none.** The kernel entry points the Shell
+  consumes (`missions`, `candidates`, `gates`, `receipts`, `journal`, `evidence`,
+  `tenant`, `configurator`, `routing`) keep their shapes. 0.5.0 adds the
+  bank-reconciliation and close-calculations engines, the monthly-close wiring, the
+  authorization gate, and the audit log. The full suite passes unchanged apart from
+  the pin assertions.
+- **Control mutation scoreboard unchanged.** Against 0.5.0: 18/25 defects rejected
+  (7200 bps), 0/3 false alarms, with the same seven survivors
+  (arkelythex/drenyra-ai#123).
+- **Known upstream defects of the 0.5.0 artifact.** It ships stale build files
+  (`dist/drenyra-ai-0.4.0.tgz`, an unexported `dist/tenant/`) and has no Sigstore
+  provenance (arkelythex/drenyra-ai#126). The compiled code matches the tag. The
+  Shell's pin verifies the entry artifact and the vendored tarball, not provenance.
+
 ### Added
 
 - **Control mutation suite (`bun run eval:controls`).** Mutation testing

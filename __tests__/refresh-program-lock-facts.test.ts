@@ -29,7 +29,7 @@ const { writeProgramLockFacts } = (await import(REFRESH_URL)) as {
 };
 const FACTS_RELATIVE_PATH = "docs/architecture/program-lock-facts.json";
 const PIN_SHA256 =
-	"09df8d696204337a9b62ddd28c354b414b62e81924caaf68a50b61131d5b7600";
+	"a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65";
 const fixtures: string[] = [];
 
 function sha256(bytes: string): string {
