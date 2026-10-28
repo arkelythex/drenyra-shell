@@ -13,7 +13,7 @@
  */
 
 export const RUNTIME_PACKAGE = "drenyra-ai";
-export const RUNTIME_VERSION = "0.6.0";
+export const RUNTIME_VERSION = "0.7.0";
 
 /**
  * Checksum placeholder while the pinned runtime has not been published yet.
@@ -111,18 +111,19 @@ export function createPin(overrides: Partial<RuntimePin> = {}): RuntimePin {
 /**
  * The pinned Drenyra AI runtime for this package.
  *
- * Released at v0.6.0 (github:arkelythex/drenyra-ai#v0.6.0, 2026-10-28) — the
- * first drenyra-ai release published by its release workflow with npm Sigstore
- * provenance; the GitHub Release tarball is the npm artifact byte for byte.
+ * Released at v0.7.0 (github:arkelythex/drenyra-ai#v0.7.0, signed tag,
+ * 2026-10-28), published by the release workflow with npm Sigstore provenance;
+ * the GitHub Release tarball is the npm artifact byte for byte.
  * checksumSha256 is the SHA-256 of the release's entry artifact dist/cmd/cli.js
  * (the artifact doctor() checksums for a package-local install); it is
- * identical to v0.5.0's. The release tarball hash lives in the GitHub Release
- * checksums.txt.
+ * identical to v0.5.0's and v0.6.0's. The release tarball hash lives in the
+ * GitHub Release checksums.txt.
  *
- * v0.6.0 is a MINOR addition over v0.5.0: the `./agents` public subpath and the
- * `pe.renta-anual` skill card, plus clean release builds (no stale dist/
- * files, arkelythex/drenyra-ai#126). The kernel entry points the Shell
- * consumes keep their shapes.
+ * v0.7.0 is a pre-1.0 MINOR that tightens journal validation
+ * (arkelythex/drenyra-ai#131): zero amounts, blank account codes and entry ids,
+ * empty evidence support, and duplicate evidence item ids are now rejected,
+ * with the additive `invalid-account` and `invalid-entry-id` codes. The kernel
+ * entry points the Shell consumes keep their shapes.
  *
  * Upgrading the pin is itself a release of Drenyra Shell (see
  * contracts/runtime-dependency.md, "Upgrade is explicit").
