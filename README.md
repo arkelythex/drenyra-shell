@@ -54,7 +54,7 @@ operational integration.
 | 21 `/drenyra:*` commands, all registered | Publication on npm |
 | Pinned `drenyra-ai@0.5.0` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
 | Signed, verifiable receipts through `ReceiptStore` | A measured eval set against a professional's own work |
-| Checksum-pinned Drenyra Engram reads — `engram_search` and `engram_context` over the vendored `0.2.1-SNAPSHOT` build, reachable by the four proposing agents | — |
+| Checksum-pinned Drenyra Engram reads — `engram_search` and `engram_context` over the vendored, attested `v0.9.0` release, reachable by the four proposing agents | — |
 | A `books` operation mode where `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool by default | — |
 | Fiscal scope (RUC + period) threading and fail-closed guards | — |
 | RDA command chains, persona, startup panel, 11 packaged skills | — |
