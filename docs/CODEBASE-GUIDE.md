@@ -32,7 +32,7 @@ lib/                Top-level domain logic (delegated to by handlers)
   └─ parse.ts                   shared parse helpers
 
 runtime/            Pinned drenyra-ai bootstrap + verification
-  ├─ pin.ts               DEFAULT_PIN — drenyra-ai@0.4.1, state released, checksum-verified
+  ├─ pin.ts               DEFAULT_PIN — drenyra-ai@0.5.0, state released, checksum-verified
   ├─ doctor.ts            checksum + version verification, fails closed
   ├─ installer.ts         package-local install (vendored tarball first, URL fallback)
   ├─ status.ts / context.ts   status projection + company/period context store
@@ -61,7 +61,7 @@ __tests__/          Test suites for commands, chains, and permissions
 ```text
 extensions/  ──►  lib/  ──►  pinned drenyra-ai public kernel (drenyra-ai/missions,
                             candidates, gates, receipts)  +  runtime/ (pin/doctor)
-runtime/  ──►  vendored/drenyra-ai-0.4.1.tgz (package-local, checksum-verified)
+runtime/  ──►  vendored/drenyra-ai-0.5.0.tgz (package-local, checksum-verified)
 ```
 
 - **Extensions are a flat, thin layer.** Each file registers commands, enforces the scope guard, and renders structured results; **no fiscal logic lives there**.
@@ -84,7 +84,7 @@ runtime/  ──►  vendored/drenyra-ai-0.4.1.tgz (package-local, checksum-veri
 1. **Money is BigInt cents, never floats.** No monetary amount is a JavaScript `Number`; version/sequence/exit codes are JSON integers. Enforced by the money guard in `extensions/fiscal-guard.ts` (introduced text only) and by `scripts/verify-style.mjs`.
 2. **SQL writes are guarded.** `extensions/fiscal-guard.ts` blocks SQL write patterns — no mutation path may be introduced through unguarded text.
 3. **RUC/period scope is mandatory.** `extensions/scope-guard.ts` precedes every `/drenyra:*` command: pre-scope commands run read-only diagnostics; mission, chain, evidence-mutation, approval, and receipt-target commands **fail closed, mutating nothing** without a complete canonical scope (a stale scope hash invalidates before any mutation).
-4. **The runtime is pinned and sealed.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.4.1` (state `released`, entry-artifact checksum `09df8d69…5b7600`), installed package-local from `vendored/`, verified by `doctor` — **never `PATH`**.
+4. **The runtime is pinned and sealed.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.5.0` (state `released`, entry-artifact checksum `09df8d69…5b7600`), installed package-local from `vendored/`, verified by `doctor` — **never `PATH`**.
 5. **Shell never authorizes.** No Shell-local code implements materiality, gates, approvals, or receipt authority; those come from the pinned kernel.
 6. **Contracts are frozen public surface.** `contracts/` is versioned; frozen contracts change only via the contract regime.
 

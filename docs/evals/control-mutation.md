@@ -1,6 +1,6 @@
 # Control mutation suite
 
-> REQ-CONF-009 · Corpus `journal-controls.synthetic.v1` · Measured against `drenyra-ai@0.4.1` · Run with `bun run eval:controls`
+> REQ-CONF-009 · Corpus `journal-controls.synthetic.v1` · Measured against `drenyra-ai@0.5.0` · Run with `bun run eval:controls`
 
 ## The idea
 

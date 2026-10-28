@@ -13,7 +13,7 @@
  */
 
 export const RUNTIME_PACKAGE = "drenyra-ai";
-export const RUNTIME_VERSION = "0.4.1";
+export const RUNTIME_VERSION = "0.5.0";
 
 /**
  * Checksum placeholder while the pinned runtime has not been published yet.
@@ -111,16 +111,19 @@ export function createPin(overrides: Partial<RuntimePin> = {}): RuntimePin {
 /**
  * The pinned Drenyra AI runtime for this package.
  *
- * Released at v0.4.1 (github:arkelythex/drenyra-ai#v0.4.1,
- * 2026-08-15). checksumSha256 is the SHA-256 of the release's entry artifact
- * dist/cmd/cli.js (the artifact doctor() checksums for a package-local
- * install); the release tarball hash lives in the GitHub Release SHA256SUMS.
+ * Released at v0.5.0 (github:arkelythex/drenyra-ai#v0.5.0; tag 2026-08-18,
+ * GitHub Release 2026-10-27). checksumSha256 is the SHA-256 of the release's
+ * entry artifact dist/cmd/cli.js (the artifact doctor() checksums for a
+ * package-local install); the release tarball hash lives in the GitHub
+ * Release checksums.txt.
  *
- * v0.4.1 is a MINOR backward-compatible addition: configurator host
- * integration (PinnedComposition, PINNED_AI_COMPOSITION, drenyra-shell as the
- * fourth managed host) and the routing preflight router (routing/router.ts,
- * deterministic route() over the eight §5 axes) land here; the
- * fiscal-authority kernel surface is unchanged.
+ * v0.5.0 is a MINOR addition over v0.4.1: the bank-reconciliation and
+ * close-calculations engines, their monthly-close wiring, the authorization
+ * gate, and the audit log. The kernel entry points the Shell consumes
+ * (missions, candidates, gates, receipts, journal, evidence, tenant) keep
+ * their shapes. The published tarball carries stale build files and no
+ * Sigstore provenance (arkelythex/drenyra-ai#126); the compiled code matches
+ * the tag.
  *
  * Upgrading the pin is itself a release of Drenyra Shell (see
  * contracts/runtime-dependency.md, "Upgrade is explicit").
@@ -128,6 +131,6 @@ export function createPin(overrides: Partial<RuntimePin> = {}): RuntimePin {
 export const DEFAULT_PIN: RuntimePin = createPin({
  version: RUNTIME_VERSION,
  checksumSha256:
-  "09df8d696204337a9b62ddd28c354b414b62e81924caaf68a50b61131d5b7600",
+  "a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65",
  state: "released",
 });

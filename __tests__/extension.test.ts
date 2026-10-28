@@ -181,7 +181,7 @@ describe("drenyraShellExtension descriptor", () => {
       "/drenyra:mode",
     ]);
     expect(drenyraShellExtension.runtime.package).toBe("drenyra-ai");
-    expect(drenyraShellExtension.runtime.version).toBe("0.4.1");
+    expect(drenyraShellExtension.runtime.version).toBe("0.5.0");
     expect(drenyraShellExtension.runtime.state).toBe("released");
   });
 });
