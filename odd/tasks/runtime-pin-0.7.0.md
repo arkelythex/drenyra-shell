@@ -18,9 +18,9 @@
 - [x] **T1** — Wait for the documentation chain (drenyra-ai#134) to merge to `main`. *(S2)* — `8e0fa28` (drenyra-ai)
 - [x] **T2** — drenyra-ai: version PR `0.7.0` (package version + CHANGELOG section), merged. *(S2)* — drenyra-ai#158, `2ebd989`
 - [x] **T3** — drenyra-ai: push the `v0.7.0` tag; observe the release workflow, npm provenance, and the GitHub Release. *(S2, S3)* — tag `v0.7.0`, run 40774240267
-- [x] **T4** — Shell: download, verify, and vendor the artifact; update the pin identity, manifest, references, lock facts. *(S3)* — runtime pin commit
-- [x] **T5** — Shell: re-run the suite (RED on the old ratchet), update the ratchet, docs, README. *(S1, S4)* — runtime pin commit
-- [ ] **T6** — CHANGELOG migration note, gates, PR. *(S5, S6)*
+- [x] **T4** — Shell: download, verify, and vendor the artifact; update the pin identity, manifest, references, lock facts. *(S3)* — `dec22cb`
+- [x] **T5** — Shell: re-run the suite (RED on the old ratchet), update the ratchet, docs, README. *(S1, S4)* — `dec22cb`
+- [x] **T6** — CHANGELOG migration note, gates, PR. *(S5, S6)* — `dec22cb`, PR #101
 
 ## Log
 
@@ -70,3 +70,10 @@ This session waits for #134 to merge, then runs T2–T6 without further prompts.
 - T3: a GPG-signed tag `v0.7.0` on `2ebd989` (`git tag -v`: good signature), matching the signed `v0.6.0`. Release run 40774240267: `publish` and `github-release` both succeeded. The npm `dist.integrity` matches the GitHub Release tarball (`sha512-g37SgGsF…uKXA==`), and npm reports SLSA v1 provenance. The release `checksums.txt` verified all 664 entries with zero failures. The tarball line was checked from its own directory; run from `dist/`, it first showed as unreadable because of the relative path. Entry artifact `cmd/cli.js` = `a40ba4c7…2f65`, unchanged, so the trust anchor stays.
 - T4: vendored `drenyra-ai-0.7.0.tgz` (`fe003fab…370e`), with the pin, docblock, and a reviewed 0.6.0 → 0.7.0 sweep across 20 files. The tarball hash and the two contract hashes were regenerated with `verify-package-files --update`. A stale checksum `09df8d69…5b7600` in `docs/CODEBASE-GUIDE.md` was corrected in passing. `bun install` linked 0.7.0. The development tree's npm-based postinstall then failed with the known arborist error (`Cannot destructure property 'package' of 'node.target'`, 92 broken links), the same error recorded in runtime-pin-0.5.0 L4. The packed install proves the clean path.
 - T5 GREEN: `control-mutation` + `pin`, 23/23 passed. `bun run eval:controls` printed `detection: 23/25 defects rejected (9200 bps)` and `false alarms: 0/3 valid entries rejected (0 bps)`. Two survivors remain, `future-capture-date` and `ruc-wrong-check-digit`, and all five predicted kill codes matched.
+
+### L8 — 2026-10-28 — T6 verification and close
+
+- Local gates on `dec22cb`'s tree: typecheck clean; `bun run test` 60 files / 866 passed; `verify:style`, `verify:capability`, and `verify:package` OK; `verify-packed-install` OK (the postinstall verified the runtime in a clean consumer, which confines the L7 arborist error to the development `node_modules`). Lock facts were refreshed through the documented mirror sequence. One earlier gate run failed `capability-manifest` 1/866 because a fallback refresh skipped the mirror rewrite. Re-running the sequence to its fixed point fixed it.
+- After the commit, `--check` on the clean tree reports stale. That is expected: like `b4fa37b`, a committed lock-facts file records its parent `headSha` and the identity computed before the commit, and CI does not run that check.
+- PR arkelythex/drenyra-shell#101: CI `package`, `style`, `test`, `typecheck` passed.
+- Merge of #101 is the owner's decision. ENG T5 stays out of scope (L1).
