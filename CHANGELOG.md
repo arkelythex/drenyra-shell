@@ -9,6 +9,31 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Changed — runtime pin `drenyra-ai` 0.6.0 → 0.7.0 (release event)
+
+- **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.7.0`. The vendored
+  `vendored/drenyra-ai-0.7.0.tgz` (SHA-256 `fe003fab…370e`) is the GitHub Release
+  `v0.7.0` asset from a signed tag. It matches the npm `dist.integrity` byte for
+  byte, carries SLSA v1 provenance, and was verified against the release
+  `checksums.txt` with zero failures. The entry artifact (`dist/cmd/cli.js`) is
+  unchanged from 0.6.0 (`a40ba4c7…2f65`), so the lock-facts trust anchor does not move.
+- **Control mutation scoreboard: 18/25 → 23/25 (7200 → 9200 bps), 0/3 false
+  alarms.** The kernel now kills `zero-amount`, `empty-account-code`,
+  `empty-entry-id`, `no-evidence-items`, and `duplicate-evidence-ids`
+  (arkelythex/drenyra-ai#131). The ratchet in `__tests__/control-mutation.test.ts`
+  and `docs/evals/control-mutation.md` move in this release. Two survivors remain,
+  deferred upstream on purpose: the RUC check digit (the Shell already rejects it
+  before storing a scope) and a future `capturedAt` (the kernel reads no clock).
+  No check was added in Pi.
+- **Migration note — stricter kernel, no shape change.** `propose_journal_entry`
+  now gets a rejection, where it used to get a recorded entry, for: a zero amount
+  (`invalid-amount`), a blank account code (`invalid-account`), a missing or blank
+  `entryId` (`invalid-entry-id`; the tool still defaults a missing id to `""`,
+  which the kernel now refuses), an evidence artifact with no items
+  (`missing-evidence`), or a repeated evidence item id (`INVALID_ITEM`). Every
+  kernel entry point the Shell consumes keeps its shape, and the error codes are
+  additive.
+
 ### Changed — runtime pin `drenyra-ai` 0.5.0 → 0.6.0 (release event)
 
 - **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.6.0`. The vendored

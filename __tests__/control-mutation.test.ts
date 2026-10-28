@@ -27,7 +27,10 @@ import {
   runMutationSuite,
 } from "../lib/control-mutation.js";
 
-/** Pinned against drenyra-ai@0.6.0 (unchanged from 0.4.1). A pin upgrade that moves any row fails here. */
+/**
+ * Pinned against drenyra-ai@0.7.0, which kills five of the 0.6.0 survivors
+ * (drenyra-ai#131). A pin upgrade that moves any row fails here.
+ */
 const EXPECTED_KILLS: Record<string, string> = {
   "unbalanced-by-one-cent": "unbalanced",
   "negative-amount": "invalid-amount",
@@ -47,17 +50,15 @@ const EXPECTED_KILLS: Record<string, string> = {
   "month-thirteen-period": "invalid-period",
   "month-zero-period": "invalid-period",
   "empty-company-id": "invalid-company",
+  "zero-amount": "invalid-amount",
+  "empty-account-code": "invalid-account",
+  "empty-entry-id": "invalid-entry-id",
+  "no-evidence-items": "missing-evidence",
+  "duplicate-evidence-ids": "INVALID_ITEM",
 };
 
-const EXPECTED_SURVIVORS = [
-  "zero-amount",
-  "empty-account-code",
-  "no-evidence-items",
-  "duplicate-evidence-ids",
-  "future-capture-date",
-  "ruc-wrong-check-digit",
-  "empty-entry-id",
-];
+/** Deferred upstream on purpose (drenyra-ai#123): checksummed RUC is decision-gated, and the kernel reads no clock. */
+const EXPECTED_SURVIVORS = ["future-capture-date", "ruc-wrong-check-digit"];
 
 const accepted = (request: JournalProposalRequest): JournalProposalResult => ({
   ok: true,
@@ -114,8 +115,8 @@ describe("scoreboard ratchet against the pinned kernel", () => {
   });
 
   it("reports counts and rates as integers, rates in basis points", () => {
-    expect(board.defects).toEqual({ total: 25, killed: 18, survived: 7 });
-    expect(board.detectionBps).toBe(7200);
+    expect(board.defects).toEqual({ total: 25, killed: 23, survived: 2 });
+    expect(board.detectionBps).toBe(9200);
     expect(board.falseAlarmBps).toBe(0);
     for (const value of [board.detectionBps, board.falseAlarmBps]) {
       expect(Number.isInteger(value)).toBe(true);
@@ -125,8 +126,8 @@ describe("scoreboard ratchet against the pinned kernel", () => {
   it("names the harness layer that already covers a survivor, or none", () => {
     const ruc = board.results.find((r) => r.id === "ruc-wrong-check-digit");
     expect(ruc?.mitigation).toContain("runtime/context.ts");
-    const entryId = board.results.find((r) => r.id === "empty-entry-id");
-    expect(entryId?.mitigation).toBe("none");
+    const future = board.results.find((r) => r.id === "future-capture-date");
+    expect(future?.mitigation).toBe("none");
   });
 });
 
@@ -175,7 +176,7 @@ describe("formatScoreboard", () => {
     const text = formatScoreboard(board);
     expect(text).toContain(CORPUS_ID);
     expect(text).toContain("not validated by a professional accountant");
-    expect(text).toContain("detection: 18/25 defects rejected (7200 bps)");
+    expect(text).toContain("detection: 23/25 defects rejected (9200 bps)");
     expect(text).toContain("false alarms: 0/");
     for (const id of EXPECTED_SURVIVORS) {
       expect(text).toContain(id);

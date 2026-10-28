@@ -254,7 +254,7 @@ gate, cross a tenant, forge an approval, or rewrite the ledger.**
   `extensions/fiscal-guard.ts`), 4 chains (`chains/monthly-close.ts`,
   `chains/reconcile.ts`, `chains/verify.ts`, `chains/evidence.ts`), **10 accounting
   agents** (`agents/`, mirrored in `assets/agents/`), and the pinned,
-  checksum-verified runtime bootstrap at `drenyra-ai@0.6.0` (released pin).
+  checksum-verified runtime bootstrap at `drenyra-ai@0.7.0` (released pin).
 - **Current point-in-time evidence:** the
   [`capability-conformance-matrix.md`](capability-conformance-matrix.md) records
   per-capability citations, the independently verified 47-file / 717-passing

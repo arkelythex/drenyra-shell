@@ -178,7 +178,7 @@ function writeRawLog(root: string, missionId: string, content: string): void {
 
 function runtimeStatus(): RuntimeStatus {
   return {
-    summary: "drenyra-ai@0.6.0: verified",
+    summary: "drenyra-ai@0.7.0: verified",
     human: "Runtime status: verified",
     machine: {
       pinState: "released",

@@ -1,6 +1,6 @@
 # Control mutation suite
 
-> REQ-CONF-009 · Corpus `journal-controls.synthetic.v1` · Measured against `drenyra-ai@0.6.0` · Run with `bun run eval:controls`
+> REQ-CONF-009 · Corpus `journal-controls.synthetic.v1` · Measured against `drenyra-ai@0.7.0` · Run with `bun run eval:controls`
 
 ## The idea
 
@@ -33,21 +33,25 @@ They are reported separately because the failures are not symmetric. A survivor 
 ## Current scoreboard
 
 ```text
-detection: 18/25 defects rejected (7200 bps)
+detection: 23/25 defects rejected (9200 bps)
 false alarms: 0/3 valid entries rejected (0 bps)
 ```
 
 ### Survivors — kernel gaps ([arkelythex/drenyra-ai#123](https://github.com/arkelythex/drenyra-ai/issues/123))
 
-| Case | Defect | Harness mitigation |
-| --- | --- | --- |
-| `zero-amount` | Entry with no economic effect | none |
-| `empty-account-code` | Line with no account | none |
-| `no-evidence-items` | Evidence artifact with no items | none |
-| `duplicate-evidence-ids` | The same evidence item cited twice | none |
-| `future-capture-date` | Evidence "captured" in 2099 | none |
-| `ruc-wrong-check-digit` | 11-digit RUC failing SUNAT Módulo 11 | `runtime/context.ts` rejects it before a scope is stored, and `propose_journal_entry` reads the RUC only from that store |
-| `empty-entry-id` | Entry that cannot be referenced | none — `propose_journal_entry` even defaults a missing `entryId` to `""` |
+Both are deferred upstream on purpose, not forgotten.
+
+| Case | Defect | Why it is deferred | Harness mitigation |
+| --- | --- | --- | --- |
+| `future-capture-date` | Evidence "captured" in 2099 | The kernel reads no clock, so the same input always gets the same verdict; rejecting "the future" needs an injected reference instant | none |
+| `ruc-wrong-check-digit` | 11-digit RUC failing SUNAT Módulo 11 | Checksummed RUC is decision-gated in the kernel's ecosystem-cleanup spec | `runtime/context.ts` rejects it before a scope is stored, and `propose_journal_entry` reads the RUC only from that store |
+
+### History
+
+| Pin | Detection | False alarms | What moved |
+| --- | --- | --- | --- |
+| `0.4.1` – `0.6.0` | 18/25 (7200 bps) | 0/3 | baseline |
+| `0.7.0` | 23/25 (9200 bps) | 0/3 | [drenyra-ai#131](https://github.com/arkelythex/drenyra-ai/pull/131) kills `zero-amount` (`invalid-amount`), `empty-account-code` (`invalid-account`), `empty-entry-id` (`invalid-entry-id`), `no-evidence-items` (`missing-evidence`), and `duplicate-evidence-ids` (`INVALID_ITEM`) |
 
 ## Rules
 
