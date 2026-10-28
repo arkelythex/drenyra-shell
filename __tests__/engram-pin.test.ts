@@ -4,7 +4,8 @@
 // floats. Fail-closed verification tests for the vendored drenyra-engram
 // binary pin (contracts/engram-dependency.md).
 
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -118,5 +119,42 @@ describe("verifyEngramPin", () => {
     expect(report.verdict).toBe("verified");
     expect(report.issues).toEqual([]);
     expect(report.resolvedPath).toBe(join(dir, artifactName));
+  });
+});
+
+/**
+ * The contract table, the pin constants, and the vendored bytes are one fact
+ * stated three times. They used to be tied only by a code comment.
+ */
+describe("engram pin source of truth (contracts/engram-dependency.md)", () => {
+  const contract = readFileSync(join(process.cwd(), "contracts", "engram-dependency.md"), "utf8");
+
+  it("pins the tagged v0.9.0 release, not a commit snapshot", () => {
+    expect(ENGRAM_PIN_BUILD).toBe("0.9.0");
+    expect(contract).toContain(`> Version: ${ENGRAM_PIN_BUILD} `);
+  });
+
+  it("states exactly the pinned checksum for every platform in the contract table", () => {
+    for (const [platformKey, checksum] of Object.entries(ENGRAM_PIN_CHECKSUMS)) {
+      const row = new RegExp(
+        `^\\| \`${platformKey}\` \\| \`drenyra-engram_${ENGRAM_PIN_BUILD}_${platformKey}\` \\| \`([0-9a-f]{64})\` \\|$`,
+        "m",
+      ).exec(contract);
+      expect(row?.[1], `${platformKey} row`).toBe(checksum);
+    }
+  });
+
+  it("vendors bytes that hash to the pinned checksum for every platform", () => {
+    for (const [platformKey, checksum] of Object.entries(ENGRAM_PIN_CHECKSUMS)) {
+      const bytes = readFileSync(
+        join(
+          process.cwd(),
+          "vendored",
+          "drenyra-engram",
+          `drenyra-engram-${ENGRAM_PIN_BUILD}-${platformKey}.tar.gz`,
+        ),
+      );
+      expect(createHash("sha256").update(bytes).digest("hex"), platformKey).toBe(checksum);
+    }
   });
 });

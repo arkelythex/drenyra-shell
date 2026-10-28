@@ -18,7 +18,7 @@ import { join } from "node:path";
 import { sha256File } from "./checksum.js";
 
 /** The exact upstream build identifier this pin targets. */
-export const ENGRAM_PIN_BUILD = "0.2.1-SNAPSHOT-6a371a9";
+export const ENGRAM_PIN_BUILD = "0.9.0";
 
 /** The four platforms this pin vendors an artifact for. win32 is absent on purpose. */
 export type EngramPlatformKey =
@@ -34,13 +34,13 @@ export type EngramPlatformKey =
  */
 export const ENGRAM_PIN_CHECKSUMS: Readonly<Record<EngramPlatformKey, string>> = {
   linux_amd64:
-    "caa6f3298601536520db82b1d6b099cde454160b3a262164163055d71366aadf",
+    "09e008cc721b186f1180026e72d050ffbceeeb685a0a92f87ff2d5e1797e3312",
   linux_arm64:
-    "4f644dc869237a73dcc6ff8d189afebffec23407c7f4b528c073bcd300728af9",
+    "1ebbe1d032001152ad5e5976ca2a4ac59c89468444c0528a9cef04b5d10f397a",
   darwin_amd64:
-    "ac71f6dee50d5030f167dd6f705652bcc6aa8b885a582257ae744bda48beb64d",
+    "c4fcda6d95c5c90d014509e6112b806d04a0759726c184ecd5c09370e8fb01af",
   darwin_arm64:
-    "39aeeb5517af259237aa4965e330b5807aacdb08e92f203310431ff0798446d4",
+    "1f0d13b651dc7972ad90f4af0f41f955e3987cefa26e82609977cff832b8b8f1",
 };
 
 const PLATFORM_ARCH_MAP: Readonly<

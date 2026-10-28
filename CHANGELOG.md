@@ -9,6 +9,24 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Changed — Drenyra Engram pin: snapshot → tagged `v0.9.0` (release event)
+
+- **Pin.** `runtime/engram-pin.ts` `ENGRAM_PIN_BUILD` = `0.9.0`, replacing the
+  untagged `0.2.1-SNAPSHOT-6a371a9`. The four vendored tarballs
+  (linux/darwin × amd64/arm64, ~21 MB) are the GitHub Release `v0.9.0` assets.
+  Each passed `sha256sum -c` against the release `checksums.txt` and
+  `gh attestation verify` (SLSA provenance): this is the first Engram pin with
+  verifiable provenance.
+- **Migration note — consumed surface unchanged.** `engram_context` and
+  `engram_search` keep their call shape. Verified through `spawnEngramClient`
+  against the vendored release binary: healthy handshake, both reads
+  `isError=false`. Upstream, the observation lifecycle moved from the 0.1 to the
+  frozen 0.5 model, but that touches write paths the Shell never calls
+  (`contracts/engram-dependency.md` rule 6).
+- **One source of truth, now tested.** `__tests__/engram-pin.test.ts` asserts that
+  the contract's checksum table, `ENGRAM_PIN_CHECKSUMS`, and the vendored bytes
+  agree. Before this, only a code comment kept them aligned.
+
 ### Changed — runtime pin `drenyra-ai` 0.4.1 → 0.5.0 (release event)
 
 - **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.5.0`, entry-artifact
