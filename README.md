@@ -40,7 +40,7 @@
 ## ⚠️ Status — pre-release, and honest about it
 
 **`v0.1.0`, contracts frozen, not production-ready.** The harness extraction from
-`arkelythex/drenyra-command-center` (`packages/pi`) is complete: this repository is
+`arkelythex/drenyra-desktop` (`packages/pi`) is complete: this repository is
 now the single source of truth for the Shell accounting harness. Two produced
 contracts are frozen at v0.1, which is the `0.1.0` step of the version policy.
 
@@ -541,7 +541,7 @@ gentle-shell, gentle-engram), adapted to accounting:
 | [Drenyra AI](https://github.com/arkelythex/drenyra-ai) | gentle-ai | Fiscal kernel and program master: missions, candidates, materiality, gates, approvals, receipts (pinned, checksum-verified) |
 | **Drenyra Shell** (this repository) | gentle-shell | Agentic harness: persona, commands, chains, agents, scope context (operates, never authorizes) |
 | [Drenyra Engram](https://github.com/arkelythex/drenyra-engram) | gentle-engram | Institutional accounting memory (pinned binary, read-only `engram_context` and `engram_search`; informs, never authorizes) |
-| [Drenyra Command Center](https://github.com/arkelythex/drenyra-command-center) | — | Web application for the professional (consumes Drenyra AI) |
+| [Drenyra Desktop](https://github.com/arkelythex/drenyra-desktop) | — | Web application for the professional (consumes Drenyra AI) |
 
 **Direction rule:** Drenyra Shell depends on Drenyra AI and Drenyra Engram, both
 pinned. Drenyra Shell never leaks into Drenyra AI's contracts, and Drenyra AI never
@@ -618,6 +618,6 @@ Peruvian legally-valid digital signatures.
 This repository is **publicly visible** on GitHub as part of the Drenyra open-core
 transition intention (charter §9: intention, not contractual promise); packaged
 artifacts and commercial distribution remain contractual and never public. See the
-Drenyra [Private Product Policy](https://github.com/arkelythex/drenyra-command-center/blob/main/docs/products/private-product-policy.md).
+Drenyra [Private Product Policy](https://github.com/arkelythex/drenyra-desktop/blob/main/docs/products/private-product-policy.md).
 
 <p align="right"><a href="#top">Back to top ↑</a></p>
