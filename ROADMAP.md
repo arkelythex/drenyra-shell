@@ -90,6 +90,6 @@ National alignment never weakens the fail-closed and no-autonomous-filing stance
 
 ## Non-goals (for now)
 
-- Full accounting engine (that is `arkelythex/drenyra-command-center`)
+- Full accounting engine (that is `arkelythex/drenyra-console`)
 - Agent runtime (that is `arkelythex/drenyra-ai`)
 - Memory engine (that is `arkelythex/drenyra-engram`)
