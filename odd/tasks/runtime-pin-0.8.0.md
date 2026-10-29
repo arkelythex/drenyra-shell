@@ -14,9 +14,9 @@
 
 ## Tasks
 
-- [x] **T1** — RED: tool, lib, and ratchet tests against the 0.7.0 pin. *(S2, S3, S4)*
-- [x] **T2** — GREEN: request field, tool clock, corpus `asOf`; vendor and pin 0.8.0. *(S2–S5)*
-- [ ] **T3** — Docs, CHANGELOG, lock facts, gates, PR, merge. *(S5)*
+- [x] **T1** — RED: tool, lib, and ratchet tests against the 0.7.0 pin. *(S2, S3, S4)* — `ce119d2`
+- [x] **T2** — GREEN: request field, tool clock, corpus `asOf`; vendor and pin 0.8.0. *(S2–S5)* — `ce119d2`
+- [x] **T3** — Docs, CHANGELOG, lock facts, gates, PR, merge. *(S5)* — `ce119d2`, PR #102
 
 ## Log
 
@@ -42,3 +42,11 @@
 ### L5 — 2026-10-28 — gates
 
 One `set -euo pipefail` run exited 0: typecheck clean; `bun run test` 60 files / 872 passed (866 + 6 new); `verify:style`, `verify:capability`, `verify:package` OK; `verify-packed-install` OK (postinstall verified the runtime under Node in a clean consumer); lock facts current at the documented fixed point.
+
+### L6 — 2026-10-28 — CI incident on PR #102
+
+On `ce119d2`, `typecheck`, `test`, and `style` passed, and `package` failed in `verify-packed-install`. The cause was `npm error 404 Not Found - GET https://registry.npmjs.org/@types/estree/-/estree-1.0.10.tgz`, a third-party transitive package. `@types/estree@1.0.10` was published at 2026-10-29T04:34:28Z, 30 s before the CI install, and was already `latest`. Its tarball still returned 404 at 04:35:52Z, while 1.0.9 returned 200: a registry propagation race, not a defect in this change. The local run of the same gate passed. Decision: rerun the failed job on the same commit once the tarball serves 200. No code, lockfile, or version pin was changed to work around it.
+
+### L7 — 2026-10-28 — CI green and close
+
+The `@types/estree@1.0.10` tarball began serving 200 at 04:39:41Z. A rerun of only the failed job on the same commit `ce119d2` passed. PR #102 CI on `ce119d2`: `package`, `style`, `test`, and `typecheck` passed. Risk: item 5 (runtime release and pin). This change was not independently verified by a separate subagent; the evidence is the observed RED and GREEN, the full local gates, the PR CI, and the release provenance and checksums. ENG T5 stays out of scope.
