@@ -26,7 +26,7 @@ Drenyra Shell does **not** contain the accounting engine. It **installs and cons
 
 Drenyra Shell is **not**:
 
-- The accounting engine — that is `arkelythex/drenyra-command-center` (product) and `arkelythex/drenyra-ai` (runtime).
+- The accounting engine — that is `arkelythex/drenyra-console` (product) and `arkelythex/drenyra-ai` (runtime).
 - An agent runtime — missions, candidates, receipts, gates, and ledger belong to `drenyra-ai`.
 - A memory engine — observations and scope-first search belong to `drenyra-engram`.
 
@@ -49,7 +49,7 @@ National alignment is positioning and roadmap direction, and it stays inside the
 
 ```mermaid
 flowchart TD
-    P["Profesional contable"] --> D["Drenyra Command Center"]
+    P["Profesional contable"] --> D["Drenyra Console"]
     D --> AI["Drenyra-AI Core"]
     PI["Drenyra Shell"] --> AI
     ERP["ERP · bancos · SUNAT"] --> AD["Adaptadores de evidencia"]
@@ -154,7 +154,7 @@ skill and policy version was used.
 
 ### Integrations and CLI
 
-v1.0 integrations in order: Drenyra SDK/API (Command Center primary surface),
+v1.0 integrations in order: Drenyra SDK/API (Drenyra Console primary surface),
 Drenyra Shell (its own harness with an exact Drenyra AI version), MCP server
 (uniform access for external hosts), Codex/Claude Code/OpenCode (first agent
 adapters), and ERP/SUNAT/banks connectors (evidence and confirmed execution).

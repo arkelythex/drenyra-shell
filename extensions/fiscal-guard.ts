@@ -2,7 +2,7 @@
  * drenyra-shell — Fiscal Guard extension.
  *
  * Ported from the legacy `@drenyra/pi` package (`packages/pi` in
- * drenyra-command-center) as part of the vertical-slice extraction: the
+ * drenyra-console) as part of the vertical-slice extraction: the
  * fiscal tools, persona command, and write guards that used to live in the
  * monorepo package now ship with the standalone harness.
  *

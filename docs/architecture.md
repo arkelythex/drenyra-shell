@@ -7,8 +7,8 @@
 ![Drenyra Shell — Position in the Ecosystem](diagrams/drenyra-shell-position.architecture.light.svg#gh-light-mode-only)
 ![Drenyra Shell — Position in the Ecosystem](diagrams/drenyra-shell-position.architecture.dark.svg#gh-dark-mode-only)
 
-Drenyra Command Center (product surface) also consumes this harness; that
-dependency is evidenced and diagrammed in `drenyra-command-center`, not here —
+Drenyra Console (product surface) also consumes this harness; that
+dependency is evidenced and diagrammed in `drenyra-console`, not here —
 see [Repository scope](#repository-scope) below.
 
 Drenyra Shell depends on Drenyra AI (pinned, package-local) and Drenyra Engram (memory access). It is a consumer — it never defines the agent ecosystem or the memory engine.
@@ -126,7 +126,7 @@ Design 04 fixes where authoritative state lives and how the harness stays safe:
 
 ## Repository scope
 
-This repo is the Shell harness only. The accounting engine, UI, and product surfaces live in `arkelythex/drenyra-command-center`; the agent runtime in `arkelythex/drenyra-ai`; the memory engine in `arkelythex/drenyra-engram`.
+This repo is the Shell harness only. The accounting engine, UI, and product surfaces live in `arkelythex/drenyra-console`; the agent runtime in `arkelythex/drenyra-ai`; the memory engine in `arkelythex/drenyra-engram`.
 
 ## National alignment (positioning)
 
