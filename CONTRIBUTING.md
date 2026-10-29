@@ -24,6 +24,16 @@
 
 The pinned Drenyra AI runtime is a **package contract** — see [contracts/runtime-dependency.md](contracts/runtime-dependency.md). Never change the pin without updating the contract, the verification steps, and the migration note.
 
+## Changing a dependency
+
+Bun installs from `bun.lock`, but GitHub's dependency graph cannot read that file. `package-lock.json` is kept as the Dependabot alert mirror, generated from `bun.lock`. It holds the same exact versions, the vendored Drenyra AI tarball included. After any dependency change, including a runtime pin bump or a Dependabot pull request, regenerate it and commit it with the change:
+
+```bash
+bun run deps:mirror
+```
+
+CI runs `node scripts/sync-alert-mirror.mjs --check` and fails when the mirror is stale. The script is carried from `arkelythex/drenyra-ai`; change it there first. Never refresh the mirror with `npm install --package-lock-only`: npm resolves its own tree, which hides advisories on the versions actually installed.
+
 ## Getting help
 
 Open an issue with a clear description. For security issues, use Private Vulnerability Reporting — see [SECURITY.md](SECURITY.md).

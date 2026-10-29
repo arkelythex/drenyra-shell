@@ -9,6 +9,26 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Security — a Dependabot alert source for the installed tree
+
+- **Root cause.** GitHub's dependency graph cannot read `bun.lock`, and this
+  repository had no `package-lock.json`. No transitive dependency was visible
+  to Dependabot, so its 0 open alerts covered nothing.
+- **Mirror.** `package-lock.json` is now generated from `bun.lock` by
+  `bun run deps:mirror` (`scripts/sync-alert-mirror.mjs`, carried from
+  arkelythex/drenyra-ai#165 and #167). It lists the same exact versions,
+  including the vendored `drenyra-ai` tarball, whose version is read from the
+  archive and whose integrity is verified. CI fails when the mirror is stale.
+- **Advisories it revealed, now fixed.** In the development tree: `fast-uri`
+  3.1.5 → 3.1.9 (10 advisories, 5 high, through the vendored runtime's `ajv`),
+  `vite` 8.3.0 → 8.3.5 (6, 1 high), `source-map-js` 1.2.1 → 1.2.2 (1 high), and
+  `vitest`/`@vitest/mocker` 5.0.1 → 5.0.5 (2 moderate).
+  `npm audit --package-lock-only` now reports 0. A consumer's fresh install
+  resolves its own versions, so the published package is unaffected.
+- **Dependabot uses the `bun` ecosystem.** Version updates now edit
+  `bun.lock`, which `bun install --frozen-lockfile` reads. A Dependabot PR still
+  needs `bun run deps:mirror` before CI passes.
+
 ### Changed — runtime pin `drenyra-ai` 0.7.0 → 0.8.0 (release event)
 
 - **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.8.0`. The vendored

@@ -1,8 +1,17 @@
 # Fiscal convention: monetary values in the Drenyra ecosystem are BigInt cents; no float is ever used for money; version/sequence numbers are JSON integers, never floats.
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# `package-lock.json` is the Dependabot alert mirror: GitHub's dependency graph cannot read
+# `bun.lock`, so that file is the only source of security alerts for this repository. It is
+# generated from `bun.lock` (exact versions, the vendored drenyra-ai tarball included), and CI
+# fails when it is stale. After any dependency change, including a Dependabot pull request, run:
+#   bun run deps:mirror
+# Never refresh it with `npm install --package-lock-only`, which resolves its own tree.
 version: 2
 updates:
-  - package-ecosystem: npm
+  # CI installs with `bun install --frozen-lockfile`, so version updates must edit
+  # `bun.lock`; the `npm` ecosystem touched npm files only and could not land.
+  - package-ecosystem: bun
     directory: /
     schedule:
       interval: weekly
