@@ -14,9 +14,9 @@
 
 ## Tasks
 
-- [x] **T1** — RED: carry the subprocess tests, expecting the missing script. *(S2)*
-- [x] **T2** — GREEN: carry the script, add `deps:mirror`, generate the mirror, validate with npm, audit. *(S2, S5)*
-- [ ] **T3** — CI step, `dependabot.yml`, docs, CHANGELOG, lock facts, gates, PR, merge. *(S3, S4)*
+- [x] **T1** — RED: carry the subprocess tests, expecting the missing script. *(S2)* — `d420e88`
+- [x] **T2** — GREEN: carry the script, add `deps:mirror`, generate the mirror, validate with npm, audit. *(S2, S5)* — `d420e88`
+- [x] **T3** — CI step, `dependabot.yml`, docs, CHANGELOG, lock facts, gates, PR, merge. *(S3, S4)* — `d420e88`, PR #103
 
 ## Log
 
@@ -39,3 +39,9 @@
 ### L4 — 2026-10-29 — gates
 
 One `set -euo pipefail` run exited 0. `bun install --frozen-lockfile`: clean. Typecheck: clean. `--check`: the mirror is current (106 packages). `bun run test`: 61 files / 891 passed (872 + 19). `verify:style`, `verify:capability`, `verify:package`: OK. `verify-packed-install`: OK. Lock facts: current at the documented fixed point (`activeChanges` = `bun-lock-alert-mirror`).
+
+### L5 — 2026-10-29 — slice boundary, CI, close
+
+- `d420e88` is ~800 authored lines, past the ~400-line guide. About 520 of them are `scripts/sync-alert-mirror.mjs` and its tests, carried byte-for-byte from arkelythex/drenyra-ai, where they were reviewed and passed CI in #165 and #167. The rest is new: CI, Dependabot, docs, lock facts, and this document. It stays one commit, because the carried script is only meaningful together with the mirror it generates and the check that enforces it.
+- PR #103 CI on `d420e88`: `package`, `style`, `test`, and `typecheck` passed, and `typecheck` now includes the mirror `--check`.
+- Risk: item 5 (CI and dependency pipeline). There was no separate independent verifier. The evidence is the observed RED and GREEN, the full local gates, the PR CI, `npm ls`, and `npm audit`.
