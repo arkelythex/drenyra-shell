@@ -9,6 +9,29 @@ and this project adheres to the version policy in [RELEASING.md](RELEASING.md).
 
 ## Unreleased — runtime pin → 0.4.1 (release event, pre-alpha)
 
+### Changed — runtime pin `drenyra-ai` 0.7.0 → 0.8.0 (release event)
+
+- **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.8.0`. The vendored
+  `vendored/drenyra-ai-0.8.0.tgz` (SHA-256 `e80ab35c…d546`) is the GitHub Release
+  `v0.8.0` asset from a signed tag. It matches the npm `dist.integrity` byte for
+  byte and carries SLSA v1 provenance. It verified against the release
+  `checksums.txt` with zero failures. The entry artifact (`dist/cmd/cli.js`) is
+  unchanged (`a40ba4c7…2f65`), so the lock-facts trust anchor does not move.
+- **`propose_journal_entry` supplies the reference instant.** 0.8.0 requires `asOf`
+  on every journal entry (arkelythex/drenyra-ai#162). The tool sets it from the
+  harness clock at call time, ignores any `asOf` the agent sends, and does not
+  expose it in its schema. An agent that could choose "now" could move it past any
+  capture date. `JournalProposalRequest` gains `asOf`, which `proposeJournalEntry`
+  forwards unchanged. Pi adds no clock check of its own.
+- **Control mutation scoreboard: 23/25 → 24/25 (9200 → 9600 bps), 0/3 false
+  alarms.** The kernel now kills `future-capture-date` (`future-evidence`). The
+  corpus baseline fixes `asOf`, so the scoreboard never depends on the wall clock.
+  The only survivor is `ruc-wrong-check-digit`, which is deferred upstream and
+  already rejected by `runtime/context.ts`.
+- **Migration note.** A proposal whose evidence was captured after the moment of
+  the call is now rejected with `future-evidence`. Every other kernel verdict is
+  unchanged.
+
 ### Changed — runtime pin `drenyra-ai` 0.6.0 → 0.7.0 (release event)
 
 - **Pin.** `runtime/pin.ts` `DEFAULT_PIN` = `drenyra-ai@0.7.0`. The vendored

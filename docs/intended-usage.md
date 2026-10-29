@@ -14,7 +14,7 @@
 It is a **Shell extension** — a thin operator layer, the accounting-domain counterpart of `gentle-shell`:
 
 - **Operator experience** — an accounting-operator persona, a startup panel that surfaces company and fiscal-period context, `/drenyra:*` commands (doctor, scope, status, capabilities, missions, receipts, evidence, verify, close), Shell-native subagents, model routing, and Receipt-Driven Accounting (RDA) command chains.
-- **Pinned, sealed runtime** — it installs and consumes an **exact, verified, package-local version of Drenyra AI** (`drenyra-ai@0.7.0`, checksum-verified, never `PATH`). Everything the harness runs is backed by that pinned kernel.
+- **Pinned, sealed runtime** — it installs and consumes an **exact, verified, package-local version of Drenyra AI** (`drenyra-ai@0.8.0`, checksum-verified, never `PATH`). Everything the harness runs is backed by that pinned kernel.
 - **Development-hygiene guards** — three pre-tool guards (money / SQL / RUC path) registered through `extensions/fiscal-guard.ts`. They guard the code being written and the commands being run; they are **not** a fiscal boundary and do not protect a ledger. See [Known limitations](../README.md#known-limitations).
 
 ## What it is NOT
@@ -47,7 +47,7 @@ The professional should never have to learn to operate an agent orchestration. W
 3. Start a mission (`/drenyra:mission <intent>`), follow the RDA chains, review evidence, and receive a signed, verifiable receipt from the `ReceiptStore` path (`lib/receipt-store.ts`) for a material action. A second, weaker record path exists and is disclosed in [Known limitations](../README.md#known-limitations); it is not a receipt.
 4. Approve or reject — the human decision, never the harness.
 
-Everything runs on the pinned `drenyra-ai@0.7.0` artifact; a missing or mismatched runtime stops mission work immediately (fail closed).
+Everything runs on the pinned `drenyra-ai@0.8.0` artifact; a missing or mismatched runtime stops mission work immediately (fail closed).
 
 ## Next steps
 

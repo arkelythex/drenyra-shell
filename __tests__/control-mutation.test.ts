@@ -28,8 +28,10 @@ import {
 } from "../lib/control-mutation.js";
 
 /**
- * Pinned against drenyra-ai@0.7.0, which kills five of the 0.6.0 survivors
- * (drenyra-ai#131). A pin upgrade that moves any row fails here.
+ * Pinned against drenyra-ai@0.8.0. 0.7.0 killed five of the 0.6.0 survivors
+ * (drenyra-ai#131), and 0.8.0 kills `future-capture-date` through the
+ * required reference instant (drenyra-ai#162). A pin upgrade that moves any
+ * row fails here.
  */
 const EXPECTED_KILLS: Record<string, string> = {
   "unbalanced-by-one-cent": "unbalanced",
@@ -55,10 +57,11 @@ const EXPECTED_KILLS: Record<string, string> = {
   "empty-entry-id": "invalid-entry-id",
   "no-evidence-items": "missing-evidence",
   "duplicate-evidence-ids": "INVALID_ITEM",
+  "future-capture-date": "future-evidence",
 };
 
-/** Deferred upstream on purpose (drenyra-ai#123): checksummed RUC is decision-gated, and the kernel reads no clock. */
-const EXPECTED_SURVIVORS = ["future-capture-date", "ruc-wrong-check-digit"];
+/** Deferred upstream on purpose (drenyra-ai#123): checksummed RUC is decision-gated. */
+const EXPECTED_SURVIVORS = ["ruc-wrong-check-digit"];
 
 const accepted = (request: JournalProposalRequest): JournalProposalResult => ({
   ok: true,
@@ -115,8 +118,8 @@ describe("scoreboard ratchet against the pinned kernel", () => {
   });
 
   it("reports counts and rates as integers, rates in basis points", () => {
-    expect(board.defects).toEqual({ total: 25, killed: 23, survived: 2 });
-    expect(board.detectionBps).toBe(9200);
+    expect(board.defects).toEqual({ total: 25, killed: 24, survived: 1 });
+    expect(board.detectionBps).toBe(9600);
     expect(board.falseAlarmBps).toBe(0);
     for (const value of [board.detectionBps, board.falseAlarmBps]) {
       expect(Number.isInteger(value)).toBe(true);
@@ -126,8 +129,7 @@ describe("scoreboard ratchet against the pinned kernel", () => {
   it("names the harness layer that already covers a survivor, or none", () => {
     const ruc = board.results.find((r) => r.id === "ruc-wrong-check-digit");
     expect(ruc?.mitigation).toContain("runtime/context.ts");
-    const future = board.results.find((r) => r.id === "future-capture-date");
-    expect(future?.mitigation).toBe("none");
+
   });
 });
 
@@ -176,11 +178,10 @@ describe("formatScoreboard", () => {
     const text = formatScoreboard(board);
     expect(text).toContain(CORPUS_ID);
     expect(text).toContain("not validated by a professional accountant");
-    expect(text).toContain("detection: 23/25 defects rejected (9200 bps)");
+    expect(text).toContain("detection: 24/25 defects rejected (9600 bps)");
     expect(text).toContain("false alarms: 0/");
     for (const id of EXPECTED_SURVIVORS) {
       expect(text).toContain(id);
     }
-    expect(text).toContain("mitigation: none");
   });
 });

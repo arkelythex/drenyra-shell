@@ -62,6 +62,8 @@ export const MUTATION_BASELINE: JournalProposalRequest = Object.freeze({
       capturedBy: "operator",
     }),
   }),
+  // Fixed, so the scoreboard never depends on the wall clock.
+  asOf: "2026-10-01T00:00:00.000Z",
 });
 
 const NONE = "none";
