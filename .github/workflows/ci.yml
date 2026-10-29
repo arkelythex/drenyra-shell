@@ -34,6 +34,9 @@ jobs:
           bun-version: "1.3.11"
       - run: bun install --frozen-lockfile
       - run: bun run typecheck
+      # package-lock.json is the Dependabot alert mirror of bun.lock; a stale
+      # mirror hides advisories on the versions CI actually installs.
+      - run: node scripts/sync-alert-mirror.mjs --check
 
   test:
     runs-on: ubuntu-latest
