@@ -52,7 +52,7 @@ operational integration.
 | Works today | Does not exist yet |
 | --- | --- |
 | 21 `/drenyra:*` commands, all registered | Publication on npm |
-| Pinned `drenyra-ai@0.7.0` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
+| Pinned `drenyra-ai@0.8.0` with checksum verification that fails closed | Typed fiscal tools beyond the proposal half (`ingest_cpe`, `close_period`) |
 | Signed, verifiable receipts through `ReceiptStore` | A measured eval set against a professional's own work |
 | Checksum-pinned Drenyra Engram reads — `engram_search` and `engram_context` over the vendored, attested `v0.9.0` release, reachable by the four proposing agents | — |
 | A `books` operation mode where `/drenyra:mode books` denies `bash`, `write`, `edit` and every unlisted tool by default | — |
@@ -144,10 +144,10 @@ The control fails first (the bank is off by S/ 1,180.00, or SIRE and the ERP
 disagree), and an entry is proposed to clear it, citing the evidence. The entry is
 right when the control passes, not when it looks right. The controls themselves are
 mutation-tested: `bun run eval:controls` injects 25 known bookkeeping defects, and
-the pinned kernel rejects **23 (9200 bps)** with no false alarms. The 2 it lets
-through are listed as kernel gaps in [`docs/evals/control-mutation.md`](docs/evals/control-mutation.md).
+the pinned kernel rejects **24 (9600 bps)** with no false alarms. The one it lets
+through is listed as a kernel gap in [`docs/evals/control-mutation.md`](docs/evals/control-mutation.md).
 CDA is defined by the Shell; formalizing it in Drenyra AI is proposed in
-[drenyra-ai#124](https://github.com/arkelythex/drenyra-ai/issues/124), and the 2 remaining gaps are
+[drenyra-ai#124](https://github.com/arkelythex/drenyra-ai/issues/124), and the remaining gap is
 deferred in [drenyra-ai#123](https://github.com/arkelythex/drenyra-ai/issues/123).
 
 #### RDA — no receipt, no mutation
@@ -213,7 +213,7 @@ You bind a fresh complete scope before running anything protected.
 ### The pinned runtime — never `PATH`
 
 The harness runs an **exact, verified, package-local** Drenyra AI
-(`drenyra-ai@0.7.0`, entry-artifact checksum
+(`drenyra-ai@0.8.0`, entry-artifact checksum
 `a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65`).
 `/drenyra:doctor` fails closed on any mismatch, and the startup panel runs the
 same check at activation.
@@ -372,7 +372,7 @@ Inside Pi, follow this order — each step's prerequisite is the previous one:
   `ReceiptStore`.
 - **Your Pi install** — the harness is a Pi extension; it does not modify your Pi
   configuration, models, or credentials.
-- **The pinned runtime** — `vendored/drenyra-ai-0.7.0.tgz`, verified against the
+- **The pinned runtime** — `vendored/drenyra-ai-0.8.0.tgz`, verified against the
   recorded checksum on every `doctor` run.
 
 </details>
@@ -461,7 +461,7 @@ documentation bug worth reporting.
 | **Typed fiscal tools stop at the proposal half** | `lib/journal-proposal.ts` | `propose_journal_entry` records an entry through the kernel's `journal.record`. Posting needs a `JournalReceiptIssuer` the harness does not have, so nothing is signed or posted. `ingest_cpe` and `close_period` do not exist: `drenyra-ai/fiscal` exposes a candidate-ordering adapter, not a close entry point. |
 | **No end-to-end validation** | `capability-manifest.yaml` | No capability is `validated-end-to-end`; every one is `declared-only`, `implemented`, or `unit-or-contract-tested`. |
 | **Engram reads reach four agents, by design** | `extensions/register.ts:705-778`, [`agents/README.md`](agents/README.md#institutional-memory), [Engram dependency](contracts/engram-dependency.md) | The integration is shipped: the pin verifies, the vendored binary spawns, and `engram_search` round-trips (a live probe returned `healthy` with an empty result set, which is an empty database rather than a failure). `journal-candidate-agent`, `invoice-sire-agent`, `reconciliation-agent`, and `tax-controller-pe` declare `drenyra_institutional_memory`. The other six are excluded on purpose, and `__tests__/agents.test.ts` pins that: the reviewer and the refuter would be anchored by precedent, and memory is not evidence. The tool is registered globally, so each agent's `tools:` frontmatter is the only gate. `/drenyra:context` is the second caller. |
-| **No professional-validated eval set** | [`docs/evals/control-mutation.md`](docs/evals/control-mutation.md), `bun run eval:controls` | The kernel's controls are measured: a synthetic mutation corpus injects 25 bookkeeping defects, and the pinned kernel rejects 23 (9200 bps) with no false alarms on valid entries. The 2 survivors are kernel gaps, listed with their mitigations. What is still missing is a corpus signed off by a professional accountant and any measure of the LLM agents themselves — the synthetic corpus says nothing about what a professional would have done. |
+| **No professional-validated eval set** | [`docs/evals/control-mutation.md`](docs/evals/control-mutation.md), `bun run eval:controls` | The kernel's controls are measured: a synthetic mutation corpus injects 25 bookkeeping defects, and the pinned kernel rejects 24 (9600 bps) with no false alarms on valid entries. The one survivor is a kernel gap, listed with their mitigations. What is still missing is a corpus signed off by a professional accountant and any measure of the LLM agents themselves — the synthetic corpus says nothing about what a professional would have done. |
 
 **[Capability conformance matrix →](docs/architecture/capability-conformance-matrix.md)**
 

@@ -2,8 +2,8 @@
   "schemaVersion": "drenyra.program-lock-facts.v1",
   "participantCheckpoint": true,
   "authorityNotice": "Pi-local input; does not modify or promote the program master",
-  "headSha": "dec22cbf3b662a97d37a3eb25b964053bc6bf830",
-  "candidateIdentity": "dirty-sha256:bda3cab5588e51829a2f584bfb643f33f3f6acc3e7b88eb8ca9bf2124b08c63d",
+  "headSha": "ce119d2beeab92171aa58db9925787e3e4c2ec1a",
+  "candidateIdentity": "dirty-sha256:9e13ed528ebc5ab9ede25daf96397d74a3b77d2474f0d93476b0e088b29e5b6d",
   "packageVersion": "0.1.0",
   "contracts": {
     "consumed": [
@@ -54,13 +54,13 @@
     "pinEntrySha256": "a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65",
     "contentManifest": {
       "path": "contracts/SHA256SUMS.json",
-      "sha256": "514df0288cc1b1fc2d637c77afad14ed761f023e4b541efac4b61a6708f3b7fe"
+      "sha256": "47f1f773477b7d8b84fb64627c34a6a2f70655c2e097657abe184ed09d378617"
     }
   },
   "capabilityStates": {
     "manifest": "capability-manifest.yaml",
     "schemaVersion": "drenyra.capability-manifest.v1",
-    "digestSha256": "be451e1beebfa90e97416348bf4c4ad30d6fdd600189c66a1a6030bf350561ae"
+    "digestSha256": "5a643a074ba7e8f601b57359bd8cb7a068b2b8198c6fd44f28ae1f990034c5a2"
   },
   "activeChanges": [],
   "snapshotRecord": {

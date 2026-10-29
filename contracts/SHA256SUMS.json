@@ -22,13 +22,13 @@
     "contracts/mission/snapshot.schema.json": "46b3d8a47fa25974216f5452cb583bb7e954f97450858ef359bb45d90825c32c",
     "contracts/mission/status.schema.json": "92e7f787826ca837410ae8f9383bccfd4bd0298c823126799862374df530e320",
     "contracts/mission/step.schema.json": "12b6d78388d0f519c90d41e1b9757c8a98d4ea6365a24d36f30120357d9ca22a",
-    "contracts/package-contract.md": "5549b26b94c6822103870cca67f9e39d4da2b2299dfaa2bfc63188accc615c94",
+    "contracts/package-contract.md": "8345bf9122cb1605cade798529ab233a0461244238480048f2dadb29583a71cf",
     "contracts/receipts/receipt-binding.schema.json": "006bda9cc3124e2c9b4c6a83a86627b67ef084f35834f6f7c6547fa9e58de0ac",
     "contracts/receipts/receipt-content.schema.json": "b8268f174f756f2062edc043a22499dabfcc0e620558a1d9189afaf72e535d0d",
     "contracts/receipts/signed-receipt.schema.json": "c1689aa9e7a5e5ea3a2212ad20c6f1f2e0416ffea6d8b79bfcb8972f4c92c8c7",
     "contracts/receipts/signing-key-info.schema.json": "3266edb9077de6c15f268399da3c15c1c6b09f3e65615ab5e3d3edf21d1d5e44",
     "contracts/receipts/trusted-key-registry.schema.json": "330c16593b52912d1cf23111a47522693fbd5e888bf89cd1ebfc94363278d418",
-    "contracts/runtime-dependency.md": "459eed86c970c31b7dab1dc6b97f162df64ea18a5db8333939daeea85dc2ce2d",
-    "vendored/drenyra-ai-0.7.0.tgz": "fe003fab8b98a8874554d4656ab4a80532bc5442b79d1bcc05177f6c8a40370e"
+    "contracts/runtime-dependency.md": "3eacb965f48b57510846b71ce5116c624566f28d72eab6efb448ab273247f1aa",
+    "vendored/drenyra-ai-0.8.0.tgz": "e80ab35c2e9642c73b7bf450ecf48dc5cd65858f59feea9175293ea14a77d546"
   }
 }

@@ -194,7 +194,7 @@
         "tests": [
           "__tests__/configurator.test.ts"
         ],
-        "note": "Pi consumes the drenyra-ai@0.7.0 public configurator: doctor reports managed-composition diagnostics incl. pinned-ai-runtime; install/sync render the drenyra-shell managed composition + pin asset under ~/.drenyra."
+        "note": "Pi consumes the drenyra-ai@0.8.0 public configurator: doctor reports managed-composition diagnostics incl. pinned-ai-runtime; install/sync render the drenyra-shell managed composition + pin asset under ~/.drenyra."
       },
       "verificationLevel": "unit-or-contract-tested",
       "ownership": "pi-local",

@@ -169,6 +169,9 @@ export function registerJournalTools(
               typeof rawProvenance.capturedBy === "string" ? rawProvenance.capturedBy : "",
           },
         },
+        // The harness clock, never an agent-supplied value: an agent able to
+        // choose asOf could move "now" past any capture date.
+        asOf: new Date().toISOString(),
       };
 
       const result = proposeJournalEntry(request);

@@ -30,7 +30,31 @@ const BASE = {
       capturedBy: "operator",
     },
   },
+  asOf: "2026-10-28T00:00:00.000Z",
 };
+
+describe("proposeJournalEntry — reference instant", () => {
+  it("surfaces the kernel's future-evidence verdict for a capture after asOf", () => {
+    const result = proposeJournalEntry({
+      ...BASE,
+      evidence: {
+        ...BASE.evidence,
+        provenance: { ...BASE.evidence.provenance, capturedAt: "2026-10-28T00:00:00.001Z" },
+      },
+    });
+    expect(result).toMatchObject({ ok: false, code: "future-evidence" });
+  });
+
+  it("records a capture exactly at asOf", () => {
+    const result = proposeJournalEntry({ ...BASE, asOf: "2026-10-27T00:00:00.000Z" });
+    expect(result.ok).toBe(true);
+  });
+
+  it("surfaces the kernel's invalid-as-of verdict instead of defaulting a clock", () => {
+    const result = proposeJournalEntry({ ...BASE, asOf: "" });
+    expect(result).toMatchObject({ ok: false, code: "invalid-as-of" });
+  });
+});
 
 describe("proposeJournalEntry — the kernel decides", () => {
   it("records a balanced entry as RECORDED, never POSTED", () => {

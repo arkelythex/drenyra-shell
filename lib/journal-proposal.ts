@@ -52,6 +52,11 @@ export interface JournalProposalRequest {
     items: readonly EvidenceItemProposal[];
     provenance: EvidenceProvenanceProposal;
   };
+  /**
+   * Reference instant (ISO-8601) the kernel compares evidence capture times
+   * against. The harness supplies it from its own clock, never the agent.
+   */
+  asOf: string;
 }
 
 /** A RECORDED entry summary. Deliberately carries no receipt. */
@@ -108,6 +113,7 @@ export function proposeJournalEntry(
         amountCents: line.amountCents,
       })),
       evidence: [evidence],
+      asOf: request.asOf,
     });
 
     return {

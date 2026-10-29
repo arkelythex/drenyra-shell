@@ -50,7 +50,7 @@ Every `/drenyra:*` command:
 
 The first verifiable vertical of this contract ships in `runtime/` and `extensions/`:
 
-- `runtime/pin.ts` — the pinned Drenyra AI runtime (`DEFAULT_PIN` = `drenyra-ai@0.7.0`, state `released`, entry-artifact checksum `a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65`), validated by `createPin`.
+- `runtime/pin.ts` — the pinned Drenyra AI runtime (`DEFAULT_PIN` = `drenyra-ai@0.8.0`, state `released`, entry-artifact checksum `a40ba4c79024d95d46ef26b1586d2f76a0dbe88b1e16185881634268edb92f65`), validated by `createPin`.
 - `runtime/doctor.ts` — fail-closed verification (checksum + version, package-local); `runtime/status.ts` renders human + machine status for the startup panel.
 - `extensions/register.ts` — the exact compiled entrypoint (`pi.extensions` → `./dist/extensions/register.js`), registering `/drenyra:status`, `:doctor`, `:company`, `:period`, `:context`, `:capabilities`, `:scope`, `:models`, `:close`.
 - `extensions/scope-guard.ts` — per-command scope policy: bootstrap/read commands run pre-scope; scope-requiring commands fail closed on incomplete or changed canonical scope.

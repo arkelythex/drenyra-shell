@@ -135,7 +135,7 @@ function makeVendoredFixture(
 	} = {},
 ): VendoredFixture {
 	const root = tempRoot("drenyra-shell-vendored-");
-	const version = options.version ?? "0.7.0";
+	const version = options.version ?? "0.8.0";
 	const entryContent = Buffer.from(
 		options.entryContent ?? 'export const runtime = "drenyra-ai-fixture";\n',
 		"utf8",
@@ -159,7 +159,7 @@ function makeVendoredFixture(
 	const vendoredDir = join(root, "vendored");
 	mkdirSync(vendoredDir, { recursive: true });
 	writeFileSync(
-		join(vendoredDir, options.tarballName ?? "drenyra-ai-0.7.0.tgz"),
+		join(vendoredDir, options.tarballName ?? "drenyra-ai-0.8.0.tgz"),
 		buildTarGz(tarFiles),
 	);
 	if (options.extraTarball) {
@@ -313,7 +313,7 @@ describe("content integrity manifest (contracts/ + assets/schemas/)", () => {
 });
 
 describe("vendored runtime artifact reconciliation vs DEFAULT_PIN", () => {
-	it("reconciles the REAL vendored drenyra-ai-0.7.0.tgz against the released DEFAULT_PIN", () => {
+	it("reconciles the REAL vendored drenyra-ai-0.8.0.tgz against the released DEFAULT_PIN", () => {
 		const result = reconcileVendoredArtifact({
 			root: REPO_ROOT,
 			pin: DEFAULT_PIN,
@@ -345,7 +345,7 @@ describe("vendored runtime artifact reconciliation vs DEFAULT_PIN", () => {
 		const fixture = makeVendoredFixture({ version: "0.1.0" });
 		const result = reconcileVendoredArtifact({
 			root: fixture.root,
-			pin: { ...fixture.pin, version: "0.7.0" },
+			pin: { ...fixture.pin, version: "0.8.0" },
 		});
 		expect(result.errors.join("\n")).toMatch(/version mismatch/);
 	});
@@ -387,7 +387,7 @@ describe("vendored runtime artifact reconciliation vs DEFAULT_PIN", () => {
 			root,
 			pin: {
 				package: "drenyra-ai",
-				version: "0.7.0",
+				version: "0.8.0",
 				checksumSha256: "pending",
 				state: "pending-release",
 			},
@@ -412,7 +412,7 @@ describe("tar reader", () => {
 		const root = tempRoot("drenyra-shell-tar-");
 		const fixture = makeVendoredFixture();
 		const entry = readTarEntry(
-			join(fixture.root, "vendored", "drenyra-ai-0.7.0.tgz"),
+			join(fixture.root, "vendored", "drenyra-ai-0.8.0.tgz"),
 			"package/dist/cmd/cli.js",
 		);
 		expect(sha256Hex(entry as Buffer)).toBe(fixture.entryChecksum);

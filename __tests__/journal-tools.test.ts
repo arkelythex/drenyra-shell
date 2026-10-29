@@ -88,6 +88,40 @@ describe("propose_journal_entry — kernel verdicts", () => {
     expect(outcome.details.code).toBe("unbalanced");
   });
 
+  it("rejects evidence captured after the harness clock (future-evidence)", async () => {
+    const tools = register(SCOPE);
+    const outcome = await tools.get("propose_journal_entry")!.execute("call-1", {
+      ...PROPOSAL,
+      evidence: {
+        ...PROPOSAL.evidence,
+        provenance: { ...PROPOSAL.evidence.provenance, capturedAt: "2099-01-01T00:00:00.000Z" },
+      },
+    });
+    expect(outcome.details.status).toBe("rejected");
+    expect(outcome.details.code).toBe("future-evidence");
+  });
+
+  it("ignores an agent-supplied asOf: the harness clock is the only reference instant", async () => {
+    const tools = register(SCOPE);
+    const outcome = await tools.get("propose_journal_entry")!.execute("call-1", {
+      ...PROPOSAL,
+      asOf: "2199-01-01T00:00:00.000Z",
+      evidence: {
+        ...PROPOSAL.evidence,
+        provenance: { ...PROPOSAL.evidence.provenance, capturedAt: "2099-01-01T00:00:00.000Z" },
+      },
+    });
+    expect(outcome.details.status).toBe("rejected");
+    expect(outcome.details.code).toBe("future-evidence");
+  });
+
+  it("does not expose asOf as a tool parameter", () => {
+    const tool = register(SCOPE).get("propose_journal_entry") as unknown as {
+      parameters: { properties: Record<string, unknown> };
+    };
+    expect(Object.keys(tool.parameters.properties)).not.toContain("asOf");
+  });
+
   it("refuses a non-integer amount before the kernel sees it", async () => {
     const tools = register(SCOPE);
     const outcome = await tools.get("propose_journal_entry")!.execute("call-1", {
